@@ -19,7 +19,7 @@ export default function Header() {
           </div>
 
           <div className="hidden lg:flex">
-            <ul className="menu menu-horizontal px-1">
+            <ul className="menu font-thin text-xs menu-horizontal px-1">
               <li><Link href="/">Home</Link></li>
               <li><Link href="/">Works</Link></li>
               <li><Link href="/">Packages</Link></li>
