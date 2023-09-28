@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={typeface.className} suppressHydrationWarning>
         <Header />
-        <main className="mx-6 mt-3">
+        <main className="mt-3">
           {children}
         </main>
       </body>
