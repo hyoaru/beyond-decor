@@ -1,31 +1,73 @@
-import Image from "next/image"
+"use client";
 
-export default function LandingCard(Props) {
+import Image from "next/image"
+import AnimationOnHover from "../animations/AnimationOnHover"
+import { motion } from "framer-motion"
+import { useEffect, useState } from "react";
+
+export default function LandingCard(props) {
+  const [quotation, setQuotation] = useState(" ")
+
   return (
     <>
-      <img
-        width={200}
-        height={500}
-        src={Props.src}
-        style={{ width: "200px", height: "500px" }}
-        alt="" className='rounded-xl object-cover hidden xl:block'
-      />
+      <div className="relative hidden xl:block">
+        <div className="prose absolute flex items-center justify-center w-full h-full p-10">
+          <h4 className="text-center font-normal">{quotation}</h4>
+        </div>
 
-      <img
-        width={400}
-        height={250}
-        src={Props.src}
-        style={{ width: "400px", height: "250px" }}
-        alt="" className='rounded-xl object-cover hidden md:block xl:hidden'
-      />
+        <AnimationOnHover
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 0.25 }}
+        >
+          <Image
+            width={200}
+            height={500}
+            src={props.src}
+            onLoad={() => {setQuotation(props.quotation)}}
+            style={{ width: "200px", height: "500px" }}
+            alt="" className='rounded-xl object-cover'
+          />
+        </AnimationOnHover>
+      </div>
 
-      <img
-        width={250}
-        height={600}
-        src={Props.src}
-        style={{ width: "250px", height: "600px" }}
-        alt="" className='rounded-xl object-cover md:hidden'
-      />
+      <div className="relative hidden md:block xl:hidden">
+        <div className="prose absolute flex items-center justify-center w-full h-full p-10">
+          <h4 className="text-center font-normal">{quotation}</h4>
+        </div>
+        <AnimationOnHover
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 0.25 }}
+        >
+          <Image
+            width={400}
+            height={250}
+            src={props.src}
+            onLoad={() => {setQuotation(props.quotation)}}
+            style={{ width: "400px", height: "250px" }}
+            alt="" className='rounded-xl object-cover'
+          />
+        </AnimationOnHover>
+      </div>
+
+      <div className="relative md:hidden">
+        <div className="prose absolute flex items-center justify-center w-full h-full p-10">
+          <h4 className="text-center font-normal">{quotation}</h4>
+        </div>
+
+        <AnimationOnHover
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 0.25 }}
+        >
+          <Image
+            width={250}
+            height={600}
+            src={props.src}
+            onLoad={() => {setQuotation(props.quotation)}}
+            style={{ width: "250px", height: "600px" }}
+            alt="" className='rounded-xl object-cover'
+          />
+        </AnimationOnHover>
+      </div>
 
     </>
   )
