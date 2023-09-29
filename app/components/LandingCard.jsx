@@ -12,7 +12,7 @@ export default function LandingCard(props) {
     <>
       <div className="relative hidden xl:block">
         <div className="prose absolute flex items-center justify-center w-full h-full p-10">
-          <h4 className="text-center font-normal">{quotation}</h4>
+          <h4 className="text-center font-bold">{quotation}</h4>
         </div>
 
         <AnimationOnHover
@@ -32,7 +32,7 @@ export default function LandingCard(props) {
 
       <div className="relative hidden md:block xl:hidden">
         <div className="prose absolute flex items-center justify-center w-full h-full p-10">
-          <h4 className="text-center font-normal">{quotation}</h4>
+          <h4 className="text-center font-bold">{quotation}</h4>
         </div>
         <AnimationOnHover
           initial={{ opacity: 1 }}
@@ -51,7 +51,7 @@ export default function LandingCard(props) {
 
       <div className="relative md:hidden">
         <div className="prose absolute flex items-center justify-center w-full h-full p-10">
-          <h4 className="text-center font-normal">{quotation}</h4>
+          <h4 className="text-center font-bold">{quotation}</h4>
         </div>
 
         <AnimationOnHover
