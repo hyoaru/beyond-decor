@@ -3,7 +3,7 @@ import React from 'react'
 export default function PackageCard(props) {
   return (
     <>
-      <div class="card rounded-xl w-64 bg-base-100 shadow-xl">
+      <div className="card rounded-xl w-64 bg-base-100 shadow-xl">
         <figure className='mt-0 mb-0'>
           <img
             src={props.src}
@@ -12,8 +12,8 @@ export default function PackageCard(props) {
             className='object-cover' alt=""
           />
         </figure>
-        <div class="card-body p-6">
-          <h2 class="card-title mt-0 mb-0 text-md">{props.title}</h2>
+        <div className="card-body p-6">
+          <h2 className="card-title mt-0 mb-0 text-md">{props.title}</h2>
           <p className='mt-0 text-sm'>{props.description}</p>
         </div>
       </div>
