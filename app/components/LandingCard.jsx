@@ -17,14 +17,14 @@ export default function LandingCard(props) {
 
         <AnimationOnHover
           initial={{ opacity: 1 }}
-          animate={{ opacity: 0.25 }}
+          animate={{ opacity: 0.10 }}
         >
           <Image
             width={200}
-            height={500}
+            height={450}
             src={props.src}
             onLoad={() => {setQuotation(props.quotation)}}
-            style={{ width: "200px", height: "500px" }}
+            style={{ width: "200px", height: "450px" }}
             alt="" className='rounded-xl object-cover'
           />
         </AnimationOnHover>
@@ -36,7 +36,7 @@ export default function LandingCard(props) {
         </div>
         <AnimationOnHover
           initial={{ opacity: 1 }}
-          animate={{ opacity: 0.25 }}
+          animate={{ opacity: 0.10 }}
         >
           <Image
             width={400}
@@ -56,7 +56,7 @@ export default function LandingCard(props) {
 
         <AnimationOnHover
           initial={{ opacity: 1 }}
-          animate={{ opacity: 0.25 }}
+          animate={{ opacity: 0.10 }}
         >
           <Image
             width={250}
