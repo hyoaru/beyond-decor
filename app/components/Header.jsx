@@ -11,20 +11,20 @@ export default function Header() {
             </label>
             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
               <li><Link href="/">Home</Link></li>
-              <li><Link href="/">Works</Link></li>
-              <li><Link href="/">Packages</Link></li>
-              <li><Link href="/">Snap</Link></li>
-              <li><Link href="/">About</Link></li>
+              <li><Link href="/works">Works</Link></li>
+              <li><Link href="/packages">Packages</Link></li>
+              <li><Link href="/snap">Snap</Link></li>
+              <li><Link href="/about">About</Link></li>
             </ul>
           </div>
 
           <div className="hidden lg:flex">
             <ul className="menu font-thin text-xs menu-horizontal px-1">
               <li><Link href="/">Home</Link></li>
-              <li><Link href="/">Works</Link></li>
-              <li><Link href="/">Packages</Link></li>
-              <li><Link href="/">Snap</Link></li>
-              <li><Link href="/">About</Link></li>
+              <li><Link href="/works">Works</Link></li>
+              <li><Link href="/packages">Packages</Link></li>
+              <li><Link href="/snap">Snap</Link></li>
+              <li><Link href="/about">About</Link></li>
             </ul>
           </div>
 
