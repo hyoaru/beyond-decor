@@ -1,7 +1,13 @@
-import Header from './components/Header'
-import './globals.css'
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { config } from "@fortawesome/fontawesome-svg-core";
 import { Lora } from 'next/font/google'
 
+// App imports
+import Footer from './components/Footer'
+import Header from './components/Header'
+import './globals.css'
+
+config.autoAddCss = false;
 const typeface = Lora({ subsets: ['latin'] })
 
 export const metadata = {
@@ -17,6 +23,7 @@ export default function RootLayout({ children }) {
         <main className="mt-3">
           {children}
         </main>
+        <Footer />
       </body>
     </html>
   )
