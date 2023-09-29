@@ -91,11 +91,15 @@ export default function Home() {
         <p className='px-8 xl:px-36 text-center'>At Beyond Decor, our commitment goes beyond just creating stunning events. We are dedicated to empowering our clients to be active participants in shaping their dream occasions. With Beyond Decor by your side, you become the architect of your event, and we provide the tools, creativity, and expertise to turn your ideas into extraordinary realities.</p>
       </div>
 
-      
 
-      <div style={{ height: "20rem" }}>
-
+      <div className='my-28 prose max-w-none md:px-20'>
+        <h2 className='text-center mb-2 mx-6 '>Let's start crafting your next priceless memory</h2>
+        <Link href={"/works"} className='no-underline'>
+          <button className="btn btn-outline flex mx-auto mt-6 ">Get a business quote</button>
+        </Link>
       </div>
+
+      
     </>
   )
 }
