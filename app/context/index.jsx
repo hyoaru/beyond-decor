@@ -1,3 +1,2 @@
-import { SupabaseContextProvider, useSupabaseContext } from "./Supabase";
-
-export {SupabaseContextProvider, useSupabaseContext}
+import { SupabaseContextProvider, useSupabaseContext, UserStateContextProvider, useUserStateContext } from "./Supabase";
+export {SupabaseContextProvider, useSupabaseContext, UserStateContextProvider, useUserStateContext}
