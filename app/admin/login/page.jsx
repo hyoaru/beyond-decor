@@ -20,10 +20,9 @@ export default function page() {
         email: formData.current.value.email,
         password: formData.current.value.password,
       })
-
-      console.log(data)
+      window.location.href="/admin"
     } catch (error) {
-      
+      console.log(error)
     }
   }
 
