@@ -2,7 +2,7 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook } from '@fortawesome/free-brands-svg-icons'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-
+import Link from 'next/link'
 
 export default function Footer() {
   return (
@@ -15,7 +15,7 @@ export default function Footer() {
             <p className='text-xs'>Turning events into priceless memories since 2016.</p>
           </div>
           <div className="order-3 mx-auto md:w-6/12  md:me-auto md:order-2">
-            <p className='text-center'>© 2023 Beyond Decor. All Rights Reserved.</p>
+            <p className='text-center'><Link href="/admin">© 2023 Beyond Decor. All Rights Reserved.</Link></p>
           </div>
           <div className="order-2 mx-auto md:w-3/12 md:order-3">
             <div className="flex flex-col">
