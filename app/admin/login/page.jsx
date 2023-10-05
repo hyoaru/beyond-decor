@@ -5,22 +5,25 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useSupabaseContext } from '@/app/context';
 
 export default function page() {
+
+
   let supabase = useSupabaseContext()
   const formData = useRef({})
 
   function handleChange(event) {
-    formData.current.value = { 
-      ...formData.current.value, [event.target.name]:event.target.value }
+    formData.current.value = {
+      ...formData.current.value, [event.target.name]: event.target.value
+    }
   }
 
-  async function handleSubmit (event) {
+  async function handleSubmit(event) {
     event.preventDefault()
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email: formData.current.value.email,
         password: formData.current.value.password,
       })
-      window.location.href="/admin"
+      window.location.href = "/admin"
     } catch (error) {
       console.log(error)
     }
@@ -49,7 +52,7 @@ export default function page() {
               onChange={handleChange}
             />
             <div className='mx-auto'>
-              <input type="submit" value="Submit" className='btn' onClick={handleSubmit}/>
+              <input type="submit" value="Submit" className='btn' onClick={handleSubmit} />
             </div>
           </div>
         </form>
