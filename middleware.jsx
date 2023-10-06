@@ -6,17 +6,23 @@ export async function middleware(req) {
   const supabase = createMiddlewareClient({ req, res })
 
   const {data: { user }} = await supabase.auth.getUser()
+  const pathnames = ['/admin/login', '/admin']
 
-  if (user) {
-    if (req.nextUrl.pathname === '/admin/login') {
-      return NextResponse.redirect(new URL('/admin', req.url))
-    }
+  
+  if (!pathnames.includes(req.nextUrl.pathname)) {
     return NextResponse.next()
   }
 
-  return NextResponse.redirect(new URL('/admin/login', req.url))
-}
+  if (!user) {
+    if (req.nextUrl.pathname === '/admin/login'){
+      return NextResponse.next()
+    } else {
+      return NextResponse.redirect(new URL('/admin/login', req.url))
+    }
+  } else {
+    if (req.nextUrl.pathname === '/admin/login') {
+      return NextResponse.redirect(new URL('/admin', req.url))
+    }
+  }
 
-export const config = {
-  matcher: ['/admin/login', '/admin']
 }
