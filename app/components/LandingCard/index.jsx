@@ -17,6 +17,7 @@ export default function LandingCard(props) {
         quotation={quotation}
         additionalClasses={"hidden xl:block"}
         onLoad={() => { setQuotation(props.quotation) }}
+        modalID={props.modalID}
       />
 
       <Card
@@ -26,6 +27,7 @@ export default function LandingCard(props) {
         quotation={quotation}
         additionalClasses={"hidden md:block xl:hidden"}
         onLoad={() => { setQuotation(props.quotation) }}
+        modalID={props.modalID}
       />
 
       <Card
@@ -35,8 +37,8 @@ export default function LandingCard(props) {
         quotation={quotation}
         additionalClasses={"md:hidden"}
         onLoad={() => { setQuotation(props.quotation) }}
+        modalID={props.modalID}
       />
-
     </>
   )
 }

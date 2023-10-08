@@ -4,11 +4,13 @@ import React, { useEffect, useState } from 'react'
 
 // App imports
 import LandingCard from '../components/LandingCard'
-import { useSupabaseContext } from '../context';
+import { useSupabaseContext, useUserStateContext } from '../context';
+import LandingCardModal from '../components/LandingCardModal';
 
 export default function LandingCards() {
   const [landingCards, setLandingCards] = useState()
   const supabase = useSupabaseContext()
+  const user = useUserStateContext()
 
   useEffect(() => {
     async function fetchLandingCards() {
@@ -42,7 +44,7 @@ export default function LandingCards() {
             .getPublicUrl(imagePath)
           const imageUrl = data.publicUrl
 
-          return <LandingCard key={`LandingCard-${id}`} src={imageUrl} quotation={quotation} />
+          return <LandingCard key={`LandingCard-${id}`} src={imageUrl} quotation={quotation} modalID={`LandingCardModal-${id}`} />
         })}
       </div>
 
@@ -59,11 +61,23 @@ export default function LandingCards() {
 
           return (
             <div key={`LandingCardCarouselItem-${id}`} className="carousel-item">
-              <LandingCard src={imageUrl} quotation={quotation} />
+              <LandingCard src={imageUrl} quotation={quotation} modalID={`LandingCardModal-${id}`} />
             </div>
           )
         })}
       </div>
+
+      {(user && landingCards) && landingCards.map((card) => {
+        const id = card.id
+        const imagePath = card.image_path
+        const { data } = supabase
+          .storage
+          .from("medias")
+          .getPublicUrl(imagePath)
+        const imageUrl = data.publicUrl
+
+        return <LandingCardModal key={`LandingCardModal-${id}`} cardId={id} imagePath={imagePath} src={imageUrl} modalID={`LandingCardModal-${id}`} />
+      })}
     </>
   )
 }
