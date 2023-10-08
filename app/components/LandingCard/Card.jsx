@@ -11,15 +11,19 @@ import { useUserStateContext } from "@/app/context";
 export default function Card(props) {
   const user = useUserStateContext()
 
+  function handleClick() {
+    if (user) { document.getElementById(`${props.modalID}`).showModal() }
+  }
+
   return (
     <>
       <div className={"relative " + props.additionalClasses}>
         <div className="prose absolute flex items-center justify-center w-full h-full p-10">
           <h4 className="text-center font-bold">{props.quotation}</h4>
           {user && <>
-            <FontAwesomeIcon 
-              icon={faPencil} 
-              className="absolute top-1/3 text-primary" 
+            <FontAwesomeIcon
+              icon={faPencil}
+              className="absolute top-1/3 text-primary"
             />
           </>}
         </div>
@@ -28,14 +32,14 @@ export default function Card(props) {
           initial={{ opacity: 1 }}
           animate={{ opacity: 0.10 }}
         >
-          <Image
+          <img
             width={props.width}
             height={props.height}
-            src={props.src}
+            src={`${props.src}?${performance.now()}`}
             onLoad={props.onLoad}
             style={{ width: `${props.width}px`, height: `${props.height}px` }}
-            alt="" className={user ? 'rounded-xl object-cover cursor-pointer' : 'rounded-xl object-cover cursor-pointer'}
-            onClick={() => {document.getElementById(`${props.modalID}`).showModal()}}
+            alt="" className={user ? 'rounded-xl object-cover cursor-pointer' : 'rounded-xl object-cover'}
+            onClick={handleClick}
           />
         </AnimationOnHover>
       </div>

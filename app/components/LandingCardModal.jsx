@@ -1,12 +1,11 @@
 "use client"
 
-import React, { useEffect, useRef, useState } from 'react'
-import Image from 'next/image'
+import React, { useRef, useState } from 'react'
 import { useSupabaseContext } from '../context'
 
 export default function LandingCardModal(props) {
   const supabase = useSupabaseContext()
-  const [imageUrl, setImageUrl] = useState(props.src)
+  const [imageUrl, setImageUrl] = useState(`${props.src}?${performance.now()}`)
   const imageInputRef = useRef()
   const quotationInputRef = useRef()
 
@@ -42,7 +41,7 @@ export default function LandingCardModal(props) {
         <div className="modal-box w-11/12 max-w-sm">
           <h3 className="font-bold text-lg">Edit card contents</h3>
           <div className="my-4">
-            <Image
+            <img
               width={300}
               height={450}
               src={imageUrl}

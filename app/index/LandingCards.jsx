@@ -35,6 +35,7 @@ export default function LandingCards() {
     <>
       <div className='justify-center justify-items-center gap-4 grid-cols-2 hidden md:grid md:grid-cols-3 xl:flex xl:flex-nowrap'>
         {landingCards && landingCards.map((card) => {
+          console.log(card)
           const id = card.id
           const quotation = card.quotation
           const imagePath = card.image_path
@@ -44,7 +45,14 @@ export default function LandingCards() {
             .getPublicUrl(imagePath)
           const imageUrl = data.publicUrl
 
-          return <LandingCard key={`LandingCard-${id}`} src={imageUrl} quotation={quotation} modalID={`LandingCardModal-${id}`} />
+          return (
+            <LandingCard
+              key={`LandingCard-${id}`}
+              src={imageUrl}
+              quotation={quotation}
+              modalID={`LandingCardModal-${id}`}
+            />
+          )
         })}
       </div>
 
@@ -76,7 +84,15 @@ export default function LandingCards() {
           .getPublicUrl(imagePath)
         const imageUrl = data.publicUrl
 
-        return <LandingCardModal key={`LandingCardModal-${id}`} cardId={id} imagePath={imagePath} src={imageUrl} modalID={`LandingCardModal-${id}`} />
+        return (
+          <LandingCardModal
+            key={`LandingCardModal-${id}`}
+            cardId={id}
+            imagePath={imagePath}
+            src={imageUrl}
+            modalID={`LandingCardModal-${id}`}
+          />
+        )
       })}
     </>
   )
