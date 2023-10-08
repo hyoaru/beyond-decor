@@ -2,18 +2,14 @@
 import React, { useEffect, useState } from 'react'
 
 // App imports
-import { useSupabaseContext } from '../context';
+import { useSupabaseContext, useUserStateContext } from '../context';
 import PackageCard from '../components/PackageCard';
+import PackageCardModal from '../components/PackageCardModal';
 
 export default function PackageCards() {
   const supabase = useSupabaseContext()
+  const user = useUserStateContext()
   const [packageCards, setPackageCards] = useState()
-  const packages = [
-    { title: "Basic Package", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus, asperiores." },
-    { title: "Themed Package", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus, asperiores." },
-    { title: "Full Backdrop Package", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus, asperiores." },
-    { title: "Full Venue Package", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus, asperiores." },
-  ]
 
   useEffect(() => {
     async function fetchPackageCards() {
@@ -38,6 +34,7 @@ export default function PackageCards() {
     <>
       <div className="flex flex-wrap gap-6 gap-y-10 justify-center">
         {packageCards && packageCards.map((card, index) => {
+          const id = card.id
           const title = card.title
           const description = card.description
           const imagePath = card.image_path
@@ -45,9 +42,14 @@ export default function PackageCards() {
             .storage
             .from("medias")
             .getPublicUrl(imagePath)
-          const imageUrl = `${data.publicUrl}?${performance.now()}`
+          const imageUrl = data.publicUrl
 
-          return <PackageCard key={`PackageCard-${index}`} src={imageUrl} title={title} description={description} />
+          return (
+            <div key={`PackageCard-${index}`}>
+              <PackageCard src={imageUrl} title={title} description={description} modalId={`PackageCardModal-${id}`} />
+              {user && <PackageCardModal src={imageUrl} imagePath={imagePath} cardId={id} modalId={`PackageCardModal-${id}`} />}
+            </div>
+          )
         })}
       </div>
 

@@ -1,12 +1,19 @@
 import React from 'react'
+import { useSupabaseContext } from '../context'
 
 export default function PackageCard(props) {
+  const user = useSupabaseContext()
+
+  function handleClick() {
+    if (user) { document.getElementById(`${props.modalId}`).showModal() }
+  }
+
   return (
     <>
-      <div className="card rounded-xl w-64 bg-base-100 shadow-xl">
+      <div className={user ? "card rounded-xl w-64 bg-base-100 shadow-xl cursor-pointer" : "card rounded-xl w-64 bg-base-100 shadow-xl"} onClick={handleClick}>
         <figure className='mt-0 mb-0'>
           <img
-            src={props.src}
+            src={`${props.src}?${performance.now()}`}
             style={{ width: "300px", height: "200px" }}
             width={300} height={200}
             className='object-cover' alt=""
