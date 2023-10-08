@@ -35,7 +35,6 @@ export default function LandingCards() {
     <>
       <div className='justify-center justify-items-center gap-4 grid-cols-2 hidden md:grid md:grid-cols-3 xl:flex xl:flex-nowrap'>
         {landingCards && landingCards.map((card) => {
-          console.log(card)
           const id = card.id
           const quotation = card.quotation
           const imagePath = card.image_path
