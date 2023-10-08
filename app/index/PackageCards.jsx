@@ -7,7 +7,7 @@ import PackageCard from '../components/PackageCard';
 
 export default function PackageCards() {
   const supabase = useSupabaseContext()
-  const [packageCardImages, setPackageCardImages] = useState([{}])
+  const [packageCards, setPackageCards] = useState()
   const packages = [
     { title: "Basic Package", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus, asperiores." },
     { title: "Themed Package", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus, asperiores." },
@@ -16,42 +16,36 @@ export default function PackageCards() {
   ]
 
   useEffect(() => {
-    async function fetchPackageCardImages() {
+    async function fetchPackageCards() {
       try {
         const { data, error } = await supabase
-          .storage
-          .from('medias')
-          .list('package-cards', {
-            limit: 100,
-            offset: 0,
-            sortBy: { column: 'name', order: 'asc' },
-          })
+          .from('package_cards')
+          .select()
+          .order('id', { ascending: true })
 
         if (data) {
-          setPackageCardImages(data)
+          setPackageCards(data)
         }
       } catch (error) {
         console.log(error)
       }
     }
 
-    fetchPackageCardImages()
+    fetchPackageCards()
   }, [])
 
   return (
     <>
       <div className="flex flex-wrap gap-6 gap-y-10 justify-center">
-        {packageCardImages.map((image, index) => {
-          if (!image) { return }
-
-          const title = packages[index].title
-          const description = packages[index].description
-          const imageFileName = image.name
+        {packageCards && packageCards.map((card, index) => {
+          const title = card.title
+          const description = card.description
+          const imagePath = card.image_path
           const { data } = supabase
             .storage
             .from("medias")
-            .getPublicUrl(`package-cards/${imageFileName}`)
-          const imageUrl = data.publicUrl
+            .getPublicUrl(imagePath)
+          const imageUrl = `${data.publicUrl}?${performance.now()}`
 
           return <PackageCard key={`PackageCard-${index}`} src={imageUrl} title={title} description={description} />
         })}
