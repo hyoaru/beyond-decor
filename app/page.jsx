@@ -8,6 +8,7 @@ import ParallaxSection from './index/ParallaxSection';
 import EventsServingSection from './index/EventsServingSection';
 import HeroSection from './index/HeroSection';
 import PackagesSection from './index/PackagesSection';
+import CallToActionSection from './index/CallToActionSection';
 
 export default function Home() {
   return (
@@ -33,12 +34,7 @@ export default function Home() {
       </div>
 
       <div className="my-40 lg:my-48">
-        <div className='prose max-w-none px-10 md:px-20'>
-          <h1 className='text-center mb-2 mx-6 '>Let's start crafting your next priceless memory</h1>
-          <Link href={"/works"} className='no-underline'>
-            <button className="btn btn-primary flex mx-auto mt-6 ">Get a business quote</button>
-          </Link>
-        </div>
+        <CallToActionSection />
       </div>
 
 
