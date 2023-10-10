@@ -25,8 +25,8 @@ export default function ParallaxSection() {
         <div className='h-[250px] bg-purple-600 opacity-0'></div>
       </Parallax>
 
-      <Parallax bgImage={imagePath} strength={-50} className='sm:hidden' bgImageStyle={{ objectFit: "cover" }}>
-        <div className='h-[220px] bg-purple-600 opacity-0'></div>
+      <Parallax bgImage={imagePath} strength={-40} className='sm:hidden' bgImageStyle={{ objectFit: "cover" }}>
+        <div className='h-[180px] bg-purple-600 opacity-0'></div>
       </Parallax>
     </>
   )
