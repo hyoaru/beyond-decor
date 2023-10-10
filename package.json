@@ -19,7 +19,8 @@
     "framer-motion": "^10.16.4",
     "next": "^13.5.4",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "react-parallax": "^3.5.1"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
