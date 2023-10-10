@@ -10,7 +10,7 @@ export default function PackageCard(props) {
 
   return (
     <>
-      <div className={user ? "card rounded-xl w-64 bg-base-100 shadow-xl cursor-pointer" : "card rounded-xl w-64 bg-base-100 shadow-xl"} onClick={handleClick}>
+      <div className={"card w-64 bg-base-100 shadow-lg" + (user ? " cursor-pointer" : "")} onClick={handleClick}>
         <figure className='mt-0 mb-0'>
           <img
             src={`${props.src}?${performance.now()}`}
@@ -19,7 +19,7 @@ export default function PackageCard(props) {
             className='object-cover' alt=""
           />
         </figure>
-        <div className="card-body p-6">
+        <div className="card-body p-6 py-8">
           <h2 className="card-title mt-0 mb-0 text-md">{props.title}</h2>
           <p className='mt-0 text-sm'>{props.description}</p>
         </div>

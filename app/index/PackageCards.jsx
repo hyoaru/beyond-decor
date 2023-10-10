@@ -32,7 +32,7 @@ export default function PackageCards() {
 
   return (
     <>
-      <div className="flex flex-wrap gap-6 gap-y-10 justify-center">
+      <div className="px-6 flex flex-wrap gap-6 gap-y-10 justify-center">
         {packageCards && packageCards.map((card, index) => {
           const id = card.id
           const title = card.title

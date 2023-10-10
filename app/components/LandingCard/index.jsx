@@ -12,7 +12,7 @@ export default function LandingCard(props) {
     <>
       <Card
         src={props.src}
-        width={200}
+        width={180}
         height={450}
         quotation={quotation}
         additionalClasses={"hidden xl:block"}
