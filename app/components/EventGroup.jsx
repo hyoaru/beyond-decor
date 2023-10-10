@@ -7,7 +7,7 @@ import Image from 'next/image';
 import AnimationSlideOnShow from '../animations/AnimationSlideOnShow';
 
 export default function EventGroup(props) {
-  const imageSrc = `${props.imageSrc}`
+  const imageSrc = `${props.imageSrc}?${performance.now()}`
   return (
     <>
       <AnimationSlideOnShow isRightAligned={props.isRightAligned}>
