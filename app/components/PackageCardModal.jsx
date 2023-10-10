@@ -71,11 +71,11 @@ export default function PackageCardModal(props) {
               />
             </div>
 
-            <div className="flex mx-auto">
+            <div className="flex mx-auto form-control w-full max-w-xs">
               <input ref={titleInputRef} type="text" placeholder={"Enter title to display"} className="input input-bordered w-full max-w-xs" />
             </div>
 
-            <div className="flex mx-auto mt-2">
+            <div className="flex mx-auto mt-2 form-control w-full max-w-xs">
               <textarea ref={descriptionInputRef} className="textarea textarea-bordered w-full max-w-xs" placeholder="Enter description to display"></textarea>
             </div>
           </div>
