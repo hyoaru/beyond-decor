@@ -26,7 +26,7 @@ export default function AnimationOnHover(props) {
 
           initial="initial"
           animate={mainControls}
-          transition={{duration: 0.1}}
+          transition={{duration: 0.3}}
           onHoverStart={() => {setIsHovered(true)}}
           onHoverEnd={() => {setIsHovered(false)}}
         >
