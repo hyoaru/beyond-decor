@@ -1,5 +1,5 @@
 import React from 'react'
-import { faPencil } from '@fortawesome/free-solid-svg-icons'
+import { faEllipsis } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 // App imports
@@ -8,8 +8,19 @@ import { useSupabaseContext } from '../context'
 export default function PackageCard(props) {
   const user = useSupabaseContext()
 
-  function handleClick() {
+  function handleEdit() {
     if (user) { document.getElementById(`${props.modalId}`).showModal() }
+  }
+
+  async function handleDelete() {
+    if (user) {
+      const { error } = await supabase
+        .from('package_cards')
+        .delete()
+        .eq('id', props.cardId)
+
+      window.location.href="/"
+    }
   }
 
   return (
@@ -17,12 +28,19 @@ export default function PackageCard(props) {
       <div className="relative">
         {user && <>
           <div className="absolute z-50 w-full">
-            <FontAwesomeIcon
-              icon={faPencil}
-              size='lg'
-              className='flex ms-auto text-primary bg-white p-2 me-2 mt-2 rounded-xl rounded-tr-none rounded-bl-none opacity-80 cursor-pointer'
-              onClick={handleClick}
-            />
+            <div className="dropdown flex dropdown-bottom dropdown-end opacity-80">
+              <label tabIndex={0} className='ms-auto p-2 me-2 mt-1'>
+                <FontAwesomeIcon
+                  icon={faEllipsis}
+                  size='xl'
+                  className='shadow-xl text-white'
+                />
+              </label>
+              <ul tabIndex={0} className="dropdown-content text-xs font-semibold z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                <li><a onClick={handleEdit}>Edit</a></li>
+                <li><a>Delete</a></li>
+              </ul>
+            </div>
           </div>
         </>}
         <div className={"card w-64 bg-base-100 shadow-lg"}>
