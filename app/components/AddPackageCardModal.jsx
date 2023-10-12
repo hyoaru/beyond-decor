@@ -27,7 +27,7 @@ export default function AddPackageCardModal(props) {
     const title = titleInputRef.current.value
     const description = descriptionInputRef.current.value
 
-    if (imageFile && title) {
+    if (imageFile && title && description) {
       const generatedFileName = `${uuidv4}-${imageFile.name}`
 
       const { data, error } = await supabase

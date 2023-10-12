@@ -46,7 +46,7 @@ export default function PackageCards() {
 
           return (
             <div key={`PackageCard-${index}`}>
-              <PackageCard src={imageUrl} title={title} description={description} modalId={`PackageCardModal-${id}`} />
+              <PackageCard cardId={id} src={imageUrl} title={title} description={description} modalId={`PackageCardModal-${id}`} />
               {user && <PackageCardModal src={imageUrl} imagePath={imagePath} cardId={id} modalId={`PackageCardModal-${id}`} />}
             </div>
           )
