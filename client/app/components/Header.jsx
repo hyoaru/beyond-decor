@@ -2,28 +2,23 @@
 
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
-import { useSupabaseContext, useUserStateContext } from "../context"
+import { usePocketbaseContext, useAuthStateContext } from "../context"
 import { faUser } from "@fortawesome/free-regular-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useRouter } from "next/navigation"
+import { useLogout } from "../hooks/authentication"
 
 // App import
 export default function Header() {
-  const supabase = useSupabaseContext()
-  const user = useUserStateContext()
+  const authState = useAuthStateContext()
+  const { logout } = useLogout()
 
-  function handleSignOut(event) {
-    async function signOut(){
-      try {
-        const { error } = await supabase.auth.signOut()
-      } catch (error) {
-        console.log(error)
-      }
-    }
+  useEffect(() => {
+  }, [authState])
 
-    event.preventDefault()
-    signOut()
-    window.location.href="/"
+  function handleLogout(event) {
+    logout()
+    window.location.href="/admin/login"
   }
 
   return (
@@ -65,14 +60,14 @@ export default function Header() {
               <span className="badge badge-xs badge-primary indicator-item"></span>
             </div>
           </button>
-          {user && <>
+          {(authState?.isValid) && <>
             <div className="dropdown dropdown-end">
               <label tabIndex="0" className="btn btn-ghost btn-circle">
                 <FontAwesomeIcon icon={faUser} size="lg" />
               </label>
               <ul tabIndex="0" className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                 <li><Link href={"/admin"}>Admin</Link></li>
-                <li><input type="submit" onClick={handleSignOut} value={"Sign out"} /></li>
+                <li><input type="submit" onClick={handleLogout} value={"Logout"} /></li>
               </ul>
             </div>
           </>}

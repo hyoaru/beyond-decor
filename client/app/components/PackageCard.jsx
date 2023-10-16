@@ -3,22 +3,20 @@ import { faEllipsis } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 // App imports
-import { useSupabaseContext } from '../context'
+import { useAuthStateContext } from '../context'
+import { useCollectionRecordDelete } from '../hooks/backend'
 
 export default function PackageCard(props) {
-  const user = useSupabaseContext()
+  const {collectionRecordDelete, isLoading, error} = useCollectionRecordDelete()
+  const authState = useAuthStateContext()
 
   function handleEdit() {
-    if (user) { document.getElementById(`${props.modalId}`).showModal() }
+    if (authState.isAdmin) { document.getElementById(`${props.modalId}`).showModal() }
   }
 
   async function handleDelete() {
-    if (user) {
-      const { error } = await supabase
-        .from('package_cards')
-        .delete()
-        .eq('id', props.cardId)
-
+    if (authState.isAdmin) {
+      await collectionRecordDelete({collectionName: "package_cards", recordId: props.cardId})
       window.location.href="/"
     }
   }
@@ -26,7 +24,7 @@ export default function PackageCard(props) {
   return (
     <>
       <div className="relative">
-        {user && <>
+        {authState.isAdmin && <>
           <div className="absolute z-50 w-full">
             <div className="dropdown flex dropdown-bottom dropdown-end opacity-80">
               <label tabIndex={0} className='ms-auto p-2 me-2 mt-1'>
@@ -38,7 +36,7 @@ export default function PackageCard(props) {
               </label>
               <ul tabIndex={0} className="dropdown-content text-xs font-semibold z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                 <li><a onClick={handleEdit}>Edit</a></li>
-                <li><a>Delete</a></li>
+                <li><a onClick={handleDelete}>Delete</a></li>
               </ul>
             </div>
           </div>
@@ -46,7 +44,7 @@ export default function PackageCard(props) {
         <div className={"card w-64 bg-base-100 shadow-lg"}>
           <figure className='mt-0 mb-0'>
             <img
-              src={`${props.src}?${performance.now()}`}
+              src={`${props.src}`}
               style={{ width: "300px", height: "200px" }}
               width={300} height={200}
               className='object-cover' alt=""

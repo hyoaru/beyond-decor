@@ -1,51 +1,38 @@
 "use client"
 
 import React, { useRef, useState } from 'react'
-import { useSupabaseContext } from '../context'
+import { useForm } from 'react-hook-form'
+import { useCollectionRecordUpdate } from '../hooks/backend'
+import { useAuthStateContext } from '../context'
 
 export default function PackageCardModal(props) {
-  const supabase = useSupabaseContext()
-  const [imageUrl, setImageUrl] = useState(`${props.src}?${performance.now()}`)
-  const imageInputRef = useRef()
-  const titleInputRef = useRef()
-  const descriptionInputRef = useRef()
+  const [imageUrl, setImageUrl] = useState(`${props.src}`)
+  const { register, handleSubmit, reset, resetField, getValues } = useForm()
+  const { collectionRecordUpdate, isLoading, error } = useCollectionRecordUpdate()
+  const authState = useAuthStateContext()
 
-  function handleImageChange() {
-    setImageUrl(URL.createObjectURL(imageInputRef.current.files[0]))
+  function onImageChange() {
+    setImageUrl(URL.createObjectURL(getValues("imageInput")[0]))
   }
 
-  async function handleSave(event) {
-    event.preventDefault()
-    
-    const imageFile = imageInputRef.current.files[0]
-    const title = titleInputRef.current.value
-    const description = descriptionInputRef.current.value
+  async function onSubmit(data) {
+    if (authState.isAdmin) {
+      const imageFile = data.imageInput[0]
+      const title = data.titleInput
+      const description = data.descriptionInput
+      const formData = new FormData()
 
-    if (imageFile) {
-      const { data, error } = await supabase
-        .storage
-        .from('medias')
-        .update(props.imagePath, imageFile, {
-          cacheControl: '3600',
-          upsert: true
-        })
+      if (imageFile) { formData.append('image_file', imageFile) }
+      if (title) { formData.append('title', title) }
+      if (description) { formData.append('description', description) }
+      formData.append('position', props.position)
+
+      await collectionRecordUpdate({ collectionName: "package_cards", recordId: props.cardId, formData: formData })
     }
 
-    if (title) {
-      const { error } = await supabase
-        .from('package_cards')
-        .update({ title: title })
-        .eq('id', props.cardId)
-    }
-
-    if (description) {
-      const { error } = await supabase
-        .from('package_cards')
-        .update({ description: description })
-        .eq('id', props.cardId)
-    }
-
-    window.location.href="/"
+    resetField("titleInput")
+    resetField("descriptionInput")
+    window.location.href = "/"
   }
 
   return (
@@ -63,25 +50,36 @@ export default function PackageCardModal(props) {
             />
             <div className="form-control w-full max-w-xs flex mx-auto my-3">
               <input
-                ref={imageInputRef}
                 type="file"
                 className="file-input file-input-md file-input-bordered w-full max-w-xs"
                 accept='.jpg, .jpeg, .png'
-                onChange={handleImageChange}
+                {...register("imageInput", {
+                  onChange: onImageChange
+                })}
               />
             </div>
 
             <div className="flex mx-auto form-control w-full max-w-xs">
-              <input ref={titleInputRef} type="text" placeholder={"Enter title to display"} className="input input-bordered w-full max-w-xs" />
+              <input
+                type="text"
+                placeholder={"Enter title to display"}
+                className="input input-bordered w-full max-w-xs"
+                {...register("titleInput")}
+              />
             </div>
 
             <div className="flex mx-auto mt-2 form-control w-full max-w-xs">
-              <textarea ref={descriptionInputRef} className="textarea textarea-bordered w-full max-w-xs" placeholder="Enter description to display"></textarea>
+              <textarea
+                className="textarea textarea-bordered w-full max-w-xs"
+                placeholder="Enter description to display"
+                {...register("descriptionInput")}
+              >
+              </textarea>
             </div>
           </div>
           <div className="modal-action flex">
             <form>
-              <button onClick={handleSave} className="btn btn-neutral">Save</button>
+              <button onClick={handleSubmit(onSubmit)} className="btn btn-neutral">Save</button>
             </form>
             <form method="dialog">
               <button className="btn">Close</button>

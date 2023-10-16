@@ -1,98 +1,77 @@
 "use client";
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from "react";
 
 // App imports
-import LandingCard from '../components/LandingCard'
-import { useSupabaseContext, useUserStateContext } from '../context';
-import LandingCardModal from '../components/LandingCardModal';
+import LandingCard from "../components/LandingCard";
+import { useAuthStateContext } from "../context";
+import LandingCardModal from "../components/LandingCardModal";
+import { useLandingCards } from "../hooks/landing";
 
 export default function LandingCards() {
+  const { getLandingCards, isLoading, error } = useLandingCards();
   const [landingCards, setLandingCards] = useState()
-  const supabase = useSupabaseContext()
-  const user = useUserStateContext()
+  const authState = useAuthStateContext();
 
-  useEffect(() => {
-    async function fetchLandingCards() {
-      try {
-        const { data, error } = await supabase
-          .from('landing_cards')
-          .select()
-          .order('id', { ascending: true })
+  async function fetchLandingCards() {
+    setLandingCards(await getLandingCards())
+  }
 
-        if (data) {
-          setLandingCards(data)
-        }
-      } catch (error) {
-        console.log(error)
-      }
-    }
-
+  useEffect(() => { 
     fetchLandingCards()
-  }, [])
+  }, []);
 
+  
   return (
     <>
-      <div className='justify-center justify-items-center gap-4 grid-cols-2 hidden md:grid md:grid-cols-3 xl:flex xl:flex-nowrap'>
-        {landingCards && landingCards.map((card) => {
-          const id = card.id
-          const quotation = card.quotation
-          const imagePath = card.image_path
-          const { data } = supabase
-            .storage
-            .from("medias")
-            .getPublicUrl(imagePath)
-          const imageUrl = data.publicUrl
-
-          return (
-            <LandingCard
-              key={`LandingCard-${id}`}
-              src={imageUrl}
-              quotation={quotation}
-              modalID={`LandingCardModal-${id}`}
-            />
-          )
-        })}
+      <div className="justify-center justify-items-center gap-4 grid-cols-2 hidden md:grid md:grid-cols-3 xl:flex xl:flex-nowrap">
+        {landingCards &&
+          landingCards.map((card) => {
+            return (
+              <LandingCard
+                key={`LandingCard-${card.id}`}
+                src={card.image_path}
+                quotation={card.quotation}
+                modalID={`LandingCardModal-${card.id}`}
+              />
+            );
+          })}
       </div>
 
       <div className="carousel carousel-center w-full p-4 space-x-4 bg-base-100 rounded-box md:hidden">
-        {landingCards && landingCards.map((card) => {
-          const id = card.id
-          const imagePath = card.image_path
-          const quotation = card.quotation
-          const { data } = supabase
-            .storage
-            .from("medias")
-            .getPublicUrl(imagePath)
-          const imageUrl = data.publicUrl
-
-          return (
-            <div key={`LandingCardCarouselItem-${id}`} className="carousel-item">
-              <LandingCard src={imageUrl} quotation={quotation} modalID={`LandingCardModal-${id}`} />
-            </div>
-          )
-        })}
+        {landingCards &&
+          landingCards.map((card) => {
+            return (
+              <div
+                key={`LandingCardCarouselItem-${card.id}`}
+                className="carousel-item"
+              >
+                <LandingCard
+                  src={card.image_path}
+                  quotation={card.quotation}
+                  modalID={`LandingCardModal-${card.id}`}
+                />
+              </div>
+            );
+          })}
       </div>
 
-      {(user && landingCards) && landingCards.map((card) => {
-        const id = card.id
-        const imagePath = card.image_path
-        const { data } = supabase
-          .storage
-          .from("medias")
-          .getPublicUrl(imagePath)
-        const imageUrl = data.publicUrl
-
-        return (
-          <LandingCardModal
-            key={`LandingCardModal-${id}`}
-            cardId={id}
-            imagePath={imagePath}
-            src={imageUrl}
-            modalID={`LandingCardModal-${id}`}
-          />
-        )
-      })}
+      {authState.isAdmin &&
+        landingCards &&
+        landingCards.map((card) => {
+          return (
+            <LandingCardModal
+              isLocal={card.isLocal}
+              id={card.id}
+              position={card.position}
+              key={`LandingCardModal-${card.id}`}
+              cardId={card.id}
+              imagePath={card.image_path}
+              src={card.image_path}
+              modalID={`LandingCardModal-${card.id}`}
+            />
+          );
+        })}
     </>
-  )
+  );
 }

@@ -1,43 +1,44 @@
 "use client"
 
 import React, { useRef, useState } from 'react'
-import { useSupabaseContext } from '../context'
+import { useForm } from 'react-hook-form'
+
+// App imports
+import { useAuthStateContext } from '../context'
+import { useCollectionRecordUpdate } from '../hooks/backend'
 
 export default function LandingCardModal(props) {
-  const supabase = useSupabaseContext()
-  const [imageUrl, setImageUrl] = useState(`${props.src}?${performance.now()}`)
-  const imageInputRef = useRef()
-  const quotationInputRef = useRef()
+  const authState = useAuthStateContext()
+  const { register, handleSubmit, getValues, reset, resetField } = useForm()
+  const { collectionRecordUpdate, isLoading, error } = useCollectionRecordUpdate()
+  const [imageUrl, setImageUrl] = useState(`${props.src}`)
 
-  function handleImageChange() {
-    setImageUrl(URL.createObjectURL(imageInputRef.current.files[0]))
+  function onImageChange() {
+    setImageUrl(URL.createObjectURL(getValues("imageInput")[0]))
   }
 
-  async function handleSave(event) {
-    const imageFile = imageInputRef.current.files[0]
-    const quotation = quotationInputRef.current.value
+  async function onSubmit(data) {
+    if (authState.isAdmin) {
+      const imageFile = data.imageInput[0]
+      const quotation = data.quotationInput
+      const recordId = props.id
+      const isRecordLocal = props.isLocal
+      const position = props.position
+      const formData = new FormData()
 
-    if (imageFile) {
-      const { data, error } = await supabase
-        .storage
-        .from('medias')
-        .update(props.imagePath, imageFile, {
-          cacheControl: '3600',
-          upsert: true
-        })
+      if (imageFile) { formData.append('image_file', imageFile) }
+      if (quotation) { formData.append('quotation', quotation) }
+      formData.append('position', position)
+      await collectionRecordUpdate({ collectionName: "landing_cards", recordId: recordId, formData: formData })
     }
 
-    if (quotation) {
-      const { error } = await supabase
-        .from('landing_cards')
-        .update({ quotation: quotation })
-        .eq('id', props.cardId)
-    }
+    resetField('quotationInput')
+    window.location.href = "/"
   }
 
   return (
     <>
-      <dialog id={props.modalID} className="modal ">
+      <dialog id={props.modalID} className="modal">
         <div className="modal-box w-11/12 max-w-sm">
           <h3 className="font-bold text-lg">Edit card contents</h3>
           <div className="my-4">
@@ -50,21 +51,25 @@ export default function LandingCardModal(props) {
             />
             <div className="form-control w-full max-w-xs flex mx-auto my-3">
               <input
-                ref={imageInputRef}
                 type="file"
                 className="file-input file-input-md file-input-bordered w-full max-w-xs"
                 accept='.jpg, .jpeg, .png'
-                onChange={handleImageChange}
+                {...register("imageInput", { onChange: onImageChange })}
               />
             </div>
 
             <div className="flex mx-auto">
-              <input ref={quotationInputRef} type="text" placeholder={"Enter quotation to display"} className="input input-bordered w-full max-w-xs" />
+              <input
+                type="text"
+                placeholder={"Enter quotation to display"}
+                className="input input-bordered w-full max-w-xs"
+                {...register("quotationInput")}
+              />
             </div>
           </div>
           <div className="modal-action flex">
             <form>
-              <button onClick={handleSave} className="btn btn-neutral">Save</button>
+              <button onClick={handleSubmit(onSubmit)} className="btn btn-neutral" disabled={isLoading}>Save</button>
             </form>
             <form method="dialog">
               <button className="btn">Close</button>

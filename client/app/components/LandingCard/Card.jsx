@@ -6,13 +6,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // App imports
 import AnimationOnHover from "../../animations/AnimationOnHover"
-import { useUserStateContext } from "@/app/context";
+import { useAuthStateContext } from "@/app/context";
+import { useEffect } from "react";
 
 export default function Card(props) {
-  const user = useUserStateContext()
+  const authState = useAuthStateContext()
 
   function handleClick() {
-    if (user) { document.getElementById(`${props.modalID}`).showModal() }
+    if (authState.isAdmin) { document.getElementById(`${props.modalID}`).showModal() }
   }
 
   return (
@@ -20,7 +21,7 @@ export default function Card(props) {
       <div className={"relative " + props.additionalClasses} onClick={handleClick}>
         <div className="prose absolute flex items-center justify-center w-full h-full p-10">
           <h4 className="text-center font-bold">{props.quotation}</h4>
-          {(user && props.quotation) && <>
+          {(authState.isAdmin && props.quotation) && <>
             <FontAwesomeIcon
               icon={faPencil}
               className="absolute top-1/3 text-primary"
@@ -32,12 +33,12 @@ export default function Card(props) {
           initial={{ opacity: 1 }}
           animate={{ opacity: 0.10 }}
         >
-          <div className={"relative " + (user ? ' cursor-pointer' : '')}>
+          <div className={"relative " + (authState.isAdmin ? ' cursor-pointer' : '')}>
             <div className="absolute w-full h-full rounded-xl rounded-tr-none rounded-bl-none"></div>
             <img
               width={props.width}
               height={props.height}
-              src={`${props.src}?${performance.now()}`}
+              src={`${props.src}`}
               onLoad={props.onLoad}
               style={{ width: `${props.width}px`, height: `${props.height}px` }}
               alt="" className={'rounded-xl object-cover rounded-tr-none rounded-bl-none shadow-lg'}

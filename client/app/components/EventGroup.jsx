@@ -7,7 +7,6 @@ import Image from 'next/image';
 import AnimationSlideOnShow from '../animations/AnimationSlideOnShow';
 
 export default function EventGroup(props) {
-  const imageSrc = `${props.imageSrc}?${performance.now()}`
   return (
     <>
       <AnimationSlideOnShow isRightAligned={props.isRightAligned}>
@@ -17,7 +16,13 @@ export default function EventGroup(props) {
             <p className='sm:text-sm lg:text-base'>{props.description}</p>
           </div>
           <div className={'order-1 ' + (props.isRightAligned ? "sm:order-2" : "")}>
-            <Image height={300} width={800} src={props.imageSrc} className={'h-[300px] w-[1000px] object-cover rounded-none ' + (props.isRightAligned ? "sm:rounded-tl-xl" : "sm:rounded-tr-xl")} alt="" />
+            <Image
+              height={300}
+              width={800}
+              src={props.imageSrc}
+              className={'h-[300px] w-[1000px] object-cover rounded-none ' + (props.isRightAligned ? "sm:rounded-tl-xl" : "sm:rounded-tr-xl")}
+              alt=""
+            />
           </div>
         </div>
       </AnimationSlideOnShow>

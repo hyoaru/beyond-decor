@@ -1,0 +1,50 @@
+[
+  {
+    "id": 0,
+    "quotation": "Artistry in Atmosphere",
+    "image_file": "1.jpg",
+    "image_path": "landing-cards/1.jpg",
+    "position": 0,
+    "isLocal": true
+  },
+  {
+    "id": 1,
+    "quotation": "Beauty in Every Detail",
+    "image_file": "2.jpg",
+    "image_path": "landing-cards/2.jpg",
+    "position": 1,
+    "isLocal": true
+  },
+  {
+    "id": 2,
+    "quotation": "Dreams Designed Delightfully",
+    "image_file": "3.jpg",
+    "image_path": "landing-cards/3.jpg",
+    "position": 2,
+    "isLocal": true
+  },
+  {
+    "id": 3,
+    "quotation": "Elegance Redefined Anew",
+    "image_file": "4.jpg",
+    "image_path": "landing-cards/4.jpg",
+    "position": 3,
+    "isLocal": true
+  },
+  {
+    "id": 4,
+    "quotation": "Crafted with Creativity",
+    "image_file": "5.jpg",
+    "image_path": "landing-cards/5.jpg",
+    "position": 4,
+    "isLocal": true
+  },
+  {
+    "id": 5,
+    "quotation": "Memories, Magic, Moments",
+    "image_file": "6.jpg",
+    "image_path": "landing-cards/6.jpg",
+    "position": 5,
+    "isLocal": true
+  }
+]

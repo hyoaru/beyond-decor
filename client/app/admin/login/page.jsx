@@ -1,58 +1,59 @@
 "use client";
+
 import React, { useEffect, useRef, useState } from 'react'
+import { useForm } from 'react-hook-form';
 
 // App imports
-import { useSupabaseContext } from '@/app/context';
+import { useAdminLogin } from '@/app/hooks/authentication';
 
 export default function page() {
+  const { register, handleSubmit, reset, resetField } = useForm()
+  const { adminLogin, isLoggedIn, isLoading, error } = useAdminLogin()
 
-
-  let supabase = useSupabaseContext()
-  const formData = useRef({})
-
-  function handleChange(event) {
-    formData.current.value = {
-      ...formData.current.value, [event.target.name]: event.target.value
+  useEffect(() => {
+    if (isLoggedIn) {
+      window.location.href="/admin"
     }
-  }
+  }, [isLoggedIn])
 
-  async function handleSubmit(event) {
-    event.preventDefault()
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: formData.current.value.email,
-        password: formData.current.value.password,
-      })
-      window.location.href = "/admin"
-    } catch (error) {
-      console.log(error)
-    }
+  async function onSubmit(data) {
+    await adminLogin({ email: data.email, password: data.password })
   }
 
   return (
     <>
       <div className="mx-6 my-16">
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="prose max-w-none">
             <h1 className='text-center'>Admin Login</h1>
           </div>
           <div className="flex flex-col mt-6 gap-y-4">
-            <input
-              type="email"
-              name='email'
-              placeholder="Email"
-              className="mx-auto input input-bordered w-full max-w-xs"
-              onChange={handleChange}
-            />
-            <input
-              type="password"
-              name='password'
-              placeholder="Password"
-              className="mx-auto input input-bordered w-full max-w-xs"
-              onChange={handleChange}
-            />
+
+            {isLoading ? <>
+              <span className="loading loading-ring loading-lg flex mx-auto"></span>
+            </> : <>
+              <input
+                type="email"
+                name='email'
+                placeholder="Email"
+                className="mx-auto input input-bordered w-full max-w-xs"
+                {...register('email')}
+              />
+              <input
+                type="password"
+                name='password'
+                placeholder="Password"
+                className="mx-auto input input-bordered w-full max-w-xs"
+                {...register('password')}
+              />
+            </>}
+
+            {error && <>
+              <small className='text-error-content text-center'>{error.message}</small>
+            </>}
+
             <div className='mx-auto'>
-              <input type="submit" value="Submit" className='btn' onClick={handleSubmit} />
+              <input type="submit" value="Submit" className='btn' disabled={isLoading} />
             </div>
           </div>
         </form>

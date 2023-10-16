@@ -1,0 +1,38 @@
+[
+  {
+    "id": 0,
+    "title": "Basic Package",
+    "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus, asperiores.",
+    "image_file": "1.jpg",
+    "image_path": "package-cards/1.jpg",
+    "position": 0,
+    "isLocal": true
+  },
+  {
+    "id": 1,
+    "title": "Themed Package",
+    "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus, asperiores.",
+    "image_file": "2.jpg",
+    "image_path": "package-cards/2.jpg",
+    "position": 1,
+    "isLocal": true
+  },
+  {
+    "id": 2,
+    "title": "Full Backdrop Package",
+    "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus, asperiores.",
+    "image_file": "3.jpg",
+    "image_path": "package-cards/3.jpg",
+    "position": 2,
+    "isLocal": true
+  },
+  {
+    "id": 3,
+    "title": "Full Venue Package",
+    "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus, asperiores.",
+    "image_file": "4.jpg",
+    "image_path": "package-cards/4.jpg",
+    "position": 3,
+    "isLocal": true
+  }
+]

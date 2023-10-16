@@ -3,52 +3,34 @@
 import React, { useRef, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
-
 // App imports
-import { useSupabaseContext } from '../context'
+import { usePocketbaseContext } from '../context'
+import { useForm } from 'react-hook-form'
+import { useCollectionRecordCreate } from '../hooks/backend'
 
 export default function AddPackageCardModal(props) {
-  const supabase = useSupabaseContext()
-  const folderName = 'package-cards'
+  const { register, handleSubmit, reset, resetField, getValues } = useForm()
+  const { collectionRecordCreate, isLoading, error } = useCollectionRecordCreate()
   const [imageUrl, setImageUrl] = useState()
-  const imageInputRef = useRef()
-  const titleInputRef = useRef()
-  const descriptionInputRef = useRef()
 
   function handleImageChange() {
-    setImageUrl(URL.createObjectURL(imageInputRef.current.files[0]))
-    console.log(imageInputRef.current.files[0])
+    setImageUrl(URL.createObjectURL(getValues("imageInput")[0]))
   }
 
-  async function handleSave(event) {
-    event.preventDefault()
-
-    const imageFile = imageInputRef.current.files[0]
-    const title = titleInputRef.current.value
-    const description = descriptionInputRef.current.value
+  async function onSubmit(data) {
+    const imageFile = data.imageInput[0]
+    const title = data.titleInput
+    const description = data.descriptionInput
 
     if (imageFile && title && description) {
-      const generatedFileName = `${uuidv4}-${imageFile.name}`
-
-      const { data, error } = await supabase
-        .storage
-        .from('medias')
-        .update(`${folderName}/${generatedFileName}`, imageFile, {
-          cacheControl: '3600',
-          upsert: false
-        })
-
-      if (data) {
-        const { error } = await supabase
-          .from('package_cards')
-          .insert({
-            image_path: `${folderName}/${generatedFileName}`,
-            title: title,
-            description: description
-          })
-      }
+      const formData = new FormData()
+      formData.append('image_file', imageFile)
+      formData.append('title', title)
+      formData.append('description', description)
+      formData.append('position', props.nextIndex)
+  
+      await collectionRecordCreate({ collectionName: "package_cards", formData: formData })
       window.location.href = "/"
-
     } else {
       alert('Fill up all fields to proceed.')
     }
@@ -70,30 +52,31 @@ export default function AddPackageCardModal(props) {
             />
             <div className="form-control w-full max-w-xs flex mx-auto my-3">
               <input
-                ref={imageInputRef}
                 type="file"
                 className="file-input file-input-md file-input-bordered w-full max-w-xs"
                 accept='.jpg, .jpeg, .png'
-                onChange={handleImageChange}
+                {...register("imageInput", {
+                  onChange: handleImageChange
+                })}
                 required
               />
             </div>
 
             <div className="flex mx-auto form-control w-full max-w-xs">
               <input
-                ref={titleInputRef}
                 type="text"
                 placeholder={"Enter title to display"}
                 className="input input-bordered w-full max-w-xs"
+                {...register("titleInput")}
                 required
               />
             </div>
 
             <div className="flex mx-auto mt-2 form-control w-full max-w-xs">
               <textarea
-                ref={descriptionInputRef}
                 className="textarea textarea-bordered w-full max-w-xs"
                 placeholder="Enter description to display"
+                {...register("descriptionInput")}
                 required
               >
               </textarea>
@@ -101,7 +84,7 @@ export default function AddPackageCardModal(props) {
           </div>
           <div className="modal-action flex">
             <form>
-              <button onClick={handleSave} className="btn btn-neutral">Save</button>
+              <button onClick={handleSubmit(onSubmit)} className="btn btn-neutral">Save</button>
             </form>
             <form method="dialog">
               <button className="btn">Close</button>

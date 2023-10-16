@@ -1,2 +1,2 @@
-import { SupabaseContextProvider, useSupabaseContext, UserStateContextProvider, useUserStateContext } from "./Supabase";
-export {SupabaseContextProvider, useSupabaseContext, UserStateContextProvider, useUserStateContext}
+import { PocketbaseContextProvider, AuthStateContextProvider, usePocketbaseContext, useAuthStateContext } from "./Pocketbase";
+export { PocketbaseContextProvider, AuthStateContextProvider, usePocketbaseContext, useAuthStateContext }
