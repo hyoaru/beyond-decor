@@ -2,7 +2,7 @@ import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // App imports
-import AnimationOnHover from "../../../animations/index/AnimationOnHover"
+import AnimationOnHover from "../../../animations/shared/AnimationOnHover"
 
 export default function BaseCard(props) {
   const { imgWidth, imgHeight, imgSrc, imgOnLoad, quotation, modalIdToTrigger, isAdmin, onClick } = props;
