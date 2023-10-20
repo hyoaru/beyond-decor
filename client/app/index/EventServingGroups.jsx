@@ -6,6 +6,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import EventServingGroup from '../components/index/EventServingGroup'
 import useGetResources from '../hooks/index/useGetResources';
 import defaultEventServingGroups from '@/public/events_serving.json'
+import EventServingGroupUpdateModal from '../components/index/EventServingGroupUpdateModal';
 
 export default function EventServingGroups(props) {
   const { isAdmin } = props
@@ -35,9 +36,23 @@ export default function EventServingGroups(props) {
               title={group.title}
               description={group.description}
               isRightAligned={index % 2 === 0}
+              isAdmin={isAdmin}
+              modalIdToTrigger={`EventServingGroupUpdateModal-${group.id}`}
             />)
         })}
       </div>
+
+      {(isAdmin && eventServingGroups) && eventServingGroups.map((group, index) => {
+        return (
+          <EventServingGroupUpdateModal 
+            groupId={group.id}
+            groupImgSrc={group.image_path}
+            groupPosition={group.position}
+            modalId={`EventServingGroupUpdateModal-${group.id}`}
+            setState={setState}
+          />
+        )
+      })}
     </>
   )
 }

@@ -80,7 +80,7 @@ export default function Home() {
 
       {/* Events serving section */}
       <div className="mt-32 lg:mt-48">
-        <EventServingGroups />
+        <EventServingGroups isAdmin={authState.isAdmin} />
       </div>
 
 
