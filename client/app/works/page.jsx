@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react'
 import Albums from './WorkAlbums'
 
@@ -19,7 +21,12 @@ export default function page() {
         </div>
 
         <div className="text-center my-10">
-          <span href="" className="text-primary font-mono opacity-40 text-sm cursor-pointer">{"[ add album ]"}</span>
+          <span
+            className="text-primary font-mono opacity-40 text-sm cursor-pointer"
+            onClick={() => { document.getElementById('WorkAlbumAddModal').showModal() }}
+          >
+            {"[ add album ]"}
+          </span>
         </div>
 
         <Albums />

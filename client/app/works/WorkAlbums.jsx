@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import useGetWorkAlbums from "../hooks/works/useGetWorkAlbums";
 import WorkAlbum from "../components/works/WorkAlbum";
+import WorkAlbumAddModal from "../components/works/WorkAlbumAddModal";
 import dayjs from "dayjs";
 
 export default function WorkAlbums(props) {
@@ -39,6 +40,7 @@ export default function WorkAlbums(props) {
         })}
       </div>
 
+      <WorkAlbumAddModal nextIndex={workAlbums.length} setState={setState} />
     </>
   )
 }
