@@ -39,7 +39,7 @@ export default function page({ params }) {
 
         <div className="columns-1 gap-6 md:columns-2">
             {imagePaths && imagePaths.map((imagePath) => (
-              <img src={imagePath} className='rounded-xl rounded-tr-none rounded-bl-none my-6 shadow-xl' alt="" />
+              <img src={imagePath} className='rounded-xl w-full rounded-tr-none rounded-bl-none my-6 shadow-xl' alt="" />
             ))}
         </div>
       </div>
