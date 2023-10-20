@@ -1,5 +1,5 @@
 import React from 'react'
-import Albums from './Albums'
+import Albums from './WorkAlbums'
 
 export default function page() {
   return (

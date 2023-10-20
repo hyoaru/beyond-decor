@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import useGetWorkAlbums from "../hooks/works/useGetWorkAlbums";
-import Album from "../components/works/Album";
+import WorkAlbum from "../components/works/WorkAlbum";
 import dayjs from "dayjs";
 
-export default function Albums(props) {
+export default function WorkAlbums(props) {
   const { isAdmin } = props
   const [_, setState] = useState()
   const { fetchWorkAlbums, workAlbums, isLoading, error } = useGetWorkAlbums({ defaultValue: [] })
@@ -27,7 +27,7 @@ export default function Albums(props) {
           const eventDate = album.event_date
           const formattedEventDate = dayjs(eventDate).format("MMMM YYYY")
           return (
-            <Album
+            <WorkAlbum
               key={`WorkAlbum-${album.id}`}
               albumId={album.id}
               imgSrc={album.thumbnail_path}

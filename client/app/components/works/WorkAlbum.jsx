@@ -3,7 +3,7 @@
 import AnimationOnHover from "@/app/animations/shared/AnimationOnHover"
 import { useRouter } from "next/navigation"
 
-export default function Album(props) {
+export default function WorkAlbum(props) {
   const { albumId, imgSrc, eventName, eventPlace, eventDate, isAdmin } = props
   const router = useRouter()
   const baseClass = "rounded-xl rounded-tr-none rounded-bl-none"
