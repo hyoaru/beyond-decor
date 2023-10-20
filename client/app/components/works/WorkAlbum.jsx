@@ -15,7 +15,7 @@ export default function WorkAlbum(props) {
 
   return (
     <>
-      <div className={`${baseClass} relative cursor-pointer`} onClick={onClick}>
+      <div className={`${baseClass} relative cursor-pointer shadow-xl`} onClick={onClick}>
         <div className={`absolute flex w-full h-full`}>
           <div className={`${baseClass} prose relative text-center my-auto mx-auto flex flex-col w-[90%] h-[90%] p-10 border border-primary`}>
             <small className=" uppercase font-bold text-primary">{eventDate}</small>

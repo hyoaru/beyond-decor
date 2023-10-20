@@ -22,12 +22,12 @@ export default function EventServingGroup(props) {
             </div>
             <p className='mt-3 sm:text-sm lg:text-base'>{description}</p>
           </div>
-          <div className={'order-1 ' + (isRightAligned ? "sm:order-2" : "")}>
+          <div className={'order-1 shadow-xl ' + (isRightAligned ? "sm:order-2" : "")}>
             <img
               height={300}
               width={800}
               src={imgSrc}
-              className={'h-[300px] w-[1000px] object-cover rounded-none ' + (isRightAligned ? "sm:rounded-tl-xl" : "sm:rounded-tr-xl")}
+              className={'h-[300px] w-[1000px] object-cover rounded-none shadow-xl ' + (isRightAligned ? "sm:rounded-tl-xl" : "sm:rounded-tr-xl")}
               alt=""
             />
           </div>
