@@ -22,6 +22,7 @@ module.exports = {
         "--rounded-box": "12px 0px 12px 0px",
         "--rounded-btn": "12px 0px 12px 0px",
         "--rounded-card": "12px 0px 12px 0px",
+        "--rounded-modal": "12px 0px 12px 0px"
       }
     }],
     darkTheme: "dark",

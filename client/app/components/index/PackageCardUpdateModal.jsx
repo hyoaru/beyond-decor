@@ -2,42 +2,40 @@
 
 import React, { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useCollectionRecordUpdate } from '../hooks/backend'
-import { useAuthStateContext } from '../context'
 
-export default function PackageCardModal(props) {
-  const [imageUrl, setImageUrl] = useState(`${props.src}`)
+// App imports
+import { useCollectionRecordUpdate } from '../../hooks/shared/useCollectionRecordUpdate'
+
+export default function PackageCardUpdateModal(props) {
+  const { cardId, cardImgSrc, cardPosition, modalId, setState } = props
   const { register, handleSubmit, reset, resetField, getValues } = useForm()
-  const { collectionRecordUpdate, isLoading, error } = useCollectionRecordUpdate()
-  const authState = useAuthStateContext()
+  const { collectionRecordUpdate, isLoading, error } = useCollectionRecordUpdate({ collectionName: 'package_cards' })
+  const [imageUrl, setImageUrl] = useState(cardImgSrc)
 
-  function onImageChange() {
-    setImageUrl(URL.createObjectURL(getValues("imageInput")[0]))
-  }
+  function onImageChange() { setImageUrl(URL.createObjectURL(getValues("imageInput")[0])) }
 
   async function onSubmit(data) {
-    if (authState.isAdmin) {
-      const imageFile = data.imageInput[0]
-      const title = data.titleInput
-      const description = data.descriptionInput
-      const formData = new FormData()
+    const imageFile = data.imageInput[0]
+    const title = data.titleInput
+    const description = data.descriptionInput
 
-      if (imageFile) { formData.append('image_file', imageFile) }
-      if (title) { formData.append('title', title) }
-      if (description) { formData.append('description', description) }
-      formData.append('position', props.position)
+    const formData = new FormData()
+    if (imageFile) { formData.append('image_file', imageFile) }
+    if (title) { formData.append('title', title) }
+    if (description) { formData.append('description', description) }
+    formData.append('position', cardPosition)
 
-      await collectionRecordUpdate({ collectionName: "package_cards", recordId: props.cardId, formData: formData })
-    }
+    await collectionRecordUpdate({ recordId: cardId, formData: formData })
 
     resetField("titleInput")
     resetField("descriptionInput")
-    window.location.href = "/"
+    setState(performance.now())
+    document.getElementById(modalId).close()
   }
 
   return (
     <>
-      <dialog id={props.modalId} className="modal ">
+      <dialog id={modalId} className="modal ">
         <div className="modal-box w-11/12 max-w-sm">
           <h3 className="font-bold text-lg mt-4">Edit card contents</h3>
           <div className="my-4">
@@ -53,9 +51,7 @@ export default function PackageCardModal(props) {
                 type="file"
                 className="file-input file-input-md file-input-bordered w-full max-w-xs"
                 accept='.jpg, .jpeg, .png'
-                {...register("imageInput", {
-                  onChange: onImageChange
-                })}
+                {...register("imageInput", { onChange: onImageChange })}
               />
             </div>
 
@@ -79,7 +75,7 @@ export default function PackageCardModal(props) {
           </div>
           <div className="modal-action flex">
             <form>
-              <button onClick={handleSubmit(onSubmit)} className="btn btn-neutral">Save</button>
+              <button onClick={handleSubmit(onSubmit)} className="btn btn-neutral" disabled={isLoading}>Save</button>
             </form>
             <form method="dialog">
               <button className="btn">Close</button>

@@ -1,44 +1,37 @@
 "use client"
 
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 // App imports
-import { useAuthStateContext } from '../context'
-import { useCollectionRecordUpdate } from '../hooks/backend'
+import { useCollectionRecordUpdate } from '../../hooks/shared/useCollectionRecordUpdate'
 
-export default function LandingCardModal(props) {
-  const authState = useAuthStateContext()
+export default function LandingCardUpdateModal(props) {
+  const { cardId, cardPosition, cardImgSrc, modalId, setState } = props
   const { register, handleSubmit, getValues, reset, resetField } = useForm()
-  const { collectionRecordUpdate, isLoading, error } = useCollectionRecordUpdate()
-  const [imageUrl, setImageUrl] = useState(`${props.src}`)
+  const [imageUrl, setImageUrl] = useState(cardImgSrc)
+  const { collectionRecordUpdate, isLoading, error } = useCollectionRecordUpdate({ collectionName: 'landing_cards' })
 
-  function onImageChange() {
-    setImageUrl(URL.createObjectURL(getValues("imageInput")[0]))
-  }
+  function onImageChange() { setImageUrl(URL.createObjectURL(getValues("imageInput")[0])) }
 
   async function onSubmit(data) {
-    if (authState.isAdmin) {
-      const imageFile = data.imageInput[0]
-      const quotation = data.quotationInput
-      const recordId = props.id
-      const isRecordLocal = props.isLocal
-      const position = props.position
-      const formData = new FormData()
+    const imageFile = data.imageInput[0]
+    const quotation = data.quotationInput
 
-      if (imageFile) { formData.append('image_file', imageFile) }
-      if (quotation) { formData.append('quotation', quotation) }
-      formData.append('position', position)
-      await collectionRecordUpdate({ collectionName: "landing_cards", recordId: recordId, formData: formData })
-    }
+    const formData = new FormData()
+    if (imageFile) { formData.append('image_file', imageFile) }
+    if (quotation) { formData.append('quotation', quotation) }
+    formData.append('position', cardPosition)
 
+    await collectionRecordUpdate({ formData: formData, recordId: cardId })
     resetField('quotationInput')
-    window.location.href = "/"
+    setState(performance.now())
+    document.getElementById(modalId).close()
   }
 
   return (
     <>
-      <dialog id={props.modalID} className="modal">
+      <dialog id={modalId} className="modal">
         <div className="modal-box w-11/12 max-w-sm">
           <h3 className="font-bold text-lg">Edit card contents</h3>
           <div className="my-4">

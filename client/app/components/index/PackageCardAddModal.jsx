@@ -1,21 +1,18 @@
 "use client"
 
-import React, { useRef, useState } from 'react'
-import { v4 as uuidv4 } from 'uuid'
+import { useState } from 'react'
 
 // App imports
-import { usePocketbaseContext } from '../context'
 import { useForm } from 'react-hook-form'
-import { useCollectionRecordCreate } from '../hooks/backend'
+import { useCollectionRecordCreate } from '../../hooks/shared/useCollectionRecordCreate'
 
-export default function AddPackageCardModal(props) {
+export default function PackageCardAddModal(props) {
+  const { nextIndex, setState } = props
   const { register, handleSubmit, reset, resetField, getValues } = useForm()
-  const { collectionRecordCreate, isLoading, error } = useCollectionRecordCreate()
+  const { collectionRecordCreate, isLoading, error } = useCollectionRecordCreate({ collectionName: 'package_cards' })
   const [imageUrl, setImageUrl] = useState()
 
-  function handleImageChange() {
-    setImageUrl(URL.createObjectURL(getValues("imageInput")[0]))
-  }
+  function onImageChange() { setImageUrl(URL.createObjectURL(getValues("imageInput")[0])) }
 
   async function onSubmit(data) {
     const imageFile = data.imageInput[0]
@@ -27,10 +24,12 @@ export default function AddPackageCardModal(props) {
       formData.append('image_file', imageFile)
       formData.append('title', title)
       formData.append('description', description)
-      formData.append('position', props.nextIndex)
-  
-      await collectionRecordCreate({ collectionName: "package_cards", formData: formData })
-      window.location.href = "/"
+      formData.append('position', nextIndex)
+
+      await collectionRecordCreate({ formData: formData })
+      setState(performance.now())
+      document.getElementById('AddPackageCardModal').close()
+
     } else {
       alert('Fill up all fields to proceed.')
     }
@@ -55,9 +54,7 @@ export default function AddPackageCardModal(props) {
                 type="file"
                 className="file-input file-input-md file-input-bordered w-full max-w-xs"
                 accept='.jpg, .jpeg, .png'
-                {...register("imageInput", {
-                  onChange: handleImageChange
-                })}
+                {...register("imageInput", { onChange: onImageChange })}
                 required
               />
             </div>
@@ -84,7 +81,7 @@ export default function AddPackageCardModal(props) {
           </div>
           <div className="modal-action flex">
             <form>
-              <button onClick={handleSubmit(onSubmit)} className="btn btn-neutral">Save</button>
+              <button onClick={handleSubmit(onSubmit)} className="btn btn-neutral" disabled={isLoading}>Save</button>
             </form>
             <form method="dialog">
               <button className="btn">Close</button>
