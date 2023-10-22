@@ -32,7 +32,8 @@ export default function WorkAlbum(props) {
           animate={{ opacity: 0.10 }}
         >
           <img
-            className={`${baseClass} object-cover w-[${imgSizeInPx}px] h-[${imgSizeInPx}px]`}
+            className={`${baseClass} object-cover`}
+            style={{width: `${imgSizeInPx}px`, height: `${imgSizeInPx}px`}}
             height={imgSizeInPx}
             width={imgSizeInPx}
             src={imgSrc}
