@@ -1,22 +1,15 @@
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-// App imports
-import { useCollectionRecordDelete } from '@/app/hooks/shared/useCollectionRecordDelete'
-
 export default function PackageCard(props) {
-  const { imgSrc, title, description, isAdmin, modalIdToTrigger, recordId, setState } = props
-  const { collectionRecordDelete, isLoading, error } = useCollectionRecordDelete({ collectionName: 'package_cards' })
+  const { imgSrc, title, description, isAdmin, editModalIdToTrigger, deleteModalIdToTrigger, recordId, setState } = props
 
   function onEdit() {
-    if (isAdmin) { document.getElementById(modalIdToTrigger).showModal() }
+    if (isAdmin) { document.getElementById(editModalIdToTrigger).showModal() }
   }
-  async function onDelete() {
-    if (isAdmin) {
-      await collectionRecordDelete({ recordId: recordId })
-      setState(performance.now())
-      document.getElementById(modalIdToTrigger).close()
-    }
+
+  function onDelete() {
+    if (isAdmin) { document.getElementById(deleteModalIdToTrigger).showModal() }
   }
 
   return (

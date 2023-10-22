@@ -7,6 +7,7 @@ import PackageCard from '../components/index/PackageCard';
 import PackageCardUpdateModal from '../components/index/PackageCardUpdateModal';
 import PackageCardAddModal from '../components/index/PackageCardAddModal';
 import useGetResources from '../hooks/index/useGetResources';
+import PackageCardDeleteModal from '../components/index/PackageCardDeleteModal';
 
 export default function PackageCards(props) {
   const { isAdmin } = props
@@ -29,8 +30,6 @@ export default function PackageCards(props) {
     <>
       <div className="px-6 flex flex-wrap gap-6 gap-y-10 justify-center">
         {packageCards && packageCards.map((card, index) => {
-          const modalIdToTrigger = `PackageCardModal-${card.id}`
-          const recordId = card.id
           return (
             <PackageCard
               key={`PackageCard-${index}`}
@@ -38,8 +37,9 @@ export default function PackageCards(props) {
               title={card.title}
               description={card.description}
               isAdmin={isAdmin}
-              modalIdToTrigger={modalIdToTrigger}
-              recordId={recordId}
+              editModalIdToTrigger={`PackageCardEditModal-${card.id}`}
+              deleteModalIdToTrigger={`PackageCardDeleteModal-${card.id}`}
+              recordId={card.id}
               setState={setState}
             />
           );
@@ -47,14 +47,25 @@ export default function PackageCards(props) {
       </div>
 
       {(isAdmin && packageCards) && packageCards.map((card, index) => (
-        <PackageCardUpdateModal
-          key={`PackageCardModalKey-${card.id}`}
-          cardImgSrc={card.image_path}
-          cardPosition={card.position}
-          cardId={card.id}
-          modalId={`PackageCardModal-${card.id}`}
-          setState={setState}
-        />
+        <div key={`PackageCardModifyModals-${index}`}>
+          <PackageCardUpdateModal
+            cardImgSrc={card.image_path}
+            cardPosition={card.position}
+            cardId={card.id}
+            modalId={`PackageCardModal-${card.id}`}
+            setState={setState}
+          />
+
+          <PackageCardDeleteModal
+            cardImgSrc={card.image_path}
+            cardPosition={card.position}
+            cardId={card.id}
+            modalId={`PackageCardDeleteModal-${card.id}`}
+            cardTitle={card.title}
+            cardDescription={card.description}
+            setState={setState}
+          />
+        </div>
       ))}
 
       {isAdmin && <PackageCardAddModal nextIndex={packageCards.length} setState={setState} />}
