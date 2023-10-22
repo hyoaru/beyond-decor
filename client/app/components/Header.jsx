@@ -33,7 +33,6 @@ export default function Header() {
               <li><Link href="/">Home</Link></li>
               <li><Link href="/works">Works</Link></li>
               <li><Link href="/packages">Packages</Link></li>
-              <li><Link href="/snap">Snap</Link></li>
               <li><Link href="/about">About</Link></li>
             </ul>
           </div>
@@ -43,7 +42,6 @@ export default function Header() {
               <li><Link href="/">Home</Link></li>
               <li><Link href="/works">Works</Link></li>
               <li><Link href="/packages">Packages</Link></li>
-              <li><Link href="/snap">Snap</Link></li>
               <li><Link href="/about">About</Link></li>
             </ul>
           </div>
