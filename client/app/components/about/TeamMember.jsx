@@ -11,7 +11,7 @@ export default function TeamMember(props) {
 
   return (
     <>
-      <div className={`${baseClass} border px-10 pb-7 w-[400x] flex flex-col items-center ${isAdmin ? "pt-4" : "pt-10"}`}>
+      <div className={`${baseClass} border px-8 pb-6 w-[400x] flex flex-col items-center ${isAdmin ? "pt-4" : "pt-8"}`}>
         {isAdmin && <>
           <div className="dropdown flex dropdown-bottom dropdown-end self-end opacity-90">
             <label tabIndex={0} className='ms-auto'>
