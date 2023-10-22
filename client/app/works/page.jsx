@@ -2,8 +2,11 @@
 
 import React from 'react'
 import Albums from './WorkAlbums'
+import { useAuthStateContext } from '../context';
 
 export default function page() {
+  const authState = useAuthStateContext()
+
   return (
     <>
       <div className="mx-6 my-20">
@@ -20,14 +23,16 @@ export default function page() {
           </div>
         </div>
 
-        <div className="text-center my-10">
-          <span
-            className="text-primary font-mono opacity-40 text-sm cursor-pointer"
-            onClick={() => { document.getElementById('WorkAlbumAddModal').showModal() }}
-          >
-            {"[ add album ]"}
-          </span>
-        </div>
+        {authState.isAdmin && <>
+          <div className="text-center my-10">
+            <span
+              className="text-primary font-mono opacity-40 text-sm cursor-pointer"
+              onClick={() => { document.getElementById('WorkAlbumAddModal').showModal() }}
+            >
+              {"[ add album ]"}
+            </span>
+          </div>
+        </>}
 
         <Albums />
       </div>
