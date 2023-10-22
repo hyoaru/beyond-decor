@@ -44,7 +44,8 @@ export default function EventServingGroups(props) {
 
       {(isAdmin && eventServingGroups) && eventServingGroups.map((group, index) => {
         return (
-          <EventServingGroupUpdateModal 
+          <EventServingGroupUpdateModal
+            key={`EventServingGroupUpdateModal-${group.id}`}
             groupId={group.id}
             groupImgSrc={group.image_path}
             groupPosition={group.position}
