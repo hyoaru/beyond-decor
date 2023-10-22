@@ -1,9 +1,14 @@
+"use client";
+
 import React from 'react'
 
 // App imports
 import TeamMembers from './TeamMembers'
+import { useAuthStateContext } from '../context'
 
 export default function page() {
+  const authState = useAuthStateContext()
+
   return (
     <>
       <div className="mx-6 my-20">
@@ -17,7 +22,18 @@ export default function page() {
           </p>
         </div>
 
-        <TeamMembers />
+        {authState.isAdmin && <>
+          <div className="text-center my-10">
+            <span
+              className="text-primary font-mono opacity-40 text-sm cursor-pointer"
+              onClick={() => { document.getElementById('TeamMemberAddModal').showModal() }}
+            >
+              {"[ add member ]"}
+            </span>
+          </div>
+        </>}
+
+        <TeamMembers isAdmin={authState.isAdmin} />
       </div>
     </>
   )

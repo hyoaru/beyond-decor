@@ -5,8 +5,10 @@ import React, { useEffect, useState } from 'react'
 // App imports
 import TeamMember from '../components/about/TeamMember'
 import useGetTeamMembers from '../hooks/about/useGetTeamMembers'
+import TeamMemberAddModal from '../components/about/TeamMemberAddModal';
 
-export default function TeamMembers() {
+export default function TeamMembers(props) {
+  const { isAdmin } = props
   const { fetchTeamMembers, teamMembers, isLoading, error } = useGetTeamMembers({ collectionName: "team_members" })
   const [_, setState] = useState()
 
@@ -32,6 +34,10 @@ export default function TeamMembers() {
             />
           )
         })}
+
+        {isAdmin && <>
+          <TeamMemberAddModal setState={setState} />
+        </>}
       </div>
     </>
   )
