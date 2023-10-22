@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import { usePocketbaseContext, useAuthStateContext } from "../context"
-import { faUser } from "@fortawesome/free-regular-svg-icons"
+import { faBagShopping, faUser } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useRouter } from "next/navigation"
 import { useLogout } from "../hooks/authentication"
@@ -18,7 +18,7 @@ export default function Header() {
 
   function handleLogout(event) {
     logout()
-    window.location.href="/admin/login"
+    window.location.href = "/admin/login"
   }
 
   return (
@@ -52,18 +52,29 @@ export default function Header() {
           <Link href="/" className="pointer-events-auto normal-case text-xl font-bold">Beyond Decor</Link>
         </div>
         <div className="navbar-end">
-          <button className="btn btn-ghost btn-circle">
-            <div className="indicator">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
-              <span className="badge badge-xs badge-primary indicator-item"></span>
+          <div className="dropdown dropdown-end">
+            <label tabIndex={0} className="btn btn-ghost">
+              <div className="indicator">
+                <FontAwesomeIcon icon={faBagShopping} size="lg" />
+                <span className="badge badge-xs badge-primary indicator-item"></span>
+              </div>
+            </label>
+            <div tabIndex={0} className="dropdown-content z-[1] card card-compact p-2 w-80 border bg-base-100 border-primary">
+              <div className="card-body">
+                <h3 className="uppercase text-center text-lg font-bold opacity-80">Your bag</h3>
+                <div className="border border-dashed"></div>
+              </div>
+              <div className="card-actions mb-4">
+                <button className="btn btn-primary btn-sm mx-auto">Get a quote</button>
+              </div>
             </div>
-          </button>
+          </div>
           {(authState?.isValid) && <>
             <div className="dropdown dropdown-end">
               <label tabIndex="0" className="btn btn-ghost btn-circle">
                 <FontAwesomeIcon icon={faUser} size="lg" />
               </label>
-              <ul tabIndex="0" className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+              <ul tabIndex="0" className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 border border-primary">
                 <li><Link href={"/admin"}>Admin</Link></li>
                 <li><input type="submit" onClick={handleLogout} value={"Logout"} /></li>
               </ul>
