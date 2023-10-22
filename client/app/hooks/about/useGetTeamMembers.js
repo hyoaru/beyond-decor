@@ -16,7 +16,7 @@ export default function useGetTeamMembers({ collectionName, defaultValue = [] })
     try {
       const fetchedTeamMembers = await pocketbase
         .collection(collectionName)
-        .getFullList({ sort: 'updated', });
+        .getFullList({ sort: 'created', });
 
       setTeamMembers(
         processTeamMembers({
