@@ -1,15 +1,27 @@
 "use client"
 
-import useGetWorkAlbum from '@/app/hooks/works/useGetWorkAlbum'
-import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
+import { faEllipsis } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import dayjs from 'dayjs'
+import { v4 as uuidv4 } from 'uuid'
+
+// App imports
+import useGetWorkAlbum from '@/app/hooks/works/useGetWorkAlbum'
+import { useAuthStateContext } from '@/app/context'
+import WorkAlbumUpdateModal from '@/app/components/works/WorkAlbumUpdateModal'
 
 export default function page({ params }) {
   const { fetchWorkAlbum, workAlbum, isLoading, error } = useGetWorkAlbum({ recordId: params.id })
-  const { event_name: eventName, event_place: eventPlace, event_date: eventDate } = workAlbum
+  const { id: recordId, event_name: eventName, event_place: eventPlace, event_date: eventDate } = workAlbum
   const { client_name: clientName, thumbnail_path: thumbnailPath, image_paths: imagePaths } = workAlbum
   const formattedEventDate = dayjs(eventDate).format("MMMM DD, YYYY")
+  const authState = useAuthStateContext()
   const [_, setState] = useState()
+
+  function onEdit() {
+    document.getElementById(`WorkAlbumUpdateModal-${recordId}`).showModal()
+  }
 
   useEffect(() => {
     async function fetchResource() {
@@ -18,8 +30,6 @@ export default function page({ params }) {
 
     fetchResource()
   }, [_])
-
-  console.log(eventName)
 
   return (
     <>
@@ -31,6 +41,21 @@ export default function page({ params }) {
             </h1>
           </div>
           <div className="text-center md:justify-self-start md:text-left lg:w-10/12 xl:w-8/12">
+            {authState.isAdmin && <>
+              <div className="dropdown dropdown-top">
+                <label tabIndex={0} className=''>
+                  <FontAwesomeIcon
+                    icon={faEllipsis}
+                    size='sm'
+                    className='text-primary cursor-pointer'
+                  />
+                </label>
+                <ul tabIndex={0} className="dropdown-content text-xs z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                  <li><a onClick={onEdit}>Edit</a></li>
+                  <li><a>Delete</a></li>
+                </ul>
+              </div>
+            </>}
             <p className='font-bold'>{eventPlace}</p>
             <p>{formattedEventDate}</p>
             <p>{clientName}</p>
@@ -38,11 +63,17 @@ export default function page({ params }) {
         </div>
 
         <div className="columns-1 gap-6 md:columns-2">
-            {imagePaths && imagePaths.map((imagePath) => (
-              <img src={imagePath} className='rounded-xl w-full rounded-tr-none rounded-bl-none my-6 shadow-xl' alt="" />
-            ))}
+          {imagePaths && imagePaths.map((imagePath) => (
+            <img
+              key={`WorkAlbumImage-${uuidv4()}`}
+              src={imagePath}
+              className='rounded-xl w-full rounded-tr-none rounded-bl-none my-6 shadow-xl'
+            />
+          ))}
         </div>
       </div>
+      
+      {workAlbum?.thumbnail_path && <WorkAlbumUpdateModal recordId={recordId} setState={setState} thumbnailSrc={thumbnailPath} />}
     </>
   )
 }
