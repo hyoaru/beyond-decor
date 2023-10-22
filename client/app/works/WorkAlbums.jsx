@@ -23,7 +23,7 @@ export default function WorkAlbums(props) {
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-8 justify-items-center sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-8 justify-items-center sm:grid-cols-2 lg:grid-cols-3 mt-20">
         {workAlbums && workAlbums.map((album, index) => {
           const eventDate = album.event_date
           const formattedEventDate = dayjs(eventDate).format("MMMM YYYY")

@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react'
-import Albums from './WorkAlbums'
+import WorkAlbums from './WorkAlbums'
 import { useAuthStateContext } from '../context';
 
 export default function page() {
@@ -34,7 +34,7 @@ export default function page() {
           </div>
         </>}
 
-        <Albums />
+        <WorkAlbums />
       </div>
 
     </>
