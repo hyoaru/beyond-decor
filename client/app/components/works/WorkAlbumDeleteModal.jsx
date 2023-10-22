@@ -27,7 +27,7 @@ export default function WorkAlbumDeleteModal(props) {
               alt="" className={'rounded-xl object-cover flex mx-auto'}
             />
           </div>
-          <div className="prose max-w-none text-center">
+          <div className="prose max-w-none text-center my-6">
             <h2>{eventName}</h2>
           </div>
 
