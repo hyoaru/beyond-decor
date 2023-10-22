@@ -7,6 +7,7 @@ import TeamMember from '../components/about/TeamMember'
 import useGetTeamMembers from '../hooks/about/useGetTeamMembers'
 import TeamMemberAddModal from '../components/about/TeamMemberAddModal';
 import TeamMemberEditModal from '../components/about/TeamMemberEditModal';
+import TeamMemberDeleteModal from '../components/about/TeamMemberDeleteModal';
 
 export default function TeamMembers(props) {
   const { isAdmin } = props
@@ -54,6 +55,14 @@ export default function TeamMembers(props) {
               imgSrc={teamMember.image_path}
               setState={setState}
               modalId={`TeamMemberEditModal-${teamMember.id}`}
+            />
+
+            <TeamMemberDeleteModal
+              recordId={teamMember.id}
+              imgSrc={teamMember.image_path}
+              setState={setState}
+              modalId={`TeamMemberDeleteModal-${teamMember.id}`}
+              memberName={teamMember.name}
             />
           </div>
         )
