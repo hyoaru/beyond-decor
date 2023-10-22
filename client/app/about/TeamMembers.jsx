@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react'
 import TeamMember from '../components/about/TeamMember'
 import useGetTeamMembers from '../hooks/about/useGetTeamMembers'
 import TeamMemberAddModal from '../components/about/TeamMemberAddModal';
+import TeamMemberEditModal from '../components/about/TeamMemberEditModal';
 
 export default function TeamMembers(props) {
   const { isAdmin } = props
@@ -20,6 +21,8 @@ export default function TeamMembers(props) {
     fetchResources()
   }, [_])
 
+  console.log(teamMembers)
+
   return (
     <>
       <div className="flex flex-wrap gap-4 justify-center mt-10 lg:gap-8">
@@ -31,14 +34,30 @@ export default function TeamMembers(props) {
               memberId={teamMember.id}
               name={teamMember.name}
               role={teamMember.role}
+              isAdmin={isAdmin}
+              editModalIdToTrigger={`TeamMemberEditModal-${teamMember.id}`}
+              deleteModalIdToTrigger={`TeamMemberDeleteModal-${teamMember.id}`}
             />
           )
         })}
-
-        {isAdmin && <>
-          <TeamMemberAddModal setState={setState} />
-        </>}
       </div>
+
+      {isAdmin && <>
+        <TeamMemberAddModal setState={setState} />
+      </>}
+
+      {teamMembers && teamMembers.map((teamMember) => {
+        return (
+          <div id={`TeamMemberModifyModal-${teamMember.id}`}>
+            <TeamMemberEditModal
+              recordId={teamMember.id}
+              imgSrc={teamMember.image_path}
+              setState={setState}
+              modalId={`TeamMemberEditModal-${teamMember.id}`}
+            />
+          </div>
+        )
+      })}
     </>
   )
 }
