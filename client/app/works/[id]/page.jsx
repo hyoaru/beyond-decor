@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid'
 import useGetWorkAlbum from '@/app/hooks/works/useGetWorkAlbum'
 import { useAuthStateContext } from '@/app/context'
 import WorkAlbumUpdateModal from '@/app/components/works/WorkAlbumUpdateModal'
+import WorkAlbumDeleteModal from '@/app/components/works/WorkAlbumDeleteModal'
 
 export default function page({ params }) {
   const { fetchWorkAlbum, workAlbum, isLoading, error } = useGetWorkAlbum({ recordId: params.id })
@@ -20,7 +21,15 @@ export default function page({ params }) {
   const [_, setState] = useState()
 
   function onEdit() {
-    document.getElementById(`WorkAlbumUpdateModal-${recordId}`).showModal()
+    if (authState.isAdmin) {
+      document.getElementById(`WorkAlbumUpdateModal-${recordId}`).showModal()
+    }
+  }
+
+  async function onDelete() {
+    if (authState.isAdmin) {
+      document.getElementById(`WorkAlbumDeleteModal-${recordId}`).showModal()
+    }
   }
 
   useEffect(() => {
@@ -52,7 +61,7 @@ export default function page({ params }) {
                 </label>
                 <ul tabIndex={0} className="dropdown-content text-xs z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                   <li><a onClick={onEdit}>Edit</a></li>
-                  <li><a>Delete</a></li>
+                  <li><a onClick={onDelete}>Delete</a></li>
                 </ul>
               </div>
             </>}
@@ -72,8 +81,21 @@ export default function page({ params }) {
           ))}
         </div>
       </div>
-      
-      {workAlbum?.thumbnail_path && <WorkAlbumUpdateModal recordId={recordId} setState={setState} thumbnailSrc={thumbnailPath} />}
+
+      {(authState.isAdmin && workAlbum?.thumbnail_path) && <>
+        <WorkAlbumUpdateModal
+          recordId={recordId}
+          setState={setState}
+          thumbnailSrc={thumbnailPath}
+        />
+
+        <WorkAlbumDeleteModal
+          recordId={recordId}
+          setState={setState}
+          thumbnailSrc={thumbnailPath}
+          eventName={eventName}
+        />
+      </>}
     </>
   )
 }
