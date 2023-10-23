@@ -11,7 +11,7 @@ export default function LandingCardUpdateModal(props) {
   const { id: cardId, image_path: cardImgSrc } = landingCard
   const [imageUrl, setImageUrl] = useState(cardImgSrc)
   const { collectionRecordUpdate, isLoading, error } = useCollectionRecordUpdate({ collectionName: 'landing_cards' })
-  const { register, handleSubmit, getValues, reset, resetField } = useForm({
+  const { register, handleSubmit, getValues, reset, resetField, setValue } = useForm({
     defaultValues: { quotationInput: landingCard.quotation }
   })
 
@@ -24,10 +24,9 @@ export default function LandingCardUpdateModal(props) {
     const formData = new FormData()
     if (imageFile) { formData.append('image_file', imageFile) }
     if (quotation) { formData.append('quotation', quotation) }
-    formData.append('position', cardPosition)
 
     await collectionRecordUpdate({ formData: formData, recordId: cardId })
-    resetField('quotationInput')
+    setValue('quotationInput', quotation)
     setState(performance.now())
     document.getElementById(modalId).close()
   }
