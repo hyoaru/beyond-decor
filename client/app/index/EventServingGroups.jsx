@@ -46,9 +46,7 @@ export default function EventServingGroups(props) {
         return (
           <EventServingGroupUpdateModal
             key={`EventServingGroupUpdateModal-${group.id}`}
-            groupId={group.id}
-            groupImgSrc={group.image_path}
-            groupPosition={group.position}
+            eventServingGroup={group}
             modalId={`EventServingGroupUpdateModal-${group.id}`}
             setState={setState}
           />
