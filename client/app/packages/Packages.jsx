@@ -1,42 +1,30 @@
-"use client"
+"use client";
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react";
 
 // App imports
-import PackageTab from "../components/packages/PackageTab"
-import ActivePackage from "../components/packages/ActivePackage"
+import useGetPackages from "../hooks/packages/useGetPackages";
+import defaultPackages from "@/public/packages.json"
+import PackagesTabPanel from './PackagesTabPanel'
 
 export default function Packages(props) {
-  const { packages } = props
-  const [activeIndex, setActiveIndex] = useState(0)
-  const activePackage = packages[activeIndex]
+  const {} = props
+  const { fetchPackages, packages, isLoading, error } = useGetPackages({ collectionName: "packages", defaultValue: defaultPackages })
+  const [_, setState] = useState()
 
+  useEffect(() => {
+    async function fetchResources() {
+      await fetchPackages()
+    }
+
+    fetchResources()
+  }, [_])
+
+  console.log(packages)
+  
   return (
     <>
-      <div className="flex justify-center mt-10 sm:mt-20">
-        <div className="tabs justify-center">
-          {packages && packages.map((pkg, index) => (
-            <PackageTab
-              key={`PackageTab-${pkg.id}`}
-              title={pkg.title}
-              index={index}
-              activeIndex={activeIndex}
-              setActiveIndex={setActiveIndex}
-            />
-          ))}
-        </div>
-      </div>
-
-      <div className="mt-10 lg:mt-20">
-        {(packages && activePackage) && <>
-          <ActivePackage  
-            title={activePackage.title}
-            description={activePackage.description}
-            inclusions={activePackage.inclusions}
-          />
-        </>}
-      </div>
-
+        {packages && <PackagesTabPanel packages={packages} />}
     </>
   )
 }

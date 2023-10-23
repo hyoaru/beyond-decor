@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function ActivePackage(props) {
-  const { title, description, inclusions } = props
+  const { packageId, title, description, inclusions } = props
   return (
     <>
       <div className="prose prose-sm sm:prose-md max-w-none mx-auto sm:w-11/12 md:prose-lg lg:w-8/12">
@@ -15,8 +15,13 @@ export default function ActivePackage(props) {
           </div>
           <div className="mt-5 sm:row-span-2 xl:col-span-3">
             <div className="grid grid-cols-1 grid-flow-row list-disc">
-              {inclusions.map((inclusion) => (
-                <li className="sm:text-sm font-semibold text-primary text-center m-0 sm:text-left md:m-0">{inclusion}</li>
+              {inclusions.map((inclusion, index) => (
+                <li
+                  key={`ActivePackage-${packageId}-${index}`}
+                  className="sm:text-sm font-semibold text-primary text-center m-0 sm:text-left md:m-0"
+                >
+                  {inclusion}
+                </li>
               ))}
             </div>
           </div>

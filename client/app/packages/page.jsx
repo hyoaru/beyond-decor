@@ -1,25 +1,8 @@
-"use client";
-
 // App imports
 import Packages from './Packages'
-import useGetPackages from '../hooks/packages/useGetPackages';
-import defaultPackages from "@/public/packages.json"
-import { useEffect, useState } from 'react';
+import AddOns from './AddOns';
 
 export default function page() {
-  const { fetchPackages, packages, isLoading, error } = useGetPackages({ collectionName: "packages", defaultValue: [] })
-  const [_, setState] = useState()
-  
-  useEffect(() => {
-    async function fetchResources() {
-      await fetchPackages()
-    }
-
-    fetchResources()
-  }, [_])
-
-  console.log(packages)
-
   return (
     <>
       <div className="mx-6 my-20">
@@ -33,7 +16,8 @@ export default function page() {
           </p>
         </div>
 
-        {packages && <Packages packages={packages} />}
+        <Packages />
+        <AddOns />
       </div>
     </>
   )

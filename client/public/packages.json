@@ -1,5 +1,6 @@
 [
   {
+    "id": 0,
     "title": "Basic Package",
     "description": "Lorem Ipsum",
     "inclusions": [
@@ -15,6 +16,7 @@
     ]
   },
   {
+    "id": 1,
     "title": "Themed Package",
     "description": "Lorem Ipsum",
     "inclusions": [
@@ -31,6 +33,7 @@
     ]
   },
   {
+    "id": 2,
     "title": "Full Backdrop Package",
     "description": "Lorem Ipsum",
     "inclusions": [
@@ -51,6 +54,7 @@
     ]
   },
   {
+    "id": 3,
     "title": "Full Venue Package",
     "description": "Lorem Ipsum",
     "inclusions": [
