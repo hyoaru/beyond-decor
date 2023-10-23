@@ -17,7 +17,7 @@ export default function page() {
         </div>
 
         <Packages />
-        <AddOns addOnsName={"Food Carts"} addOnsCategory={"Food Cart"} />
+        <AddOns />
       </div>
     </>
   )

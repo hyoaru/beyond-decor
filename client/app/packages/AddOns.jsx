@@ -7,8 +7,8 @@ import AddOnCard from '../components/packages/AddOnCard'
 import useGetAddOns from '../hooks/packages/useGetAddOns';
 
 export default function AddOns(props) {
-  const { addOnsName, addOnsCategory } = props
-  const { fetchAddOns, addOns, isLoading, error } = useGetAddOns({ collectionName: "addons", category: addOnsCategory, defaultValue: [] })
+  const { } = props
+  const { fetchAddOns, addOns, isLoading, error } = useGetAddOns({ collectionName: "addons", defaultValue: [] })
   const [_, setState] = useState()
 
   useEffect(() => {
@@ -25,15 +25,20 @@ export default function AddOns(props) {
     <>
       <div className="mt-32 mx-auto md:w-11/12 lg:w-9/12 xl:w-8/12">
         <div className="prose max-w-none">
-          <h1 className='m-0 text-center'>
-            Add-ons: {' '}
-            <span className='bg-primary p-1 text-white rounded-xl rounded-tr-none rounded-bl-none'>{addOnsName}</span>
+          <h1 className='m-0 text-center leading-normal'>
+            {'Other event upgrades: '}
+            <span className='bg-primary p-1 text-white rounded-xl rounded-tr-none rounded-bl-none'>Add-ons</span>
           </h1>
         </div>
 
-        <div className="flex flex-wrap gap-8 justify-center mt-10">
+        <div className="grid grid-cols-1 grid-flow-row mt-10 gap-2 lg:grid-cols-2">
           {addOns && addOns?.map((addOn) => (
-            <AddOnCard title={addOn.title} price={addOn.price} />
+            <AddOnCard
+              key={`AddOn-${addOn.id}`}
+              title={addOn.title}
+              price={addOn.price}
+              category={addOn.category}
+            />
           ))}
         </div>
       </div>
