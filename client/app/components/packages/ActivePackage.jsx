@@ -14,7 +14,7 @@ export default function ActivePackage(props) {
             <p className="sm:text-sm m-0 text-center sm:m-0 sm:text-left">{description}</p>
           </div>
           <div className="mt-5 sm:row-span-2 xl:col-span-3">
-            <div className="grid grid-cols-1 grid-flow-row list-disc xl:grid-cols-2">
+            <div className="grid grid-cols-1 grid-flow-row list-disc">
               {inclusions.map((inclusion) => (
                 <li className="sm:text-sm font-semibold text-primary text-center m-0 sm:text-left md:m-0">{inclusion}</li>
               ))}
