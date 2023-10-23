@@ -8,16 +8,11 @@ import { useCollectionRecordUpdate } from '../../hooks/shared/useCollectionRecor
 
 export default function PackageCardUpdateModal(props) {
   const { packageCard, modalId, setState } = props
-  const { id: cardId, image_path: cardImgSrc, title, description, short_description: shortDescription, inclusions } = packageCard
+  const { id: cardId, image_path: cardImgSrc, title, short_description: shortDescription } = packageCard
   const [imageUrl, setImageUrl] = useState(cardImgSrc)
   const { collectionRecordUpdate, isLoading, error } = useCollectionRecordUpdate({ collectionName: 'packages' })
   const { register, handleSubmit, reset, resetField, getValues, setValue } = useForm({
-    defaultValues: {
-      titleInput: title,
-      descriptionInput: description,
-      shortDescriptionInput: shortDescription,
-      inclusionsInput: inclusions.join()
-    }
+    defaultValues: { titleInput: title, shortDescriptionInput: shortDescription }
   })
 
   function onImageChange() { setImageUrl(URL.createObjectURL(getValues("imageInput")[0])) }
@@ -25,21 +20,17 @@ export default function PackageCardUpdateModal(props) {
   async function onSubmit(data) {
     const imageFile = data.imageInput[0]
     const title = data.titleInput
-    const description = data.descriptionInput
     const shortDescription = data.shortDescriptionInput
-    const inclusions = JSON.stringify(data.inclusionsInput.split(","))
 
     const formData = new FormData()
     if (imageFile) { formData.append('image_file', imageFile) }
     if (title) { formData.append('title', title) }
-    if (description) { formData.append('description', description) }
     if (shortDescription) { formData.append('short_description', shortDescription) }
-    if (inclusions) { formData.append('inclusions', inclusions) }
 
     await collectionRecordUpdate({ recordId: cardId, formData: formData })
 
-    resetField("titleInput")
-    resetField("descriptionInput")
+    setValue('titleInput', title)
+    setValue('shortDescriptionInput', shortDescription)
     setState(performance.now())
     document.getElementById(modalId).close()
   }
@@ -83,26 +74,6 @@ export default function PackageCardUpdateModal(props) {
                   {...register("titleInput")}
                   required
                 />
-              </div>
-
-              <div className="flex mx-auto form-control w-full max-w-xs my-2">
-                <textarea
-                  className="textarea textarea-bordered w-full max-w-xs"
-                  placeholder="Enter comma separated inclusions e.g: wall backdrop, themed balloons, garland"
-                  {...register("inclusionsInput")}
-                  required
-                >
-                </textarea>
-              </div>
-
-              <div className="flex mx-auto form-control w-full max-w-xs my-2">
-                <textarea
-                  className="textarea textarea-bordered w-full max-w-xs"
-                  placeholder="Enter full description"
-                  {...register("descriptionInput")}
-                  required
-                >
-                </textarea>
               </div>
 
               <div className="flex mx-auto form-control w-full max-w-xs my-2">
