@@ -16,7 +16,7 @@ export default function useGetResources({ collectionName, defaultValue }) {
     try {
       const fetchedResources = await pocketbase
         .collection(collectionName)
-        .getFullList({ sort: 'position', });
+        .getFullList({ sort: 'created', });
 
       setResources(
         processResources({
