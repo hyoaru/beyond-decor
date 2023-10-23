@@ -1,0 +1,72 @@
+[
+  {
+    "title": "Basic Package",
+    "description": "Lorem Ipsum",
+    "inclusions": [
+      "Wall Backdrop",
+      "Themed Color Balloons",
+      "Balloon Garland",
+      "2ft Letter Standees with Lights or Letter Cutouts (Styro)",
+      "Welcome Signage Easel",
+      "Uplight/String Lights",
+      "Cake Standees",
+      "Grass Carpet",
+      "Backdrop Chair"
+    ]
+  },
+  {
+    "title": "Themed Package",
+    "description": "Lorem Ipsum",
+    "inclusions": [
+      "Themed Wall Backdrop",
+      "Theme Props",
+      "Balloon Garland",
+      "2ft Letter Standees with Lights",
+      "Name/Letter Cut Outs (Styro)",
+      "Uplight/String Lights",
+      "Cake Stand",
+      "Grass Carpet",
+      "Backdrop Chair",
+      "Welcome Signage Easel"
+    ]
+  },
+  {
+    "title": "Full Backdrop Package",
+    "description": "Lorem Ipsum",
+    "inclusions": [
+      "Themed Wall Backdrop",
+      "Theme Props",
+      "Balloon Garland",
+      "2ft Letter Standees with Lights",
+      "Backdrop Chair",
+      "Balloon Arch",
+      "Balloon Pillars",
+      "Uplight/String Lights",
+      "Cake Stand",
+      "Grass Carpet",
+      "Name/Letter Cut Outs (Styro)",
+      "Welcome Signage Easel",
+      "Table Centerpiece (10 pcs)",
+      "Ceiling Decor (Cloth/Balloon)"
+    ]
+  },
+  {
+    "title": "Full Venue Package",
+    "description": "Lorem Ipsum",
+    "inclusions": [
+      "Themed Wall Backdrop",
+      "Theme Props",
+      "Balloon Garland",
+      "2ft Letter Standees with Lights or Letter Cutouts (Styro)",
+      "Entrance Decor",
+      "Welcome Signage Easel",
+      "Uplight/String Lights",
+      "Table Centerpiece",
+      "Cake Stand",
+      "Grass Carpet",
+      "Ceiling Decor (Cloth/Balloon)",
+      "Backdrop Chair",
+      "Kiddies Tables & Chairs"
+    ]
+  }
+]
