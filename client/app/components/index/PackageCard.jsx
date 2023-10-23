@@ -25,7 +25,7 @@ export default function PackageCard(props) {
                   className='shadow-xl text-white'
                 />
               </label>
-              <ul tabIndex={0} className="dropdown-content text-xs font-semibold z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+              <ul tabIndex={0} className="dropdown-content text-xs font-semibold z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 border border-primary">
                 <li><a onClick={onEdit}>Edit</a></li>
                 <li><a onClick={onDelete}>Delete</a></li>
               </ul>
