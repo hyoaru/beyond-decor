@@ -9,7 +9,7 @@ export default function AddOnCard(props) {
           <h3 className='text-primary m-0 p-0'>{title}</h3>
           <small className='opacity-80'>{category} ・ {price !== 0 ? `₱ ${price.toLocaleString('en-us')}` : '-'}</small>
         </div>
-        <button className="btn btn-primary h-full me-3">Add to bag</button>
+        <button className="btn btn-primary btn-outline h-full me-3">Add to bag</button>
       </div>
     </>
   )
