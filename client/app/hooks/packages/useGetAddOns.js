@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import PocketBase from "pocketbase"
 
-export default function useGetAddOns({ collectionName="addons", category, defaultValue=[] }) {
+export default function useGetAddOns({ collectionName="addons", defaultValue=[] }) {
   const pocketbase = new PocketBase(process.env.NEXT_PUBLIC_POCKETBASE_URL)
   const [isLoading, setIsLoading] = useState()
   const [error, setError] = useState()
@@ -13,7 +13,7 @@ export default function useGetAddOns({ collectionName="addons", category, defaul
     try {
       const fetchedAddOns = await pocketbase
         .collection(collectionName)
-        .getFullList(`category="${category}"`, { sort: 'created', });
+        .getFullList({ sort: 'category', });
 
       setAddOns(fetchedAddOns)
     } catch (error) {
