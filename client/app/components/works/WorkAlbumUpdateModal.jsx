@@ -1,20 +1,31 @@
 "use client"
 
 import { useState } from 'react'
+import dayjs from 'dayjs'
 
 // App imports
 import { useForm } from 'react-hook-form'
 import { useCollectionRecordUpdate } from '@/app/hooks/shared/useCollectionRecordUpdate'
 
 export default function WorkAlbumUpdateModal(props) {
-  const { setState, recordId, thumbnailSrc } = props
-  const { register, handleSubmit, reset, resetField, getValues } = useForm()
-  const { collectionRecordUpdate, isLoading, error } = useCollectionRecordUpdate({ collectionName: 'work_albums' })
+  const { workAlbum, setState } = props
+  const {id: recordId, thumbnail_path: thumbnailSrc, event_name: eventName } = workAlbum
+  const {event_place: eventPlace, event_date: eventDate, client_name: clientName} = workAlbum
   const [thumbnailUrl, setThumbnailUrl] = useState(thumbnailSrc)
+  const { collectionRecordUpdate, isLoading, error } = useCollectionRecordUpdate({ collectionName: 'work_albums' })
+  const { register, handleSubmit, reset, resetField, getValues, setValue } = useForm({
+    defaultValues: {
+      eventNameInput: eventName,
+      eventPlaceInput: eventPlace,
+      eventDateInput: dayjs(eventDate).format("YYYY-MM-DD"),
+      clientNameInput: clientName,
+    }
+  })
 
   function onImageChange() { setThumbnailUrl(URL.createObjectURL(getValues("thumbnailInput")[0])) }
 
   async function onSubmit(data) {
+
     const thumbnailFile = data.thumbnailInput[0]
     const imageFiles = data.imagesInput
     const eventName = data.eventNameInput
@@ -35,9 +46,12 @@ export default function WorkAlbumUpdateModal(props) {
     }
 
     await collectionRecordUpdate({ recordId: recordId, formData: formData })
+    setValue('eventNameInput', eventName)
+    setValue('eventPlaceInput', eventPlace)
+    setValue('eventDateInput', eventDate)
+    setValue('clientNameInput', clientName)
     setState(performance.now())
     document.getElementById(`WorkAlbumUpdateModal-${recordId}`).close()
-    reset()
   }
 
   return (
@@ -132,7 +146,7 @@ export default function WorkAlbumUpdateModal(props) {
           </div>
           <div className="modal-action flex">
             <form>
-              <button onClick={handleSubmit(onSubmit)} className="btn btn-neutral" disabled={isLoading}>Save</button>
+              <button onClick={handleSubmit(onSubmit)} className="btn btn-primary" disabled={isLoading}>Save</button>
             </form>
             <form method="dialog">
               <button className="btn">Close</button>

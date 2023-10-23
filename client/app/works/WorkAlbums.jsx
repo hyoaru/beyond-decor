@@ -40,7 +40,7 @@ export default function WorkAlbums(props) {
         })}
       </div>
 
-      <WorkAlbumAddModal nextIndex={workAlbums.length} setState={setState} />
+      <WorkAlbumAddModal setState={setState} />
     </>
   )
 }

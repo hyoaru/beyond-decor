@@ -59,7 +59,7 @@ export default function page({ params }) {
                     className='text-primary cursor-pointer'
                   />
                 </label>
-                <ul tabIndex={0} className="dropdown-content text-xs z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                <ul tabIndex={0} className="dropdown-content text-xs z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 border border-primary">
                   <li><a onClick={onEdit}>Edit</a></li>
                   <li><a onClick={onDelete}>Delete</a></li>
                 </ul>
@@ -84,9 +84,8 @@ export default function page({ params }) {
 
       {(authState.isAdmin && workAlbum?.thumbnail_path) && <>
         <WorkAlbumUpdateModal
-          recordId={recordId}
+          workAlbum={workAlbum}
           setState={setState}
-          thumbnailSrc={thumbnailPath}
         />
 
         <WorkAlbumDeleteModal

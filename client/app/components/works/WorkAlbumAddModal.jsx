@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form'
 import { useCollectionRecordCreate } from '../../hooks/shared/useCollectionRecordCreate'
 
 export default function WorkAlbumAddModal(props) {
-  const { nextIndex, setState } = props
+  const { setState } = props
   const { register, handleSubmit, reset, resetField, getValues } = useForm()
   const { collectionRecordCreate, isLoading, error } = useCollectionRecordCreate({ collectionName: 'work_albums' })
   const [thumbnailUrl, setThumbnailUrl] = useState()
@@ -135,7 +135,7 @@ export default function WorkAlbumAddModal(props) {
           </div>
           <div className="modal-action flex">
             <form>
-              <button onClick={handleSubmit(onSubmit)} className="btn btn-neutral" disabled={isLoading}>Save</button>
+              <button onClick={handleSubmit(onSubmit)} className="btn btn-primary" disabled={isLoading}>Save</button>
             </form>
             <form method="dialog">
               <button className="btn">Close</button>
