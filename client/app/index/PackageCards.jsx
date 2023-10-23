@@ -13,7 +13,7 @@ export default function PackageCards(props) {
   const { isAdmin } = props
   const [_, setState] = useState()
   const { fetchResources: fetchPackageCards, resources: packageCards, isLoading, error } = useGetResources(
-    { collectionName: 'package_cards', defaultValue: defaultPackageCards }
+    { collectionName: 'packages', defaultValue: [] }
   )
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function PackageCards(props) {
               key={`PackageCard-${index}`}
               imgSrc={card.image_path}
               title={card.title}
-              description={card.description}
+              description={card.short_description}
               isAdmin={isAdmin}
               editModalIdToTrigger={`PackageCardEditModal-${card.id}`}
               deleteModalIdToTrigger={`PackageCardDeleteModal-${card.id}`}
@@ -49,10 +49,8 @@ export default function PackageCards(props) {
       {(isAdmin && packageCards) && packageCards.map((card, index) => (
         <div key={`PackageCardModifyModals-${index}`}>
           <PackageCardUpdateModal
-            cardImgSrc={card.image_path}
-            cardPosition={card.position}
-            cardId={card.id}
-            modalId={`PackageCardModal-${card.id}`}
+            packageCard={card}
+            modalId={`PackageCardEditModal-${card.id}`}
             setState={setState}
           />
 

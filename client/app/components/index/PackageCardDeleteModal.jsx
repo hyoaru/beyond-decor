@@ -3,7 +3,7 @@ import { useCollectionRecordDelete } from '@/app/hooks/shared/useCollectionRecor
 
 export default function PackageCardDeleteModal(props) {
   const { cardId, cardTitle, cardDescription, cardImgSrc, modalId, setState } = props
-  const { collectionRecordDelete, isLoading, error } = useCollectionRecordDelete({ collectionName: "package_cards" })
+  const { collectionRecordDelete, isLoading, error } = useCollectionRecordDelete({ collectionName: "packages" })
 
   async function onSubmit(data) {
     await collectionRecordDelete({ recordId: cardId })
@@ -15,7 +15,7 @@ export default function PackageCardDeleteModal(props) {
     <>
       <dialog id={modalId} className="modal ">
         <div className="modal-box w-11/12 max-w-sm">
-          <h3 className="font-bold text-lg mt-4">Delete package card</h3>
+          <h3 className="font-bold text-lg mt-4">Delete package</h3>
           <div className="my-4">
             <img
               width={300}
@@ -25,7 +25,7 @@ export default function PackageCardDeleteModal(props) {
               alt="" className={'rounded-xl object-cover flex mx-auto'}
             />
             <div className="prose max-w-none text-center my-6">
-              <h2>{cardTitle}</h2>
+              <h2 className=''>{cardTitle}</h2>
             </div>
           </div>
           <div className="modal-action flex">
