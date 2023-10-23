@@ -7,10 +7,13 @@ import { useForm } from 'react-hook-form'
 import { useCollectionRecordUpdate } from '../../hooks/shared/useCollectionRecordUpdate'
 
 export default function LandingCardUpdateModal(props) {
-  const { cardId, cardPosition, cardImgSrc, modalId, setState } = props
-  const { register, handleSubmit, getValues, reset, resetField } = useForm()
+  const { landingCard, modalId, setState } = props
+  const { id: cardId, image_path: cardImgSrc } = landingCard
   const [imageUrl, setImageUrl] = useState(cardImgSrc)
   const { collectionRecordUpdate, isLoading, error } = useCollectionRecordUpdate({ collectionName: 'landing_cards' })
+  const { register, handleSubmit, getValues, reset, resetField } = useForm({
+    defaultValues: { quotationInput: landingCard.quotation }
+  })
 
   function onImageChange() { setImageUrl(URL.createObjectURL(getValues("imageInput")[0])) }
 
@@ -42,15 +45,22 @@ export default function LandingCardUpdateModal(props) {
               style={{ width: `${300}px`, height: `${450}px` }}
               alt="" className={'rounded-xl object-cover flex mx-auto'}
             />
+
+            <div className="divider">
+              <small className="text-primary font-bold">Choose thumbnail to upload</small>
+            </div>
             <div className="form-control w-full max-w-xs flex mx-auto my-3">
               <input
                 type="file"
-                className="file-input file-input-md file-input-bordered w-full max-w-xs"
+                className="file-input file-input-md file-input-primary file-input-bordered w-full max-w-xs"
                 accept='.jpg, .jpeg, .png'
                 {...register("imageInput", { onChange: onImageChange })}
               />
             </div>
 
+            <div className="divider">
+              <small>Other required fields</small>
+            </div>
             <div className="flex mx-auto">
               <input
                 type="text"
@@ -62,7 +72,7 @@ export default function LandingCardUpdateModal(props) {
           </div>
           <div className="modal-action flex">
             <form>
-              <button onClick={handleSubmit(onSubmit)} className="btn btn-neutral" disabled={isLoading}>Save</button>
+              <button onClick={handleSubmit(onSubmit)} className="btn btn-primary" disabled={isLoading}>Save</button>
             </form>
             <form method="dialog">
               <button className="btn">Close</button>

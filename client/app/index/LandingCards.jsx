@@ -58,9 +58,7 @@ export default function LandingCards(props) {
       {(isAdmin && landingCards) && landingCards.map((card) => (
         <LandingCardUpdateModal
           key={`LandingCardModal-${card.id}`}
-          cardId={card.id}
-          cardPosition={card.position}
-          cardImgSrc={card.image_path}
+          landingCard={card}
           modalId={`LandingCardModal-${card.id}`}
           setState={setState}
         />
