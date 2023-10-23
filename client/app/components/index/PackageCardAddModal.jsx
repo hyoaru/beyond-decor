@@ -68,7 +68,7 @@ export default function PackageCardAddModal(props) {
               </div>
 
               <div className="divider">
-                <small>Required fields</small>
+                <small>Other required fields</small>
               </div>
               <div className="flex mx-auto form-control w-full max-w-xs my-2">
                 <input

@@ -8,15 +8,17 @@ import { useCollectionRecordUpdate } from '../../hooks/shared/useCollectionRecor
 
 export default function PackageCardUpdateModal(props) {
   const { packageCard, modalId, setState } = props
-  const { id: cardId, image_path: cardImgSrc, title, description, short_description: shortDescription, inclusions} = packageCard
+  const { id: cardId, image_path: cardImgSrc, title, description, short_description: shortDescription, inclusions } = packageCard
   const [imageUrl, setImageUrl] = useState(cardImgSrc)
   const { collectionRecordUpdate, isLoading, error } = useCollectionRecordUpdate({ collectionName: 'packages' })
-  const { register, handleSubmit, reset, resetField, getValues, setValue } = useForm({defaultValues: {
-    titleInput: title, 
-    descriptionInput: description, 
-    shortDescriptionInput: shortDescription, 
-    inclusionsInput: inclusions.join()
-  }})
+  const { register, handleSubmit, reset, resetField, getValues, setValue } = useForm({
+    defaultValues: {
+      titleInput: title,
+      descriptionInput: description,
+      shortDescriptionInput: shortDescription,
+      inclusionsInput: inclusions.join()
+    }
+  })
 
   function onImageChange() { setImageUrl(URL.createObjectURL(getValues("imageInput")[0])) }
 
@@ -71,7 +73,7 @@ export default function PackageCardUpdateModal(props) {
               </div>
 
               <div className="divider">
-                <small>Required fields</small>
+                <small>Other required fields</small>
               </div>
               <div className="flex mx-auto form-control w-full max-w-xs my-2">
                 <input
