@@ -49,10 +49,9 @@ export default function TeamMembers(props) {
 
       {teamMembers && teamMembers.map((teamMember) => {
         return (
-          <div id={`TeamMemberModifyModal-${teamMember.id}`}>
+          <div key={`TeamMemberModifyModal-${teamMember.id}`}>
             <TeamMemberEditModal
-              recordId={teamMember.id}
-              imgSrc={teamMember.image_path}
+              teamMember={teamMember}
               setState={setState}
               modalId={`TeamMemberEditModal-${teamMember.id}`}
             />

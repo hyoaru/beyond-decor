@@ -7,10 +7,13 @@ import { useForm } from 'react-hook-form'
 import { useCollectionRecordUpdate } from '../../hooks/shared/useCollectionRecordUpdate'
 
 export default function TeamMemberEditModal(props) {
-  const { recordId, imgSrc, setState, modalId } = props
-  const { register, handleSubmit, reset, resetField, getValues } = useForm()
+  const { teamMember, setState, modalId } = props
+  const { id: recordId, image_path: imgSrc, name, role } = teamMember
   const { collectionRecordUpdate, isLoading, error } = useCollectionRecordUpdate({ collectionName: 'team_members' })
   const [imageUrl, setImageUrl] = useState(imgSrc)
+  const { register, handleSubmit, reset, resetField, getValues, setValue } = useForm({
+    defaultValues: { nameInput: name, roleInput: role }
+  })
 
   function onImageChange() { setImageUrl(URL.createObjectURL(getValues("imageInput")[0])) }
 
@@ -25,6 +28,8 @@ export default function TeamMemberEditModal(props) {
     if (role) { formData.append('role', role) }
 
     await collectionRecordUpdate({ recordId: recordId, formData: formData })
+    setValue('nameInput', name)
+    setValue('roleInput', role)
     setState(performance.now())
     document.getElementById(modalId).close()
   }
@@ -79,7 +84,7 @@ export default function TeamMemberEditModal(props) {
           </div>
           <div className="modal-action flex">
             <form>
-              <button onClick={handleSubmit(onSubmit)} className="btn btn-neutral" disabled={isLoading}>Save</button>
+              <button onClick={handleSubmit(onSubmit)} className="btn btn-primary" disabled={isLoading}>Save</button>
             </form>
             <form method="dialog">
               <button className="btn">Close</button>

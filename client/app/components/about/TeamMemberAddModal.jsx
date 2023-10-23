@@ -86,7 +86,7 @@ export default function TeamMemberAddModal(props) {
           </div>
           <div className="modal-action flex">
             <form>
-              <button onClick={handleSubmit(onSubmit)} className="btn btn-neutral" disabled={isLoading}>Save</button>
+              <button onClick={handleSubmit(onSubmit)} className="btn btn-primary" disabled={isLoading}>Save</button>
             </form>
             <form method="dialog">
               <button className="btn">Close</button>
