@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import AddOnCard from '../components/packages/AddOnCard'
 import useGetAddOns from '../hooks/packages/useGetAddOns';
 import AddOnsAddModal from '../components/packages/AddOnsAddModal';
+import AddOnsUpdateModal from '../components/packages/AddOnsUpdateModal';
 
 export default function AddOns(props) {
   const { isAdmin } = props
@@ -47,15 +48,26 @@ export default function AddOns(props) {
           {addOns && addOns?.map((addOn) => (
             <AddOnCard
               key={`AddOn-${addOn.id}`}
-              title={addOn.title}
-              price={addOn.price}
-              category={addOn.category}
+              addOnCard={addOn}
+              editModalIdToTrigger={`AddOnUpdateModal-${addOn.id}`}
+              deleteModalIdToTrigger={`AddOnDeleteModal-${addOn.id}`}
+              isAdmin={isAdmin}
             />
           ))}
         </div>
       </div>
 
       <AddOnsAddModal setState={setState} />
+
+      {(isAdmin && addOns) && addOns?.map((addOn) => (
+        <div key={`AddOnsModifyModals-${addOn.id}`}>
+          <AddOnsUpdateModal
+            modalId={`AddOnUpdateModal-${addOn.id}`}
+            addOnCard={addOn}
+            setState={setState}
+          />
+        </div>
+      ))}
     </>
   )
 }
