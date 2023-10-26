@@ -35,8 +35,20 @@ export default function Packages(props) {
           </span>
         </div>
       </>}
-      {packages && <PackagesTabPanel packages={packages} isAdmin={isAdmin} />}
-      {isAdmin && <PackageCardAddModal setState={setState} />}
+      
+      {packages &&
+        <PackagesTabPanel
+          packages={packages}
+          isAdmin={isAdmin}
+          setState={setState}
+        />
+      }
+
+      {isAdmin &&
+        <PackageCardAddModal
+          setState={setState}
+        />
+      }
     </>
   )
 }

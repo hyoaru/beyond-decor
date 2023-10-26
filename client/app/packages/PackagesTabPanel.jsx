@@ -5,15 +5,16 @@ import { useState } from "react"
 // App imports
 import PackageTab from "../components/packages/PackageTab"
 import ActivePackage from "../components/packages/ActivePackage"
+import PackageUpdateModal from "../components/packages/PackageUpdateModal"
 
 export default function PackagesTabPanel(props) {
-  const { packages, isAdmin } = props
+  const { packages, isAdmin, setState } = props
   const [activeIndex, setActiveIndex] = useState(0)
   const activePackage = packages[activeIndex]
 
   return (
     <>
-      <div className={`flex justify-center mt-10 ${ isAdmin ? "sm:mt-10" : "sm:mt-20"}`}>
+      <div className={`flex justify-center mt-10 ${isAdmin ? "sm:mt-10" : "sm:mt-20"}`}>
         <div className="tabs justify-center">
           {packages && packages.map((pkg, index) => (
             <PackageTab
@@ -27,16 +28,28 @@ export default function PackagesTabPanel(props) {
         </div>
       </div>
 
-      <div className="mt-10 lg:mt-20">
+      <div className={`mt-10 ${isAdmin ? "lg:mt-10" : "lg:mt-20"}`}>
         {(packages && activePackage) && <>
           <ActivePackage
             packageId={activePackage.id}
             title={activePackage.title}
             description={activePackage.description}
             inclusions={activePackage.inclusions}
+            isAdmin={isAdmin}
+            editModalIdToTrigger={`PackageEditModal-${activePackage.id}`}
           />
         </>}
       </div>
+
+      {(isAdmin && packages) && packages.map((pkg, index) => (
+        <div key={`PackageModifyModals-${index}`}>
+          <PackageUpdateModal
+            modalId={`PackageEditModal-${pkg.id}`}
+            packageCard={pkg}
+            setState={setState}
+          />
+        </div>
+      ))}
 
     </>
   )
