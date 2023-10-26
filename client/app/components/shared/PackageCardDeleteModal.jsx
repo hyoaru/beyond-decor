@@ -2,7 +2,8 @@
 import { useCollectionRecordDelete } from '@/app/hooks/shared/useCollectionRecordDelete'
 
 export default function PackageCardDeleteModal(props) {
-  const { cardId, cardTitle, cardDescription, cardImgSrc, modalId, setState } = props
+  const { packageCard, modalId, setState } = props
+  const { id: cardId, title: cardTitle, image_path: cardImgSrc } = packageCard
   const { collectionRecordDelete, isLoading, error } = useCollectionRecordDelete({ collectionName: "packages" })
 
   async function onSubmit(data) {

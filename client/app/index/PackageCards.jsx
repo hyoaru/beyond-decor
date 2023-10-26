@@ -7,7 +7,7 @@ import PackageCard from '../components/index/PackageCard';
 import PackageCardUpdateModal from '../components/index/PackageCardUpdateModal';
 import PackageCardAddModal from '../components/shared/PackageCardAddModal';
 import useGetResources from '../hooks/index/useGetResources';
-import PackageCardDeleteModal from '../components/index/PackageCardDeleteModal';
+import PackageCardDeleteModal from '../components/shared/PackageCardDeleteModal';
 
 export default function PackageCards(props) {
   const { isAdmin } = props
@@ -55,12 +55,8 @@ export default function PackageCards(props) {
           />
 
           <PackageCardDeleteModal
-            cardImgSrc={card.image_path}
-            cardPosition={card.position}
-            cardId={card.id}
+            packageCard={card}
             modalId={`PackageCardDeleteModal-${card.id}`}
-            cardTitle={card.title}
-            cardDescription={card.description}
             setState={setState}
           />
         </div>
