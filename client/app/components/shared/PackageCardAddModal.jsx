@@ -19,7 +19,8 @@ export default function PackageCardAddModal(props) {
     const title = data.titleInput
     const description = data.descriptionInput
     const shortDescription = data.shortDescriptionInput
-    const inclusions = JSON.stringify(data.inclusionsInput.split(","))
+    const inclusionsTrimmed = data.inclusionsInput.split(",").map((inclusion) => inclusion.trim())
+    const inclusions = JSON.stringify(inclusionsTrimmed)
 
     if (imageFile && title && description) {
       const formData = new FormData()
