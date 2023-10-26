@@ -10,7 +10,7 @@ import PackageCardAddModal from "../components/shared/PackageCardAddModal";
 
 export default function Packages(props) {
   const { isAdmin } = props
-  const { fetchPackages, packages, isLoading, error } = useGetPackages({ collectionName: "packages", defaultValue: defaultPackages })
+  const { fetchPackages, packages, isLoading, error } = useGetPackages({ collectionName: "packages", defaultValue: [] })
   const [_, setState] = useState()
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function Packages(props) {
           </span>
         </div>
       </>}
-      
+
       {packages &&
         <PackagesTabPanel
           packages={packages}
