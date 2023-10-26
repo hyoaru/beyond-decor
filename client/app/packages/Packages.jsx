@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import useGetPackages from "../hooks/packages/useGetPackages";
 import defaultPackages from "@/public/packages.json"
 import PackagesTabPanel from './PackagesTabPanel'
-import PackageCardAddModal from "../components/packages/PackageCardAddModal";
+import PackageCardAddModal from "../components/shared/PackageCardAddModal";
 
 export default function Packages(props) {
   const { isAdmin } = props

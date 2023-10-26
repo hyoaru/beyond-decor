@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import defaultPackageCards from "@/public/package_cards.json"
 import PackageCard from '../components/index/PackageCard';
 import PackageCardUpdateModal from '../components/index/PackageCardUpdateModal';
-import PackageCardAddModal from '../components/packages/PackageCardAddModal';
+import PackageCardAddModal from '../components/shared/PackageCardAddModal';
 import useGetResources from '../hooks/index/useGetResources';
 import PackageCardDeleteModal from '../components/index/PackageCardDeleteModal';
 
