@@ -7,6 +7,7 @@ import AddOnCard from '../components/packages/AddOnCard'
 import useGetAddOns from '../hooks/packages/useGetAddOns';
 import AddOnsAddModal from '../components/packages/AddOnsAddModal';
 import AddOnsUpdateModal from '../components/packages/AddOnsUpdateModal';
+import AddOnsDeleteModal from '../components/packages/AddOnsDeleteModal';
 
 export default function AddOns(props) {
   const { isAdmin } = props
@@ -63,6 +64,12 @@ export default function AddOns(props) {
         <div key={`AddOnsModifyModals-${addOn.id}`}>
           <AddOnsUpdateModal
             modalId={`AddOnUpdateModal-${addOn.id}`}
+            addOnCard={addOn}
+            setState={setState}
+          />
+
+          <AddOnsDeleteModal
+            modalId={`AddOnDeleteModal-${addOn.id}`}
             addOnCard={addOn}
             setState={setState}
           />
