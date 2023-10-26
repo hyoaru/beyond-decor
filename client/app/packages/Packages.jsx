@@ -6,9 +6,10 @@ import { useEffect, useState } from "react";
 import useGetPackages from "../hooks/packages/useGetPackages";
 import defaultPackages from "@/public/packages.json"
 import PackagesTabPanel from './PackagesTabPanel'
+import PackageCardAddModal from "../components/packages/PackageCardAddModal";
 
 export default function Packages(props) {
-  const {} = props
+  const { isAdmin } = props
   const { fetchPackages, packages, isLoading, error } = useGetPackages({ collectionName: "packages", defaultValue: defaultPackages })
   const [_, setState] = useState()
 
@@ -21,10 +22,21 @@ export default function Packages(props) {
   }, [_])
 
   console.log(packages)
-  
+
   return (
     <>
-        {packages && <PackagesTabPanel packages={packages} />}
+      {isAdmin && <>
+        <div className="text-center mt-20">
+          <span
+            className="text-primary font-mono opacity-40 text-sm cursor-pointer"
+            onClick={() => { document.getElementById('AddPackageCardModal').showModal() }}
+          >
+            {"[ add package ]"}
+          </span>
+        </div>
+      </>}
+      {packages && <PackagesTabPanel packages={packages} isAdmin={isAdmin} />}
+      {isAdmin && <PackageCardAddModal setState={setState} />}
     </>
   )
 }

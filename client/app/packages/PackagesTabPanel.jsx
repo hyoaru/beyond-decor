@@ -7,13 +7,13 @@ import PackageTab from "../components/packages/PackageTab"
 import ActivePackage from "../components/packages/ActivePackage"
 
 export default function PackagesTabPanel(props) {
-  const { packages } = props
+  const { packages, isAdmin } = props
   const [activeIndex, setActiveIndex] = useState(0)
   const activePackage = packages[activeIndex]
 
   return (
     <>
-      <div className="flex justify-center mt-10 sm:mt-20">
+      <div className={`flex justify-center mt-10 ${ isAdmin ? "sm:mt-10" : "sm:mt-20"}`}>
         <div className="tabs justify-center">
           {packages && packages.map((pkg, index) => (
             <PackageTab

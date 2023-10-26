@@ -1,8 +1,12 @@
+"use client";
+
 // App imports
 import Packages from './Packages'
 import AddOns from './AddOns';
+import { useAuthStateContext } from '../context';
 
 export default function page() {
+  const authState = useAuthStateContext()
   return (
     <>
       <div className="mx-6 my-20">
@@ -16,7 +20,7 @@ export default function page() {
           </p>
         </div>
 
-        <Packages />
+        <Packages isAdmin={authState.isAdmin} />
         <AddOns />
       </div>
     </>
