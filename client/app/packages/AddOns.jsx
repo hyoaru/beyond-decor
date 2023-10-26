@@ -5,9 +5,10 @@ import { useEffect, useState } from 'react';
 // App imports
 import AddOnCard from '../components/packages/AddOnCard'
 import useGetAddOns from '../hooks/packages/useGetAddOns';
+import AddOnsAddModal from '../components/packages/AddOnsAddModal';
 
 export default function AddOns(props) {
-  const { } = props
+  const { isAdmin } = props
   const { fetchAddOns, addOns, isLoading, error } = useGetAddOns({ collectionName: "addons", defaultValue: [] })
   const [_, setState] = useState()
 
@@ -31,6 +32,17 @@ export default function AddOns(props) {
           </h1>
         </div>
 
+        {isAdmin && <>
+          <div className="text-center mt-10">
+            <span
+              className="text-primary font-mono opacity-40 text-sm cursor-pointer"
+              onClick={() => { document.getElementById('AddAddOnsModal').showModal() }}
+            >
+              {"[ add add-ons ]"}
+            </span>
+          </div>
+        </>}
+
         <div className="grid grid-cols-1 grid-flow-row mt-10 gap-2 lg:grid-cols-2">
           {addOns && addOns?.map((addOn) => (
             <AddOnCard
@@ -42,6 +54,8 @@ export default function AddOns(props) {
           ))}
         </div>
       </div>
+
+      <AddOnsAddModal setState={setState} />
     </>
   )
 }

@@ -21,7 +21,7 @@ export default function page() {
         </div>
 
         <Packages isAdmin={authState.isAdmin} />
-        <AddOns />
+        <AddOns isAdmin={authState.isAdmin} />
       </div>
     </>
   )
