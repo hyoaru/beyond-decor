@@ -2,7 +2,7 @@ import { useState } from 'react'
 import PocketBase from "pocketbase"
 
 // App imports
-import processResources from '@/app/libraries/index/processResources'
+import processResources from '@/app/libraries/shared/processResources'
 
 export default function useGetResources({ collectionName, defaultValue }) {
   const pocketbase = new PocketBase(process.env.NEXT_PUBLIC_POCKETBASE_URL)
