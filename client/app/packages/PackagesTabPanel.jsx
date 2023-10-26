@@ -6,6 +6,7 @@ import { useState } from "react"
 import PackageTab from "../components/packages/PackageTab"
 import ActivePackage from "../components/packages/ActivePackage"
 import PackageUpdateModal from "../components/packages/PackageUpdateModal"
+import PackageCardDeleteModal from "../components/shared/PackageCardDeleteModal"
 
 export default function PackagesTabPanel(props) {
   const { packages, isAdmin, setState } = props
@@ -37,6 +38,7 @@ export default function PackagesTabPanel(props) {
             inclusions={activePackage.inclusions}
             isAdmin={isAdmin}
             editModalIdToTrigger={`PackageEditModal-${activePackage.id}`}
+            deleteModalIdToTrigger={`PackageDeleteModal-${activePackage.id}`}
           />
         </>}
       </div>
@@ -45,6 +47,11 @@ export default function PackagesTabPanel(props) {
         <div key={`PackageModifyModals-${index}`}>
           <PackageUpdateModal
             modalId={`PackageEditModal-${pkg.id}`}
+            packageCard={pkg}
+            setState={setState}
+          />
+          <PackageCardDeleteModal 
+            modalId={`PackageDeleteModal-${pkg.id}`}
             packageCard={pkg}
             setState={setState}
           />

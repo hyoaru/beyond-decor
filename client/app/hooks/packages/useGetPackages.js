@@ -1,7 +1,10 @@
 import { useState } from 'react'
-import PocketBase from "pocketbase"
 
-export default function useGetPackages({ collectionName="packages", defaultValue=[] }) {
+// App imports
+import PocketBase from "pocketbase"
+import processResources from '@/app/libraries/shared/processResources'
+
+export default function useGetPackages({ collectionName = "packages", defaultValue = [] }) {
   const pocketbase = new PocketBase(process.env.NEXT_PUBLIC_POCKETBASE_URL)
   const [isLoading, setIsLoading] = useState()
   const [error, setError] = useState()
@@ -15,7 +18,12 @@ export default function useGetPackages({ collectionName="packages", defaultValue
         .collection(collectionName)
         .getFullList({ sort: 'created', });
 
-      setPackages(fetchedPackages)
+      setPackages(
+        processResources({
+          collectionName: collectionName,
+          resources: fetchedPackages
+        })
+      )
     } catch (error) {
       setPackages(defaultValue)
       setError(error)
