@@ -6,15 +6,18 @@ import React, { useEffect, useState } from 'react'
 import WorkAlbums from './WorkAlbums'
 import { useAuthStateContext } from '../context';
 import useGetWorkAlbums from "../hooks/works/useGetWorkAlbums";
+import useGetPackages from '../hooks/packages/useGetPackages';
 
 export default function page() {
-  const { fetchWorkAlbums, workAlbums, isLoading, error } = useGetWorkAlbums({ defaultValue: [] })
+  const { fetchWorkAlbums, workAlbums, isLoading, error } = useGetWorkAlbums({ collectionName:"work_albums", defaultValue: [] })
+  const { fetchPackages, packages } = useGetPackages({ collectionName: "packages", defaultValue: [] })
   const authState = useAuthStateContext()
   const [_, setState] = useState()
 
   useEffect(() => {
     async function fetchResources() {
       await fetchWorkAlbums()
+      await fetchPackages()
     }
 
     fetchResources()
@@ -49,7 +52,7 @@ export default function page() {
           </div>
         </>}
 
-        <WorkAlbums workAlbums={workAlbums} setState={setState} />
+        <WorkAlbums workAlbums={workAlbums} setState={setState} packages={packages} />
       </div>
 
     </>

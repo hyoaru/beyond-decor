@@ -7,10 +7,11 @@ import { useForm } from 'react-hook-form'
 import { useCollectionRecordCreate } from '../../hooks/shared/useCollectionRecordCreate'
 
 export default function WorkAlbumAddModal(props) {
-  const { setState } = props
+  const { packages, setState } = props
   const { register, handleSubmit, reset, resetField, getValues } = useForm()
   const { collectionRecordCreate, isLoading, error } = useCollectionRecordCreate({ collectionName: 'work_albums' })
   const [thumbnailUrl, setThumbnailUrl] = useState()
+  const packageTypes = Array.from(new Set(packages?.map((pkg) => pkg.title)))
 
   function onImageChange() { setThumbnailUrl(URL.createObjectURL(getValues("thumbnailInput")[0])) }
 
@@ -120,13 +121,20 @@ export default function WorkAlbumAddModal(props) {
             </div>
 
             <div className="flex mx-auto mt-2 w-full max-w-xs">
-              <input
-                type="text"
-                placeholder={"Enter package type"}
-                className="input input-bordered w-full max-w-xs"
+              <select
+                className="select select-bordered w-full max-w-xs"
                 {...register("packageTypeInput")}
                 required
-              />
+              >
+                {packageTypes.map((packageType, index) => (
+                  <option
+                    key={`PackageType-${index}`}
+                    value={packageType}
+                  >
+                    {packageType}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div className="divider">

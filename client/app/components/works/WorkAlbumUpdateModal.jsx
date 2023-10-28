@@ -8,9 +8,10 @@ import { useForm } from 'react-hook-form'
 import { useCollectionRecordUpdate } from '@/app/hooks/shared/useCollectionRecordUpdate'
 
 export default function WorkAlbumUpdateModal(props) {
-  const { workAlbum, setState } = props
-  const {id: recordId, thumbnail_path: thumbnailSrc, event_name: eventName } = workAlbum
-  const {event_place: eventPlace, event_date: eventDate, client_name: clientName, package_type: packageType} = workAlbum
+  const { workAlbum, packages, setState } = props
+  const { id: recordId, thumbnail_path: thumbnailSrc, event_name: eventName } = workAlbum
+  const { event_place: eventPlace, event_date: eventDate, client_name: clientName, package_type: packageType } = workAlbum
+  const packageTypes = Array.from(new Set(packages?.map((pkg) => pkg.title)))
   const [thumbnailUrl, setThumbnailUrl] = useState(thumbnailSrc)
   const { collectionRecordUpdate, isLoading, error } = useCollectionRecordUpdate({ collectionName: 'work_albums' })
   const { register, handleSubmit, reset, resetField, getValues, setValue } = useForm({
@@ -133,13 +134,20 @@ export default function WorkAlbumUpdateModal(props) {
             </div>
 
             <div className="flex mx-auto mt-2 w-full max-w-xs">
-              <input
-                type="text"
-                placeholder={"Enter package type"}
-                className="input input-bordered w-full max-w-xs"
+              <select
+                className="select select-bordered w-full max-w-xs"
                 {...register("packageTypeInput")}
                 required
-              />
+              >
+                {packageTypes.map((packageType, index) => (
+                  <option
+                    key={`PackageType-${index}`}
+                    value={packageType}
+                  >
+                    {packageType}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div className="divider">

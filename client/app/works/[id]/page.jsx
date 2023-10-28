@@ -11,9 +11,11 @@ import useGetWorkAlbum from '@/app/hooks/works/useGetWorkAlbum'
 import { useAuthStateContext } from '@/app/context'
 import WorkAlbumUpdateModal from '@/app/components/works/WorkAlbumUpdateModal'
 import WorkAlbumDeleteModal from '@/app/components/works/WorkAlbumDeleteModal'
+import useGetPackages from '@/app/hooks/packages/useGetPackages'
 
 export default function page({ params }) {
   const { fetchWorkAlbum, workAlbum, isLoading, error } = useGetWorkAlbum({ recordId: params.id })
+  const { fetchPackages, packages } = useGetPackages({ collectionName: "packages", defaultValue: [] })
   const { id: recordId, event_name: eventName, event_place: eventPlace, event_date: eventDate } = workAlbum
   const { client_name: clientName, thumbnail_path: thumbnailPath, image_paths: imagePaths } = workAlbum
   const formattedEventDate = dayjs(eventDate).format("MMMM DD, YYYY")
@@ -35,6 +37,7 @@ export default function page({ params }) {
   useEffect(() => {
     async function fetchResource() {
       await fetchWorkAlbum()
+      await fetchPackages()
     }
 
     fetchResource()
@@ -85,6 +88,7 @@ export default function page({ params }) {
       {(authState.isAdmin && workAlbum?.thumbnail_path) && <>
         <WorkAlbumUpdateModal
           workAlbum={workAlbum}
+          packages={packages}
           setState={setState}
         />
 

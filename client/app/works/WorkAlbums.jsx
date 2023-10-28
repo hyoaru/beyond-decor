@@ -10,7 +10,7 @@ import useQueryParams from "../hooks/works/useQueryParams";
 import { useRef, useState } from "react";
 
 export default function WorkAlbums(props) {
-  const { workAlbums, isAdmin, setState } = props
+  const { workAlbums, packages, isAdmin, setState } = props
   const { urlSearchParams, router, pathname } = useQueryParams()
   const [filterBy, setFilterBy] = useState(urlSearchParams.get("filterBy") || "none")
   const [sortOrder, setSortOrder] = useState()
@@ -91,7 +91,7 @@ export default function WorkAlbums(props) {
         })}
       </div>
 
-      <WorkAlbumAddModal setState={setState} />
+      <WorkAlbumAddModal setState={setState} packages={packages} />
     </>
   )
 }
