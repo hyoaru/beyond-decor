@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 import { faPen, faPencil, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
@@ -60,8 +61,10 @@ export default function ActivePackage(props) {
         </div>
 
         <div className="divider mt-10">
-          <button className="btn btn-primary mx-auto flex">Add to bag</button>
-
+          <div className="flex mx-auto gap-4">
+            <Link href={{pathname: '/works', query: {filterBy: title}}} className='btn btn-primary btn-outline'>View works</Link>
+            <button className="btn btn-primary">Add to bag</button>
+          </div>
         </div>
       </div>
     </>
