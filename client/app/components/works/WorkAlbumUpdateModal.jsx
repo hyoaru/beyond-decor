@@ -10,7 +10,7 @@ import { useCollectionRecordUpdate } from '@/app/hooks/shared/useCollectionRecor
 export default function WorkAlbumUpdateModal(props) {
   const { workAlbum, setState } = props
   const {id: recordId, thumbnail_path: thumbnailSrc, event_name: eventName } = workAlbum
-  const {event_place: eventPlace, event_date: eventDate, client_name: clientName} = workAlbum
+  const {event_place: eventPlace, event_date: eventDate, client_name: clientName, package_type: packageType} = workAlbum
   const [thumbnailUrl, setThumbnailUrl] = useState(thumbnailSrc)
   const { collectionRecordUpdate, isLoading, error } = useCollectionRecordUpdate({ collectionName: 'work_albums' })
   const { register, handleSubmit, reset, resetField, getValues, setValue } = useForm({
@@ -19,6 +19,7 @@ export default function WorkAlbumUpdateModal(props) {
       eventPlaceInput: eventPlace,
       eventDateInput: dayjs(eventDate).format("YYYY-MM-DD"),
       clientNameInput: clientName,
+      packageTypeInput: packageType
     }
   })
 
@@ -32,6 +33,7 @@ export default function WorkAlbumUpdateModal(props) {
     const eventPlace = data.eventPlaceInput
     const clientName = data.clientNameInput
     const eventDate = data.eventDateInput
+    const packageType = data.packageTypeInput
 
     const formData = new FormData()
     if (thumbnailFile) { formData.append('thumbnail_file', thumbnailFile) }
@@ -39,6 +41,7 @@ export default function WorkAlbumUpdateModal(props) {
     if (eventPlace) { formData.append('event_place', eventPlace) }
     if (eventDate) { formData.append('event_date', eventDate) }
     if (clientName) { formData.append('client_name', clientName) }
+    if (packageType) { formData.append('package_type', packageType) }
     if (Array.from(imageFiles).length >= 1) {
       Array.from(imageFiles).forEach((imageFile) => {
         formData.append('image_files', imageFile)
@@ -50,6 +53,7 @@ export default function WorkAlbumUpdateModal(props) {
     setValue('eventPlaceInput', eventPlace)
     setValue('eventDateInput', eventDate)
     setValue('clientNameInput', clientName)
+    setValue('packageTypeInput', packageType)
     setState(performance.now())
     document.getElementById(`WorkAlbumUpdateModal-${recordId}`).close()
   }
@@ -101,7 +105,7 @@ export default function WorkAlbumUpdateModal(props) {
             <div className="flex mx-auto mt-2 form-control w-full max-w-xs">
               <input
                 type="text"
-                placeholder={"Enter event name to display"}
+                placeholder={"Enter event name"}
                 className="input input-bordered w-full max-w-xs"
                 {...register("eventNameInput")}
                 required
@@ -111,7 +115,7 @@ export default function WorkAlbumUpdateModal(props) {
             <div className="flex mx-auto mt-2 form-control w-full max-w-xs">
               <input
                 type="text"
-                placeholder={"Enter event place to display"}
+                placeholder={"Enter event place"}
                 className="input input-bordered w-full max-w-xs"
                 {...register("eventPlaceInput")}
                 required
@@ -121,9 +125,19 @@ export default function WorkAlbumUpdateModal(props) {
             <div className="flex mx-auto mt-2 form-control w-full max-w-xs">
               <input
                 type="date"
-                placeholder={"Enter event place to display"}
+                placeholder={"Enter event date"}
                 className="input input-bordered w-full max-w-xs"
                 {...register("eventDateInput")}
+                required
+              />
+            </div>
+
+            <div className="flex mx-auto mt-2 w-full max-w-xs">
+              <input
+                type="text"
+                placeholder={"Enter package type"}
+                className="input input-bordered w-full max-w-xs"
+                {...register("packageTypeInput")}
                 required
               />
             </div>

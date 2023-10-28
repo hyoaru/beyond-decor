@@ -21,6 +21,7 @@ export default function WorkAlbumAddModal(props) {
     const eventPlace = data.eventPlaceInput
     const clientName = data.clientNameInput
     const eventDate = data.eventDateInput
+    const packageType = data.packageTypeInput
 
     if (thumbnailFile && imageFiles && eventName && eventPlace && eventDate) {
       const formData = new FormData()
@@ -28,6 +29,7 @@ export default function WorkAlbumAddModal(props) {
       formData.append('event_name', eventName)
       formData.append('event_place', eventPlace)
       formData.append('event_date', eventDate)
+      formData.append('package_type', packageType)
       if (clientName) { formData.append('client_name', clientName) }
       Array.from(imageFiles).forEach((imageFile) => {
         formData.append('image_files', imageFile)
@@ -90,7 +92,7 @@ export default function WorkAlbumAddModal(props) {
             <div className="flex mx-auto mt-2 form-control w-full max-w-xs">
               <input
                 type="text"
-                placeholder={"Enter event name to display"}
+                placeholder={"Enter event name"}
                 className="input input-bordered w-full max-w-xs"
                 {...register("eventNameInput")}
                 required
@@ -100,7 +102,7 @@ export default function WorkAlbumAddModal(props) {
             <div className="flex mx-auto mt-2 form-control w-full max-w-xs">
               <input
                 type="text"
-                placeholder={"Enter event place to display"}
+                placeholder={"Enter event place"}
                 className="input input-bordered w-full max-w-xs"
                 {...register("eventPlaceInput")}
                 required
@@ -110,9 +112,19 @@ export default function WorkAlbumAddModal(props) {
             <div className="flex mx-auto mt-2 form-control w-full max-w-xs">
               <input
                 type="date"
-                placeholder={"Enter event place to display"}
+                placeholder={"Enter event date"}
                 className="input input-bordered w-full max-w-xs"
                 {...register("eventDateInput")}
+                required
+              />
+            </div>
+
+            <div className="flex mx-auto mt-2 w-full max-w-xs">
+              <input
+                type="text"
+                placeholder={"Enter package type"}
+                className="input input-bordered w-full max-w-xs"
+                {...register("packageTypeInput")}
                 required
               />
             </div>
@@ -124,7 +136,7 @@ export default function WorkAlbumAddModal(props) {
             <div className="flex mx-auto mt-2 form-control w-full max-w-xs">
               <input
                 type="text"
-                placeholder={"Enter client to display"}
+                placeholder={"Enter client name"}
                 className="input input-bordered w-full max-w-xs"
                 {...register("clientNameInput")}
                 required
