@@ -1,11 +1,26 @@
 "use client";
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+
+// App imports
 import WorkAlbums from './WorkAlbums'
 import { useAuthStateContext } from '../context';
+import useGetWorkAlbums from "../hooks/works/useGetWorkAlbums";
 
 export default function page() {
+  const { fetchWorkAlbums, workAlbums, isLoading, error } = useGetWorkAlbums({ defaultValue: [] })
   const authState = useAuthStateContext()
+  const [_, setState] = useState()
+
+  useEffect(() => {
+    async function fetchResources() {
+      await fetchWorkAlbums()
+    }
+
+    fetchResources()
+  }, [_])
+
+  console.log(workAlbums)
 
   return (
     <>
@@ -24,7 +39,7 @@ export default function page() {
         </div>
 
         {authState.isAdmin && <>
-          <div className="text-center my-10">
+          <div className="text-center mt-10">
             <span
               className="text-primary font-mono opacity-40 text-sm cursor-pointer"
               onClick={() => { document.getElementById('WorkAlbumAddModal').showModal() }}
@@ -34,7 +49,7 @@ export default function page() {
           </div>
         </>}
 
-        <WorkAlbums />
+        <WorkAlbums workAlbums={workAlbums} setState={setState} />
       </div>
 
     </>
