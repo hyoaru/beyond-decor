@@ -18,7 +18,9 @@ export default function WorkAlbums(props) {
 
   let filteredWorkAlbums = workAlbums
   if (filterBy !== "none") {
-    filteredWorkAlbums = workAlbums.filter((workAlbum) => (workAlbum.package_type === filterBy))
+    filteredWorkAlbums = workAlbums.filter((workAlbum) => (
+      workAlbum.package_type.toLowerCase() === filterBy.toLowerCase()
+    ))
   }
 
   function onFilterChange(event) {
