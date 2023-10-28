@@ -1,22 +1,28 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons'
+import { useBagStore } from '@/app/store/Bag'
 
 
 export default function AddOnCard(props) {
   const { isAdmin, addOnCard, editModalIdToTrigger, deleteModalIdToTrigger } = props
   const { id: addOnId, title, price, category } = addOnCard
+  const { addAddOn } = useBagStore()
 
-  function onEdit() { 
+  function onEdit() {
     if (isAdmin) {
       document.getElementById(editModalIdToTrigger).showModal()
     }
   }
-  
-  function onDelete() { 
+
+  function onDelete() {
     if (isAdmin) {
       document.getElementById(deleteModalIdToTrigger).showModal()
     }
+  }
+
+  function onAddToBag() {
+    addAddOn(title)
   }
 
   return (
@@ -43,7 +49,7 @@ export default function AddOnCard(props) {
           </div>
         </>}
 
-        <button className="btn btn-primary btn-outline h-full me-3">Add to bag</button>
+        <button className="btn btn-primary btn-outline h-full me-3" onClick={onAddToBag}>Add to bag</button>
       </div>
     </>
   )

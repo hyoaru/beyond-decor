@@ -2,19 +2,26 @@ import React from 'react'
 import Link from 'next/link'
 import { faPen, faPencil, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { useBagStore } from '@/app/store/Bag'
 
 export default function ActivePackage(props) {
   const { packageId, title, description, inclusions, isAdmin, editModalIdToTrigger, deleteModalIdToTrigger } = props
+  const { addPackage } = useBagStore()
 
-  function onEdit() { 
+  function onEdit() {
     if (isAdmin) {
       document.getElementById(editModalIdToTrigger).showModal()
     }
   }
-  function onDelete() { 
+
+  function onDelete() {
     if (isAdmin) {
       document.getElementById(deleteModalIdToTrigger).showModal()
     }
+  }
+
+  function onAddToBag() {
+    addPackage(title)
   }
 
   return (
@@ -62,8 +69,8 @@ export default function ActivePackage(props) {
 
         <div className="divider mt-10">
           <div className="flex mx-auto gap-4">
-            <Link href={{pathname: '/works', query: {filterBy: title}}} className='btn btn-primary btn-outline'>View works</Link>
-            <button className="btn btn-primary">Add to bag</button>
+            <Link href={{ pathname: '/works', query: { filterBy: title } }} className='btn btn-primary btn-outline'>View works</Link>
+            <button onClick={onAddToBag} className="btn btn-primary">Add to bag</button>
           </div>
         </div>
       </div>

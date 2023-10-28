@@ -3,18 +3,22 @@
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import { usePocketbaseContext, useAuthStateContext } from "../context"
-import { faBagShopping, faUser } from "@fortawesome/free-solid-svg-icons"
+import { faBagShopping, faUser, faX } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useRouter } from "next/navigation"
 import { useLogout } from "../hooks/authentication"
+import { useBagStore } from "../store/Bag"
 
 // App import
 export default function Header() {
+  const { packages, addOns, totalCount, removePackage, removeAddOn } = useBagStore()
   const authState = useAuthStateContext()
   const { logout } = useLogout()
 
   useEffect(() => {
   }, [authState])
+
+  console.log(addOns)
 
   function handleLogout(event) {
     logout()
@@ -51,24 +55,56 @@ export default function Header() {
         <div className="navbar-center">
           <Link href="/" className="pointer-events-auto normal-case text-xl font-bold">Beyond Decor</Link>
         </div>
+
         <div className="navbar-end">
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost">
               <div className="indicator">
                 <FontAwesomeIcon icon={faBagShopping} size="lg" />
-                <span className="badge badge-xs badge-primary indicator-item"></span>
+                <span className="badge badge-xs badge-primary indicator-item">{totalCount()}</span>
               </div>
             </label>
             <div tabIndex={0} className="dropdown-content z-[1] card card-compact p-2 w-80 border bg-base-100 border-primary">
               <div className="card-body">
                 <h3 className="uppercase text-center text-lg font-bold opacity-80">Your bag</h3>
-                <div className="border border-dashed"></div>
+                <div className="border border-dashed mb-2"></div>
+                <div className="mx-2">
+                  {packages && <>
+                    <div className="flex">
+                      <p className="font-bold text-lg me-auto text-primary">{packages}</p>
+                      <FontAwesomeIcon
+                        icon={faX}
+                        size="lg"
+                        className="text-error cursor-pointer"
+                        onClick={removePackage}
+                      />
+                    </div>
+                  </>}
+
+                  {addOns && addOns.map((addOn) => (
+                    <div className="flex">
+                      <p className="text-lg me-auto">{addOn}</p>
+                      <FontAwesomeIcon
+                        icon={faX}
+                        size="lg"
+                        className="text-error cursor-pointer"
+                        onClick={() => removeAddOn(addOn)}
+                      />
+                    </div>
+                  ))}
+
+                </div>
+
+                <div className="border border-dashed mb-2"></div>
+                <p className="text-center text-primary">{totalCount()} items in bag</p>
               </div>
-              <div className="card-actions mb-4">
-                <button className="btn btn-primary btn-sm mx-auto">Get a quote</button>
+              <div className="card-actions mb-4 flex justify-center">
+                <Link href={"/packages"} className="btn btn-primary btn-sm btn-outline">Add items</Link>
+                <button className="btn btn-primary btn-sm">Get a quote</button>
               </div>
             </div>
           </div>
+
           {(authState?.isValid) && <>
             <div className="dropdown dropdown-end">
               <label tabIndex="0" className="btn btn-ghost btn-circle">
