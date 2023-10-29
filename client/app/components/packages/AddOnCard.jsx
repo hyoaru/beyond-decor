@@ -22,7 +22,7 @@ export default function AddOnCard(props) {
   }
 
   function onAddToBag() {
-    addAddOn(title)
+    addAddOn(addOnCard)
   }
 
   return (

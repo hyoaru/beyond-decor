@@ -12,7 +12,7 @@ export default function Bag(props) {
         <div className="mx-2">
           {packages && <>
             <div className="flex items-center">
-              <p className="font-bold text-lg me-auto text-primary">{packages}</p>
+              <p className="font-bold text-lg me-auto text-primary">{packages.title}</p>
               <FontAwesomeIcon
                 icon={faX}
                 size="lg"
@@ -23,8 +23,8 @@ export default function Bag(props) {
           </>}
 
           {addOns && addOns.map((addOn) => (
-            <div key={`AddOnsBagItem-${addOn}`} className="flex items-center">
-              <p className="text-lg me-auto">{addOn}</p>
+            <div key={`AddOnsBagItem-${addOn.id}`} className="flex items-center">
+              <p className="text-lg me-auto">{addOn.title}</p>
               <FontAwesomeIcon
                 icon={faX}
                 size="lg"

@@ -22,7 +22,7 @@ export default function ActivePackage(props) {
   }
 
   function onAddToBag() {
-    addPackage(title)
+    addPackage(activePackage)
   }
 
   return (
