@@ -80,7 +80,7 @@ export default function Header() {
                   </>}
 
                   {addOns && addOns.map((addOn) => (
-                    <div className="flex items-center">
+                    <div key={`AddOnsBagItem-${addOn}`} className="flex items-center">
                       <p className="text-lg me-auto">{addOn}</p>
                       <FontAwesomeIcon
                         icon={faX}
