@@ -9,7 +9,7 @@ export default function Bag(props) {
       <div className="card-body">
         <h3 className="uppercase text-center text-lg font-bold opacity-80">Your bag</h3>
         <div className="border border-dashed mb-2"></div>
-        <div className="mx-2">
+        <div className="ms-2 pe-2 h-40 overflow-y-auto">
           {mainPackage && <>
             <div className="flex items-center">
               <p className="font-bold text-lg me-auto text-primary">{mainPackage.title}</p>
@@ -41,7 +41,7 @@ export default function Bag(props) {
       </div>
       <div className="card-actions mb-4 flex justify-center">
         <Link href={"/packages"} className="btn btn-primary btn-sm btn-outline">Add items</Link>
-        <button className="btn btn-primary btn-sm">Get a quote</button>
+        <Link href={"/checkout"} className="btn btn-primary btn-sm">Get a quote</Link>
       </div>
     </>
   )
