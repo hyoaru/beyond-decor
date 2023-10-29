@@ -44,7 +44,7 @@ export default function WorkAlbums(props) {
 
   return (
     <>
-      <div className="flex justify-center items-center gap-4 mt-10">
+      <div className="flex flex-col md:flex-row justify-center items-center gap-4 mt-10">
         <div className="flex items-center gap-4">
           <p className="font-bold">Filter by package:</p>
           <select

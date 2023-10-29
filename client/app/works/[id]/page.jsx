@@ -45,7 +45,7 @@ export default function page({ params }) {
 
   return (
     <>
-      <div className="mx-6 my-20">
+      <div className="mx-6 my-10 md:my-20">
         <div className="grid gap-6 items-center md:grid-cols-2 md:gap-14 lg:gap-24 my-20">
           <div className="prose max-w-none text-center md:text-right md:justify-self-end md:prose-lg lg:w-10/12 xl:w-8/12">
             <h1 className='md:leading-normal'>

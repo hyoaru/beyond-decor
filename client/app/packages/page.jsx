@@ -9,7 +9,7 @@ export default function page() {
   const authState = useAuthStateContext()
   return (
     <>
-      <div className="mx-6 my-20">
+      <div className="mx-6 my-10 md:my-20">
         <div className="prose max-w-none md:prose-lg text-center">
           <h1 className='leading-normal'>
             {'Discover '}

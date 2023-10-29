@@ -19,7 +19,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="mx-6 mt-8">
+      <div className="mx-6 mt-2 md:mt-8">
         <LandingCards isAdmin={authState.isAdmin} />
       </div>
 
