@@ -18,8 +18,6 @@ export default function Header() {
   useEffect(() => {
   }, [authState])
 
-  console.log(addOns)
-
   function handleLogout(event) {
     logout()
     window.location.href = "/admin/login"
@@ -27,7 +25,7 @@ export default function Header() {
 
   return (
     <>
-      <div className="navbar bg-base-100 border-b pb-0">
+      <div className="navbar bg-base-100 border-b pb-0 sticky top-0 z-50">
         <div className="navbar-start">
           <div className="dropdown lg:hidden">
             <label tabIndex={0} className="btn btn-ghost btn-circle">
@@ -107,7 +105,7 @@ export default function Header() {
 
           {(authState?.isValid) && <>
             <div className="dropdown dropdown-end">
-              <label tabIndex="0" className="btn btn-ghost btn-circle">
+              <label tabIndex="0" className="btn btn-ghost">
                 <FontAwesomeIcon icon={faUser} size="lg" />
               </label>
               <ul tabIndex="0" className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 border border-primary">
