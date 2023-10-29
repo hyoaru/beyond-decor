@@ -56,6 +56,8 @@ export default function Header() {
         </div>
 
         <div className="navbar-end">
+          <Link href={"/checkout"} className="hidden md:flex btn btn-primary btn-sm btn-outline text-white">Get a quote</Link>
+
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost">
               <div className="indicator">
