@@ -7,7 +7,7 @@ import { useBagStore } from '@/app/store/Bag'
 export default function ActivePackage(props) {
   const { activePackage, isAdmin, editModalIdToTrigger, deleteModalIdToTrigger } = props
   const { id: packageId, title, description, inclusions, price } = activePackage
-  const { addPackage } = useBagStore()
+  const { addMainPackage } = useBagStore()
 
   function onEdit() {
     if (isAdmin) {
@@ -22,7 +22,7 @@ export default function ActivePackage(props) {
   }
 
   function onAddToBag() {
-    addPackage(activePackage)
+    addMainPackage(activePackage)
   }
 
   return (

@@ -1,17 +1,17 @@
 import { create } from "zustand";
 
 export const useBagStore = create((set, get) => ({
-  packages: null,
+  mainPackage: null,
   addOns: [],
-  totalCount: () => get().addOns.length + (get().packages ? 1 : 0),
-  addPackage: (newPackages) => {
+  totalCount: () => get().addOns.length + (get().mainPackage ? 1 : 0),
+  addMainPackage: (newMainPackage) => {
     set((state) => ({
-      packages: newPackages
+      mainPackage: newMainPackage
     }))
   },
-  removePackage: () => {
+  removeMainPackage: () => {
     set((state) => ({
-      packages: null
+      mainPackage: null
     }))
   },
   addAddOn: (newAddOn) => {

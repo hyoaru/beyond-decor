@@ -12,7 +12,7 @@ import Bag from "./Bag"
 
 // App import
 export default function Header() {
-  const { packages, addOns, totalCount, removePackage, removeAddOn } = useBagStore()
+  const { mainPackage, addOns, totalCount, removeMainPackage, removeAddOn } = useBagStore()
   const authState = useAuthStateContext()
   const { logout } = useLogout()
 
@@ -65,10 +65,10 @@ export default function Header() {
             </label>
             <div tabIndex={0} className="dropdown-content z-[1] card card-compact p-2 w-80 border bg-base-100 border-primary">
               <Bag
-                packages={packages}
+                mainPackage={mainPackage}
                 addOns={addOns}
                 removeAddOn={removeAddOn}
-                removePackage={removePackage}
+                removeMainPackage={removeMainPackage}
                 totalCount={totalCount}
               />
             </div>
