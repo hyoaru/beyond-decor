@@ -17,16 +17,8 @@ export function useAdminLogin() {
         .authWithPassword(email, password)
 
       if (authData) {
+        document.cookie = pocketbase.authStore.exportToCookie({httpOnly: false})
         setIsLoggedIn(true)
-        const additionalAuthInfo = {
-          isAdmin: pocketbase.authStore.isAdmin,
-          isValid: pocketbase.authStore.isValid
-        }
-        Cookies.set("pocketbase_auth", JSON.stringify(
-          { ...pocketbase.authStore, ...additionalAuthInfo }), {
-          secure: true,
-          sameSite: 'strict'
-        })
       }
 
     } catch (error) {
