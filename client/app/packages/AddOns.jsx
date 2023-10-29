@@ -27,7 +27,7 @@ export default function AddOns(props) {
   return (
     <>
       <div className="mt-32 mx-auto md:w-11/12 lg:w-9/12 xl:w-8/12">
-        <div className="prose max-w-none">
+        <div className="prose prose-sm sm:prose-md md:prose-lg max-w-none">
           <h1 className='m-0 text-center leading-normal'>
             {'Other event upgrades: '}
             <span className='bg-primary p-1 text-white rounded-xl rounded-tr-none rounded-bl-none'>Add-ons</span>
