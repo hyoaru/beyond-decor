@@ -8,23 +8,25 @@ import { useCollectionRecordUpdate } from '../../hooks/shared/useCollectionRecor
 
 export default function PackageUpdateModal(props) {
   const { packageCard, modalId, setState } = props
-  const { id: cardId, title, description, inclusions } = packageCard
+  const { id: cardId, title, description, inclusions, price } = packageCard
   const { collectionRecordUpdate, isLoading, error } = useCollectionRecordUpdate({ collectionName: 'packages' })
   const { register, handleSubmit, reset, resetField, getValues, setValue } = useForm({
-    defaultValues: { titleInput: title, descriptionInput: description, inclusionsInput: inclusions.join(", ") }
+    defaultValues: { titleInput: title, descriptionInput: description, inclusionsInput: inclusions.join(", "), priceInput: price }
   })
 
   async function onSubmit(data) {
     const title = data.titleInput
     const description = data.descriptionInput
     const inclusions = data.inclusionsInput
+    const price = data.priceInput
 
     const formData = new FormData()
     if (title) { formData.append('title', title) }
     if (description) { formData.append('description', description) }
-    if (inclusions) { 
+    if (price) { formData.append('price', price) }
+    if (inclusions) {
       const inclusionsTrimmed = inclusions.split(",").map((inclusion) => inclusion.trim())
-      formData.append('inclusions', JSON.stringify(inclusionsTrimmed)) 
+      formData.append('inclusions', JSON.stringify(inclusionsTrimmed))
     }
 
     await collectionRecordUpdate({ recordId: cardId, formData: formData })
@@ -32,6 +34,7 @@ export default function PackageUpdateModal(props) {
     setValue('titleInput', title)
     setValue('descriptionInput', description)
     setValue('inclusionsInput', inclusions)
+    setValue('priceInput', price)
     setState(performance.now())
     document.getElementById(modalId).close()
   }
@@ -52,6 +55,16 @@ export default function PackageUpdateModal(props) {
                   placeholder={"Enter title to display"}
                   className="input input-bordered w-full max-w-xs"
                   {...register("titleInput")}
+                  required
+                />
+              </div>
+
+              <div className="flex mx-auto form-control w-full max-w-xs my-2">
+                <input
+                  type="number"
+                  placeholder={"Enter package price"}
+                  className="input input-bordered w-full max-w-xs"
+                  {...register("priceInput")}
                   required
                 />
               </div>

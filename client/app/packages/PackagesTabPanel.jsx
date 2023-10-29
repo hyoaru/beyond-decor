@@ -32,10 +32,7 @@ export default function PackagesTabPanel(props) {
       <div className={`mt-10 ${isAdmin ? "lg:mt-10" : "lg:mt-20"}`}>
         {(packages && activePackage) && <>
           <ActivePackage
-            packageId={activePackage.id}
-            title={activePackage.title}
-            description={activePackage.description}
-            inclusions={activePackage.inclusions}
+            activePackage={activePackage}
             isAdmin={isAdmin}
             editModalIdToTrigger={`PackageEditModal-${activePackage.id}`}
             deleteModalIdToTrigger={`PackageDeleteModal-${activePackage.id}`}

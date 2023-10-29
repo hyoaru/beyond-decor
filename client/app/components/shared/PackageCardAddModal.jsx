@@ -21,14 +21,16 @@ export default function PackageCardAddModal(props) {
     const shortDescription = data.shortDescriptionInput
     const inclusionsTrimmed = data.inclusionsInput.split(",").map((inclusion) => inclusion.trim())
     const inclusions = JSON.stringify(inclusionsTrimmed)
+    const price = data.priceInput
 
-    if (imageFile && title && description) {
+    if (imageFile && title && description && shortDescription && inclusions && price) {
       const formData = new FormData()
       formData.append('image_file', imageFile)
       formData.append('title', title)
       formData.append('description', description)
       formData.append('short_description', shortDescription)
       formData.append('inclusions', inclusions)
+      formData.append('price', price)
 
       await collectionRecordCreate({ formData: formData })
       setState(performance.now())
@@ -77,6 +79,16 @@ export default function PackageCardAddModal(props) {
                   placeholder={"Enter title to display"}
                   className="input input-bordered w-full max-w-xs"
                   {...register("titleInput")}
+                  required
+                />
+              </div>
+
+              <div className="flex mx-auto form-control w-full max-w-xs my-2">
+                <input
+                  type="number"
+                  placeholder={"Enter package price"}
+                  className="input input-bordered w-full max-w-xs"
+                  {...register("priceInput")}
                   required
                 />
               </div>
