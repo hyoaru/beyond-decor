@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 // App imports
 import WorkAlbum from "../components/works/WorkAlbum";
 import WorkAlbumAddModal from "../components/works/WorkAlbumAddModal";
-import useQueryParams from "../hooks/works/useQueryParams";
+import useQueryParams from "../hooks/shared/useQueryParams";
 import { useRef, useState } from "react";
 
 export default function WorkAlbums(props) {
