@@ -68,7 +68,7 @@ export default function Header() {
                 <div className="border border-dashed mb-2"></div>
                 <div className="mx-2">
                   {packages && <>
-                    <div className="flex">
+                    <div className="flex items-center">
                       <p className="font-bold text-lg me-auto text-primary">{packages}</p>
                       <FontAwesomeIcon
                         icon={faX}
@@ -80,7 +80,7 @@ export default function Header() {
                   </>}
 
                   {addOns && addOns.map((addOn) => (
-                    <div className="flex">
+                    <div className="flex items-center">
                       <p className="text-lg me-auto">{addOn}</p>
                       <FontAwesomeIcon
                         icon={faX}
