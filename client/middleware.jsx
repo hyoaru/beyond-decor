@@ -7,8 +7,10 @@ export async function middleware(req) {
   const pocketbase = new PocketBase(process.env.NEXT_PUBLIC_POCKETBASE_URL)
   
   const authCookie = req.cookies.get('pb_auth')?.value
-  const authCookieParsed = JSON.parse(authCookie)
-  pocketbase.authStore.save(authCookieParsed.token, authCookieParsed.model)
+  if (authCookie) {
+    const authCookieParsed = JSON.parse(authCookie)
+    pocketbase.authStore.save(authCookieParsed.token, authCookieParsed.model)
+  }
 
   const isAuthenticated = pocketbase.authStore.isAdmin
   if (!pathnames.includes(req.nextUrl.pathname)) {

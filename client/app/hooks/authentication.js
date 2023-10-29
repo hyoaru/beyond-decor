@@ -33,7 +33,7 @@ export function useAdminLogin() {
 export function useLogout() {
   function logout() {
     pocketbase.authStore.clear()
-    Cookies.remove('pocketbase_auth')
+    Cookies.remove('pb_auth')
   }
 
   return { logout }

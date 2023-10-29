@@ -21,12 +21,13 @@ export function AuthStateContextProvider({ children }) {
   useEffect(() => {
     const authStateCookie = Cookies.get('pb_auth')
     const authStateLocal = localStorage.getItem('pocketbase_auth')
-    const authStateCookieParsed = JSON.parse(authStateCookie)
-
+    
     if (authStateCookie && authStateLocal) {
+      const authStateCookieParsed = JSON.parse(authStateCookie)
       pocketbase.authStore.save(authStateCookieParsed.token, authStateCookieParsed.model)
     } else {
       pocketbase.authStore.clear()
+      Cookies.remove('pb_auth')
     }
 
     setAuthState(pocketbase.authStore)
