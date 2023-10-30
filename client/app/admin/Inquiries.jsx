@@ -15,6 +15,8 @@ export default function Inquiries(props) {
   const { flexRender, inquiriesTable, globalFilter, setGlobalFilter, pageRef } = useGetInquiriesTable({ inquiries })
   const [_, setState] = useState()
 
+  console.log(inquiries)
+
   function onGlobalFilterChange(event) { setGlobalFilter(event.target.value) }
 
   function onFirstPagePagination() {

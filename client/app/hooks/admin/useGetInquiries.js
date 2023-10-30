@@ -2,6 +2,7 @@ import { useState } from 'react'
 import PocketBase from "pocketbase"
 
 // App imports
+import processInquiries from '@/app/libraries/admin/processInquiries'
 
 export default function useGetInquiries({ collectionName = 'inquiries', defaultValue }) {
   const pocketbase = new PocketBase(process.env.NEXT_PUBLIC_POCKETBASE_URL)
@@ -9,7 +10,7 @@ export default function useGetInquiries({ collectionName = 'inquiries', defaultV
   const [error, setError] = useState()
   const [inquiries, setInquiries] = useState([])
 
-  const fetchInquiries = async() => {
+  const fetchInquiries = async () => {
     setIsLoading(true)
 
     try {
@@ -17,7 +18,12 @@ export default function useGetInquiries({ collectionName = 'inquiries', defaultV
         .collection(collectionName)
         .getFullList({ sort: 'created' });
 
-      setInquiries(fetchedInquiries)
+      setInquiries(
+        processInquiries({
+          collectionName: collectionName,
+          inquiries: fetchedInquiries
+        })
+      )
     } catch (error) {
       setInquiries(defaultValue)
       setError(error)
