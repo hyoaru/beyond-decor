@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 
 // App imports
-import useGetInquiries from '../hooks/admin/useGetInquiries';
+import useGetInquiries from '../hooks/shared/useGetInquiries';
 import InquiriesTable from '../components/admin/InquiriesTable';
 
 export default function Inquiries(props) {
