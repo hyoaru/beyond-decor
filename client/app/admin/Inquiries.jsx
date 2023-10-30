@@ -1,38 +1,19 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from 'react'
-import { flexRender, getCoreRowModel, useReactTable, getSortedRowModel, getFilteredRowModel, getPaginationRowModel } from '@tanstack/react-table';
+
 import { saveAs } from 'file-saver';
 import { Parser as CsvParser } from '@json2csv/plainjs';
 import dayjs from 'dayjs';
 
 // App imports
 import useGetInquiries from '../hooks/admin/useGetInquiries';
+import useGetInquiriesTable from '../hooks/admin/useGetInquiriesTable';
 
 export default function Inquiries(props) {
   const { fetchInquiries, inquiries, isLoading, error } = useGetInquiries({ collectionName: 'inquiries', defaultValue: [] })
-  const [sorting, setSorting] = useState([])
-  const [globalFilter, setGlobalFilter] = useState('')
-  const pageRef = useRef(0)
+  const { flexRender, inquiriesTable, globalFilter, setGlobalFilter, pageRef } = useGetInquiriesTable({ inquiries })
   const [_, setState] = useState()
-
-  const columnDefinition = [
-    { accessorKey: 'id' }, { accessorKey: 'full_name' }, { accessorKey: 'email_address' }, { accessorKey: 'facebook_link' },
-    { accessorKey: 'phone_number' }, { accessorKey: 'event_date' }, { accessorFn: (row) => (row.main_package?.title ?? null), header: 'main_package' },
-  ]
-
-  const inquiriesTable = useReactTable({
-    state: { sorting: sorting, globalFilter: globalFilter },
-    columns: columnDefinition,
-    data: inquiries,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    onSortingChange: setSorting,
-    onGlobalFilterChange: setGlobalFilter,
-  })
-
 
   function onGlobalFilterChange(event) { setGlobalFilter(event.target.value) }
 
