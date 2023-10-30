@@ -14,7 +14,7 @@ import { useState } from "react";
 export default function page() {
   const { mainPackage, addOns, removeAddOn, removeMainPackage, getTotalPrice } = useBagStore()
   const { register, handleSubmit, reset, resetField, getValues } = useForm()
-  const {collectionRecordCreate, isLoading, error} = useCollectionRecordCreate({collectionName: 'inquiries'})
+  const { collectionRecordCreate, isLoading, error } = useCollectionRecordCreate({ collectionName: 'inquiries' })
   const [_, setState] = useState()
 
   async function onSubmit(data) {
@@ -28,7 +28,6 @@ export default function page() {
     const preferredDesignDescription = data.preferredDesignDescriptionInput
     const preferredDesignSamples = data.preferredDesignSamplesInput
     const acquisitionSurvey = data.acquisitionSurveyInput
-    const items = {mainPackage: mainPackage, addOns: addOns}
     const itemsTotalCost = getTotalPrice()
 
     const formData = new FormData()
@@ -41,13 +40,22 @@ export default function page() {
     formData.append('event_date', eventDate)
     formData.append('preferred_design_description', preferredDesignDescription)
     formData.append('acquisition_survey', acquisitionSurvey)
-    formData.append('items', JSON.stringify(items))
     formData.append('items_total_cost', itemsTotalCost)
     Array.from(preferredDesignSamples).forEach((imageFile) => {
       formData.append('preferred_design_samples', imageFile)
     })
-    
-    await collectionRecordCreate({formData: formData})
+
+    if (mainPackage) {
+      const mainPackageStripped = { title: mainPackage.title, price: mainPackage.price }
+      formData.append('main_package', JSON.stringify(mainPackageStripped))
+    }
+
+    if (addOns) {
+      const addOnsStripped = addOns.map((addOn) => { return { title: addOn.title, price: addOn.price } })
+      formData.append('add_ons', JSON.stringify(addOnsStripped))
+    }
+
+    await collectionRecordCreate({ formData: formData })
     setState(performance.now())
     document.getElementById('CheckoutSubmitStatusModal').showModal()
     reset()
@@ -84,16 +92,16 @@ export default function page() {
                 <p className='font-bold text-primary mb-2'>Event information</p>
                 <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
                   <RequiredFieldLayout>
-                    <input type="text" placeholder="Occasion" className="input input-bordered w-full" {...register('eventTypeInput')} required/>
+                    <input type="text" placeholder="Occasion" className="input input-bordered w-full" {...register('eventTypeInput')} required />
                   </RequiredFieldLayout>
 
                   <RequiredFieldLayout>
-                    <input type="text" placeholder="Location/Venue" className="input input-bordered w-full" {...register('eventPlaceInput')} required/>
+                    <input type="text" placeholder="Location/Venue" className="input input-bordered w-full" {...register('eventPlaceInput')} required />
                   </RequiredFieldLayout>
                   <div className="md:col-span-2">
                     <div className="divider m-0 my-2"><small className='text-primary font-bold'>Event date</small></div>
                     <RequiredFieldLayout>
-                      <input type="date" placeholder="Event date" className="input input-bordered w-full" {...register('eventDateInput')} required/>
+                      <input type="date" placeholder="Event date" className="input input-bordered w-full" {...register('eventDateInput')} required />
                     </RequiredFieldLayout>
                   </div>
 
@@ -114,7 +122,6 @@ export default function page() {
                       className="file-input file-input-bordered file-input-primary w-full"
                       {...register('preferredDesignSamplesInput')}
                       multiple
-                      required
                     />
                   </div>
                 </div>
