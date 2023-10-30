@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { useRef, useState } from "react";
 
 // App imports 
 import RequiredFieldLayout from "../components/checkout/RequiredFieldLayout"
@@ -9,13 +9,18 @@ import { useBagStore } from "../store/Bag";
 import { useForm } from "react-hook-form";
 import { useCollectionRecordCreate } from "../hooks/shared/useCollectionRecordCreate";
 import CheckoutSubmitStatusModal from "../components/checkout/CheckoutSubmitStatusModal";
-import { useState } from "react";
+import isEventDateConflicting from "../libraries/checkout/isEventDateConflicting";
 
 export default function page() {
   const { mainPackage, addOns, removeAddOn, removeMainPackage, getTotalPrice } = useBagStore()
   const { register, handleSubmit, reset, resetField, getValues } = useForm()
   const { collectionRecordCreate, isLoading, error } = useCollectionRecordCreate({ collectionName: 'inquiries' })
+  const [eventDateInConflictCount, setEventDateInConflictCount] = useState(0)
   const [_, setState] = useState()
+
+  async function eventDateOnChange() {
+    setEventDateInConflictCount(await isEventDateConflicting({eventDate: getValues('eventDateInput')}))
+  }
 
   async function onSubmit(data) {
     const fullName = data.fullNameInput
@@ -77,14 +82,38 @@ export default function page() {
                 <p className='font-bold text-primary mb-2'>Information about you</p>
                 <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
                   <RequiredFieldLayout>
-                    <input type="text" placeholder="Full name" className="input input-bordered w-full" {...register('fullNameInput')} required />
+                    <input
+                      type="text"
+                      placeholder="Full name"
+                      className="input input-bordered w-full"
+                      {...register('fullNameInput')}
+                      required
+                    />
                   </RequiredFieldLayout>
-                  <input type="text" placeholder="Phone number" className="input input-bordered w-full" {...register('phoneNumberInput')} required />
+                  <input
+                    type="text"
+                    placeholder="Phone number"
+                    className="input input-bordered w-full"
+                    {...register('phoneNumberInput')}
+                    required
+                  />
                   <RequiredFieldLayout>
-                    <input type="email" placeholder="Email address" className="input input-bordered w-full" {...register('emailAddressInput')} required />
+                    <input
+                      type="email"
+                      placeholder="Email address"
+                      className="input input-bordered w-full"
+                      {...register('emailAddressInput')}
+                      required
+                    />
                   </RequiredFieldLayout>
                   <RequiredFieldLayout>
-                    <input type="text" placeholder="Facebook link" className="input input-bordered w-full" {...register('facebookLinkInput')} required />
+                    <input
+                      type="text"
+                      placeholder="Facebook link"
+                      className="input input-bordered w-full"
+                      {...register('facebookLinkInput')}
+                      required
+                    />
                   </RequiredFieldLayout>
                 </div>
               </div>
@@ -92,22 +121,53 @@ export default function page() {
                 <p className='font-bold text-primary mb-2'>Event information</p>
                 <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
                   <RequiredFieldLayout>
-                    <input type="text" placeholder="Occasion" className="input input-bordered w-full" {...register('eventTypeInput')} required />
+                    <input
+                      type="text"
+                      placeholder="Occasion"
+                      className="input input-bordered w-full"
+                      {...register('eventTypeInput')}
+                      required
+                    />
                   </RequiredFieldLayout>
 
                   <RequiredFieldLayout>
-                    <input type="text" placeholder="Location/Venue" className="input input-bordered w-full" {...register('eventPlaceInput')} required />
+                    <input
+                      type="text"
+                      placeholder="Location/Venue"
+                      className="input input-bordered w-full"
+                      {...register('eventPlaceInput')}
+                      required
+                    />
                   </RequiredFieldLayout>
                   <div className="md:col-span-2">
-                    <div className="divider m-0 my-2"><small className='text-primary font-bold'>Event date</small></div>
+                    <div className="divider m-0 my-2">
+                      <small className='text-primary font-bold'>Event date</small>
+                    </div>
+
+                    {eventDateInConflictCount > 0 && <>
+                      <small className="text-error block mb-2 font-bold">{`${eventDateInConflictCount} event(s) booked this day`}</small>
+                    </>}
                     <RequiredFieldLayout>
-                      <input type="date" placeholder="Event date" className="input input-bordered w-full" {...register('eventDateInput')} required />
+                      <input
+                        type="date"
+                        placeholder="Event date"
+                        className="input input-bordered w-full"
+                        {...register('eventDateInput', { onChange: eventDateOnChange })}
+                        required
+                      />
                     </RequiredFieldLayout>
                   </div>
 
                   <div className="md:col-span-2">
-                    <div className="divider m-0 my-2"><small className='text-primary font-bold'>Preferred design / theme</small></div>
-                    <textarea placeholder="Describe preferred design" className="textarea textarea-bordered w-full" {...register('preferredDesignDescriptionInput')}></textarea>
+                    <div className="divider m-0 my-2">
+                      <small className='text-primary font-bold'>Preferred design / theme</small>
+                    </div>
+                    <textarea
+                      placeholder="Describe preferred design"
+                      className="textarea textarea-bordered w-full"
+                      {...register('preferredDesignDescriptionInput')}>
+                    </textarea>
+
                     <small className="block my-2">
                       You may choose to upload <span className="font-bold">up to 5 sample peg designs</span> or you may also check our {' '}
                       <span className='text-primary font-bold underline tooltip' data-tip="www.facebook.com/beyonddecorph">
@@ -116,6 +176,7 @@ export default function page() {
                         </a>
                       </span>
                     </small>
+
                     <input
                       type="file"
                       accept='.jpg, .jpeg, .png'
@@ -141,12 +202,21 @@ export default function page() {
                 <div className="divider">
                   <small className="font-bold text-primary">How did you hear about Beyond Decor</small>
                 </div>
-                <textarea className="textarea textarea-primary w-full" placeholder="Facebook? Co-workers? Relatives?" {...register('acquisitionSurveyInput')}></textarea>
+                <textarea
+                  className="textarea textarea-primary w-full"
+                  placeholder="Facebook? Co-workers? Relatives?"
+                  {...register('acquisitionSurveyInput')}>
+                </textarea>
               </div>
             </div>
 
             <div className="col-span-1 md:col-span-2 mt-6">
-              <input type="submit" className="btn btn-primary btn-lg font-bold text-white flex w-full" value={"Checkout"} disabled={isLoading} />
+              <input
+                type="submit"
+                className="btn btn-primary btn-lg font-bold text-white flex w-full"
+                value={"Checkout"}
+                disabled={isLoading}
+              />
             </div>
           </div>
         </form>
