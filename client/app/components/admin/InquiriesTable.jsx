@@ -63,7 +63,7 @@ export default function InquiriesTable(props) {
     <>
       <div className="mt-16 mx-4 md:mx-16 lg:mx-32 mb-6 flex flex-col sm:flex-row items-center gap-2">
         <div className="flex">
-          <label className='me-4 rounded-box bg-primary text-white p-1 px-3 font-bold max-w-xs'>Global filter</label>
+          <label className='me-4 rounded-box bg-primary text-white p-1 px-3 font-bold max-w-xs uppercase text-sm'>Global filter</label>
           <a className="flex btn btn-primary btn-outine btn-sm text-white sm:hidden" onClick={onExportToCsv}>Export to CSV</a>
         </div>
         <input
@@ -73,7 +73,7 @@ export default function InquiriesTable(props) {
           value={globalFilter}
           onChange={onGlobalFilterChange}
         />
-        <FontAwesomeIcon icon={faArrowsRotate} size='xl' className='text-primary cursor-pointer sm:ms-5 sm:me-auto' onClick={onRefreshTable} />
+        <FontAwesomeIcon icon={faArrowsRotate} size='xl' className='text-primary cursor-pointer mt-5 sm:mt-0 sm:ms-5 sm:me-auto' onClick={onRefreshTable} />
         <a className="hidden btn btn-primary btn-outline btn-sm text-white sm:flex" onClick={onExportToCsv}>Export to CSV</a>
       </div>
 
