@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import dayjs from "dayjs";
 
 // App imports 
 import RequiredFieldLayout from "../components/checkout/RequiredFieldLayout"
@@ -9,17 +10,27 @@ import { useBagStore } from "../store/Bag";
 import { useForm } from "react-hook-form";
 import { useCollectionRecordCreate } from "../hooks/shared/useCollectionRecordCreate";
 import CheckoutSubmitStatusModal from "../components/checkout/CheckoutSubmitStatusModal";
-import isEventDateConflicting from "../libraries/checkout/isEventDateConflicting";
+import useGetInquiries from "../hooks/shared/useGetInquiries";
 
 export default function page() {
   const { mainPackage, addOns, removeAddOn, removeMainPackage, getTotalPrice } = useBagStore()
+  const { fetchInquiries, inquiries, isLoading: inquiriesIsLoading, error: inquiriesError } = useGetInquiries({collectionName: 'inquiries'})
   const { register, handleSubmit, reset, resetField, getValues } = useForm()
   const { collectionRecordCreate, isLoading, error } = useCollectionRecordCreate({ collectionName: 'inquiries' })
   const [eventDateInConflictCount, setEventDateInConflictCount] = useState(0)
   const [_, setState] = useState()
 
+  useEffect(() => {
+    fetchInquiries()
+  }, [_])
+
   async function eventDateOnChange() {
-    setEventDateInConflictCount(await isEventDateConflicting({eventDate: getValues('eventDateInput')}))
+    if (inquiries.length <= 0) { return }
+    const formattedEventDate = dayjs(getValues('eventDateInput')).format('YYYY-MM-DD')
+    const filteredInquiries = inquiries.filter((inquiry) => (
+      formattedEventDate === dayjs(inquiry.event_date).format('YYYY-MM-DD')
+    ))
+    setEventDateInConflictCount(filteredInquiries.length)
   }
 
   async function onSubmit(data) {
