@@ -65,7 +65,10 @@ export default function Inquiries(props) {
   return (
     <>
       <div className="mt-16 mx-4 md:mx-16 lg:mx-32 mb-6 flex flex-col sm:flex-row items-center gap-2">
-        <label className='me-4 rounded-box bg-primary text-white p-1 px-3 font-bold max-w-xs'>Global filter</label>
+        <div className="flex">
+          <label className='me-4 rounded-box bg-primary text-white p-1 px-3 font-bold max-w-xs'>Global filter</label>
+          <a className="flex btn btn-primary btn-sm text-white sm:hidden" onClick={onExportToCsv}>Export to CSV</a>
+        </div>
         <input
           type="text"
           className="input input-sm input-bordered input-primary w-full max-w-[17rem] sm:me-auto"
@@ -73,7 +76,7 @@ export default function Inquiries(props) {
           value={globalFilter}
           onChange={onGlobalFilterChange}
         />
-        <a className="btn btn-primary btn-sm text-white" onClick={onExportToCsv}>Export to CSV</a>
+        <a className="hidden btn btn-primary btn-sm text-white sm:flex" onClick={onExportToCsv}>Export to CSV</a>
       </div>
 
       <div className="overflow-x-auto mx-4 md:mx-16 lg:mx-32">
@@ -109,20 +112,20 @@ export default function Inquiries(props) {
         </table>
       </div>
 
-      <div className="flex justify-center mt-16 text-white font-black text-lg">
+      <div className="flex justify-center mt-16 text-white font-black text-lg mx-4 md:mx-16 lg:mx-32">
         <div className="join">
-          <button className="join-item btn btn-primary" onClick={onFirstPagePagination}>«</button>
-          <button className="join-item btn btn-primary" onClick={onPreviousPagePagination}>{'<'}</button>
+          <button className="join-item btn btn-sm btn-primary sm:btn-md" onClick={onFirstPagePagination}>«</button>
+          <button className="join-item btn btn-sm btn-primary sm:btn-md" onClick={onPreviousPagePagination}>{'<'}</button>
           <div className="join-item mx-auto px-5 bg-primary flex">
             <input
               type="number"
-              className="input text-primary text-center max-w-[10rem]"
+              className="input text-primary input-sm text-center max-w-[5rem] sm:btn-md sm:max-w-[10rem]"
               value={pageRef.current}
               onChange={onPageJump}
             />
           </div>
-          <button className="join-item btn btn-primary" onClick={onNextPagePagination}>{'>'}</button>
-          <button className="join-item btn btn-primary" onClick={onLastPagePagination}>»</button>
+          <button className="join-item btn btn-sm btn-primary sm:btn-md" onClick={onNextPagePagination}>{'>'}</button>
+          <button className="join-item btn btn-sm btn-primary sm:btn-md" onClick={onLastPagePagination}>»</button>
         </div>
       </div>
     </>
