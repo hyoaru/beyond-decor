@@ -7,6 +7,7 @@ import useGetPackages from "../../_hooks/packages/useGetPackages";
 import defaultPackages from "@/public/packages.json"
 import PackagesTabPanel from './PackagesTabPanel'
 import PackageCardAddModal from "../../_components/shared/PackageCardAddModal";
+import Loading from "./loading";
 
 export default function Packages(props) {
   const { isAdmin } = props
@@ -14,11 +15,7 @@ export default function Packages(props) {
   const [_, setState] = useState()
 
   useEffect(() => {
-    async function fetchResources() {
-      await fetchPackages()
-    }
-
-    fetchResources()
+    fetchPackages()
   }, [_])
 
   console.log(packages)
@@ -36,19 +33,25 @@ export default function Packages(props) {
         </div>
       </>}
 
-      {packages &&
-        <PackagesTabPanel
-          packages={packages}
-          isAdmin={isAdmin}
-          setState={setState}
-        />
+      {isLoading
+        ? <Loading />
+        : <>
+          {packages &&
+            <PackagesTabPanel
+              packages={packages}
+              isAdmin={isAdmin}
+              setState={setState}
+            />
+          }
+
+          {isAdmin &&
+            <PackageCardAddModal
+              setState={setState}
+            />
+          }
+        </>
       }
 
-      {isAdmin &&
-        <PackageCardAddModal
-          setState={setState}
-        />
-      }
     </>
   )
 }

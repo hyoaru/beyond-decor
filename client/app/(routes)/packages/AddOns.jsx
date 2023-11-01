@@ -8,6 +8,7 @@ import useGetAddOns from '../../_hooks/packages/useGetAddOns';
 import AddOnsAddModal from '../../_components/packages/AddOnsAddModal';
 import AddOnsUpdateModal from '../../_components/packages/AddOnsUpdateModal';
 import AddOnsDeleteModal from '../../_components/packages/AddOnsDeleteModal';
+import Loading from './loading';
 
 export default function AddOns(props) {
   const { isAdmin } = props
@@ -15,14 +16,10 @@ export default function AddOns(props) {
   const [_, setState] = useState()
 
   useEffect(() => {
-    async function fetchResources() {
-      await fetchAddOns()
-    }
-
-    fetchResources()
+    fetchAddOns()
   }, [_])
 
-  console.log(addOns)
+  if (isLoading) { return <Loading /> }
 
   return (
     <>

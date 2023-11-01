@@ -6,7 +6,7 @@ import processResources from '@/app/_libraries/shared/processResources'
 
 export default function useGetPackages({ collectionName = "packages", defaultValue = [] }) {
   const pocketbase = new PocketBase(process.env.NEXT_PUBLIC_POCKETBASE_URL)
-  const [isLoading, setIsLoading] = useState()
+  const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState()
   const [packages, setPackages] = useState([])
 

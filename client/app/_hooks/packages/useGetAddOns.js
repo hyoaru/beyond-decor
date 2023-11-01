@@ -3,7 +3,7 @@ import PocketBase from "pocketbase"
 
 export default function useGetAddOns({ collectionName="addons", defaultValue=[] }) {
   const pocketbase = new PocketBase(process.env.NEXT_PUBLIC_POCKETBASE_URL)
-  const [isLoading, setIsLoading] = useState()
+  const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState()
   const [addOns, setAddOns] = useState([])
 
