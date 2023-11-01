@@ -11,10 +11,11 @@ import { useForm } from "react-hook-form";
 import { useCollectionRecordCreate } from "../hooks/shared/useCollectionRecordCreate";
 import CheckoutSubmitStatusModal from "../components/checkout/CheckoutSubmitStatusModal";
 import useGetInquiries from "../hooks/shared/useGetInquiries";
+import processInquiries from "../libraries/shared/processInquiries";
 
 export default function page() {
   const { mainPackage, addOns, removeAddOn, removeMainPackage, getTotalPrice } = useBagStore()
-  const { fetchInquiries, inquiries, isLoading: inquiriesIsLoading, error: inquiriesError } = useGetInquiries({collectionName: 'inquiries'})
+  const { fetchInquiries, inquiries, isLoading: inquiriesIsLoading, error: inquiriesError } = useGetInquiries({ collectionName: 'inquiries' })
   const { register, handleSubmit, reset, resetField, getValues } = useForm()
   const { collectionRecordCreate, isLoading, error } = useCollectionRecordCreate({ collectionName: 'inquiries' })
   const [eventDateInConflictCount, setEventDateInConflictCount] = useState(0)
@@ -31,6 +32,26 @@ export default function page() {
       formattedEventDate === dayjs(inquiry.event_date).format('YYYY-MM-DD')
     ))
     setEventDateInConflictCount(filteredInquiries.length)
+  }
+
+  function onPreferredDesignSamplesInputChange () {
+    const imageCount = Array.from(getValues('preferredDesignSamplesInput')).length
+    if (imageCount > 3) {
+      alert("You can only upload up to 3 sample peg designs")
+      resetField("preferredDesignSamplesInput")
+    }
+  }
+
+  function sendInquiryDetailsToEmail({ emailAddress, inquiry }) {
+    fetch('/api/checkout/InquiryDetailsEmail', {
+      method: "POST",
+      body: JSON.stringify({
+        to: `${emailAddress}, beyonddecordev1@gmail.com`,
+        from: "beyonddecordev1@gmail.com",
+        subject: "Beyond Decor Inquiry",
+        inquiry: inquiry
+      })
+    })
   }
 
   async function onSubmit(data) {
@@ -66,12 +87,20 @@ export default function page() {
       formData.append('main_package', JSON.stringify(mainPackageStripped))
     }
 
-    if (addOns) {
+    if (addOns.length > 0) {
       const addOnsStripped = addOns.map((addOn) => { return { title: addOn.title, price: addOn.price } })
       formData.append('add_ons', JSON.stringify(addOnsStripped))
     }
 
     await collectionRecordCreate({ formData: formData })
+      .then((inquiryRes) => (processInquiries({ collectionName: 'inquiries', inquiries: [inquiryRes] })))
+      .then((processedInquiries) => {
+        sendInquiryDetailsToEmail({
+          emailAddress: processedInquiries[0]?.email_address,
+          inquiry: processedInquiries[0]
+        })
+      })
+
     setState(performance.now())
     document.getElementById('CheckoutSubmitStatusModal').showModal()
     reset()
@@ -180,7 +209,7 @@ export default function page() {
                     </textarea>
 
                     <small className="block my-2">
-                      You may choose to upload <span className="font-bold">up to 5 sample peg designs</span> or you may also check our {' '}
+                      You may choose to upload <span className="font-bold">up to 3 sample peg designs</span> or you may also check our {' '}
                       <span className='text-primary font-bold underline tooltip' data-tip="www.facebook.com/beyonddecorph">
                         <a href="https://www.facebook.com/beyonddecorph" target="_blank">
                           facebook page
@@ -192,7 +221,7 @@ export default function page() {
                       type="file"
                       accept='.jpg, .jpeg, .png'
                       className="file-input file-input-bordered file-input-primary w-full"
-                      {...register('preferredDesignSamplesInput')}
+                      {...register('preferredDesignSamplesInput', {onChange: onPreferredDesignSamplesInputChange})}
                       multiple
                     />
                   </div>
