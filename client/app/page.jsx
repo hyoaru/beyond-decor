@@ -1,18 +1,14 @@
 "use client";
 
-export const revalidate = 0
-export const dynamic = 'force-dynamic'
-export const fetchCache = 'force-no-store'
-
 import Link from 'next/link';
 
 // App imports
-import LandingCards from './index/LandingCards'
-import PackageCards from './index/PackageCards'
-import ParallaxSection from './index/ParallaxSection';
-import EventServingGroups from './index/EventServingGroups';
-import AnimationFadeOnShow from './animations/shared/AnimationFadeOnShow';
-import { useAuthStateContext } from './context';
+import LandingCards from './(routes)/index/LandingCards'
+import PackageCards from './(routes)/index/PackageCards'
+import ParallaxSection from './(routes)/index/ParallaxSection';
+import EventServingGroups from './(routes)/index/EventServingGroups';
+import AnimationFadeOnShow from './_animations/shared/AnimationFadeOnShow';
+import { useAuthStateContext } from './_context';
 
 export default function Home() {
   const authState = useAuthStateContext()
