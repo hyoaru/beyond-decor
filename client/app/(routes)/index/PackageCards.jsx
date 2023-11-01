@@ -8,6 +8,7 @@ import PackageCardUpdateModal from '../../_components/index/PackageCardUpdateMod
 import PackageCardAddModal from '../../_components/shared/PackageCardAddModal';
 import useGetResources from '../../_hooks/index/useGetResources';
 import PackageCardDeleteModal from '../../_components/shared/PackageCardDeleteModal';
+import Loading from '@/app/loading';
 
 export default function PackageCards(props) {
   const { isAdmin } = props
@@ -17,14 +18,10 @@ export default function PackageCards(props) {
   )
 
   useEffect(() => {
-    async function fetchResources() {
-      await fetchPackageCards()
-    }
-
-    fetchResources()
+    fetchPackageCards()
   }, [_])
 
-  console.log(packageCards)
+  if (isLoading) { return <Loading /> }
 
   return (
     <>

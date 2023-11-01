@@ -7,6 +7,7 @@ import defaultLandingCards from "@/public/landing_cards.json"
 import LandingCard from "../../_components/index/LandingCard";
 import LandingCardUpdateModal from "../../_components/index/LandingCardUpdateModal";
 import useGetResources from "../../_hooks/index/useGetResources";
+import Loading from "@/app/loading";
 
 export default function LandingCards(props) {
   const { isAdmin } = props
@@ -16,14 +17,10 @@ export default function LandingCards(props) {
   )
 
   useEffect(() => {
-    async function fetchResources() {
-      await fetchLandingCards()
-    }
-
-    fetchResources()
+    fetchLandingCards()
   }, [_])
 
-  console.log(landingCards)
+  if (isLoading) { return <Loading /> }
 
   return (
     <>
@@ -51,7 +48,7 @@ export default function LandingCards(props) {
                 isAdmin={isAdmin}
               />
             </div>
-          );Z
+          ); Z
         })}
       </div>
 

@@ -6,7 +6,7 @@ import processResources from '@/app/_libraries/shared/processResources'
 
 export default function useGetResources({ collectionName, defaultValue }) {
   const pocketbase = new PocketBase(process.env.NEXT_PUBLIC_POCKETBASE_URL)
-  const [isLoading, setIsLoading] = useState()
+  const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState()
   const [resources, setResources] = useState([])
 

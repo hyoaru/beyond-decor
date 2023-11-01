@@ -7,6 +7,7 @@ import EventServingGroup from '../../_components/index/EventServingGroup'
 import useGetResources from '../../_hooks/index/useGetResources';
 import defaultEventServingGroups from '@/public/events_serving.json'
 import EventServingGroupUpdateModal from '../../_components/index/EventServingGroupUpdateModal';
+import Loading from '@/app/loading';
 
 export default function EventServingGroups(props) {
   const { isAdmin } = props
@@ -16,14 +17,10 @@ export default function EventServingGroups(props) {
   )
 
   useEffect(() => {
-    async function fetchResources() {
-      fetchEventServingGroups()
-    }
-
-    fetchResources()
+    fetchEventServingGroups()
   }, [_])
 
-  console.log(eventServingGroups)
+  if (isLoading) { return <Loading /> }
 
   return (
     <>
