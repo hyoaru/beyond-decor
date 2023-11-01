@@ -7,30 +7,25 @@ import WorkAlbums from './WorkAlbums'
 import { useAuthStateContext } from '../../_context';
 import useGetWorkAlbums from "../../_hooks/works/useGetWorkAlbums";
 import useGetPackages from '../../_hooks/packages/useGetPackages';
+import Loading from './loading';
 
 export default function page() {
-  const { fetchWorkAlbums, workAlbums, isLoading, error } = useGetWorkAlbums({ collectionName:"work_albums", defaultValue: [] })
+  const { fetchWorkAlbums, workAlbums, isLoading, error } = useGetWorkAlbums({ collectionName: "work_albums", defaultValue: [] })
   const { fetchPackages, packages } = useGetPackages({ collectionName: "packages", defaultValue: [] })
   const authState = useAuthStateContext()
   const [_, setState] = useState()
 
   useEffect(() => {
-    async function fetchResources() {
-      await fetchWorkAlbums()
-      await fetchPackages()
-    }
-
-    fetchResources()
+    fetchWorkAlbums()
+    fetchPackages()
   }, [_])
-
-  console.log(workAlbums)
 
   return (
     <>
       <div className="mx-6 my-10 md:my-20">
         <div className="grid gap-6 items-center md:grid-cols-2 md:gap-14 lg:gap-24">
           <div className="prose max-w-none text-center md:text-right md:justify-self-end md:prose-lg lg:w-10/12 xl:w-7/12">
-            <h1 className='md:leading-snug'>
+            <h1 className='leading-normal md:leading-snug'>
               {"What we've "}
               <span className='bg-primary p-1 text-white rounded-xl rounded-tr-none rounded-bl-none'>served</span>
               {" so far"}
@@ -52,7 +47,14 @@ export default function page() {
           </div>
         </>}
 
-        <WorkAlbums workAlbums={workAlbums} setState={setState} packages={packages} />
+        {isLoading
+          ? <Loading />
+          : <WorkAlbums
+            workAlbums={workAlbums}
+            setState={setState}
+            packages={packages}
+            />
+        }
       </div>
 
     </>

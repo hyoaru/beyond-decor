@@ -12,6 +12,8 @@ import { useAuthStateContext } from '@/app/_context'
 import WorkAlbumUpdateModal from '@/app/_components/works/WorkAlbumUpdateModal'
 import WorkAlbumDeleteModal from '@/app/_components/works/WorkAlbumDeleteModal'
 import useGetPackages from '@/app/_hooks/packages/useGetPackages'
+import Loading from '../loading'
+import { notFound } from 'next/navigation'
 
 export default function page({ params }) {
   const { fetchWorkAlbum, workAlbum, isLoading, error } = useGetWorkAlbum({ recordId: params.id })
@@ -21,6 +23,19 @@ export default function page({ params }) {
   const formattedEventDate = dayjs(eventDate).format("MMMM DD, YYYY")
   const authState = useAuthStateContext()
   const [_, setState] = useState()
+
+  useEffect(() => {
+    fetchWorkAlbum()
+    fetchPackages()
+  }, [_])
+
+  if (isLoading) {
+    return (<Loading />)
+  }
+
+  if (!isLoading && workAlbum.length === 0) {
+    return (notFound())
+  }
 
   function onEdit() {
     if (authState.isAdmin) {
@@ -33,15 +48,6 @@ export default function page({ params }) {
       document.getElementById(`WorkAlbumDeleteModal-${recordId}`).showModal()
     }
   }
-
-  useEffect(() => {
-    async function fetchResource() {
-      await fetchWorkAlbum()
-      await fetchPackages()
-    }
-
-    fetchResource()
-  }, [_])
 
   return (
     <>

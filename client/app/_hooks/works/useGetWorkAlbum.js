@@ -6,7 +6,7 @@ import processWorkAlbums from '@/app/_libraries/works/processWorkAlbums'
 
 export default function useGetWorkAlbum({ collectionName = "work_albums", recordId }) {
   const pocketbase = new PocketBase(process.env.NEXT_PUBLIC_POCKETBASE_URL)
-  const [isLoading, setIsLoading] = useState()
+  const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState()
   const [workAlbum, setWorkAlbum] = useState([])
 
