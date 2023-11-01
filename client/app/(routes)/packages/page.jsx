@@ -5,7 +5,7 @@ import Packages from './Packages'
 import AddOns from './AddOns';
 import { useAuthStateContext } from '../../_context';
 
-export default function page() {
+export default function Page() {
   const authState = useAuthStateContext()
   return (
     <>

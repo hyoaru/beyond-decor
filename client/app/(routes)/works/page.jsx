@@ -9,7 +9,7 @@ import useGetWorkAlbums from "../../_hooks/works/useGetWorkAlbums";
 import useGetPackages from '../../_hooks/packages/useGetPackages';
 import Loading from './loading';
 
-export default function page() {
+export default function Page() {
   const { fetchWorkAlbums, workAlbums, isLoading, error } = useGetWorkAlbums({ collectionName: "work_albums", defaultValue: [] })
   const { fetchPackages, packages } = useGetPackages({ collectionName: "packages", defaultValue: [] })
   const authState = useAuthStateContext()

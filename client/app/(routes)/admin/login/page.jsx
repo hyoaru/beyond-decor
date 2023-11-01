@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 // App imports
 import { useAdminLogin } from '@/app/_hooks/authentication';
 
-export default function page() {
+export default function Page() {
   const { register, handleSubmit, reset, resetField } = useForm()
   const { adminLogin, isLoggedIn, isLoading, error } = useAdminLogin()
 

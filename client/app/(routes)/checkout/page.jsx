@@ -14,7 +14,7 @@ import useGetInquiries from "../../_hooks/shared/useGetInquiries";
 import processInquiries from "../../_libraries/shared/processInquiries";
 import { resizeImage } from "@/app/_libraries/shared/resizeImage";
 
-export default function page() {
+export default function Page() {
   const { mainPackage, addOns, removeAddOn, removeMainPackage, getTotalPrice } = useBagStore()
   const { fetchInquiries, inquiries, isLoading: inquiriesIsLoading, error: inquiriesError } = useGetInquiries({ collectionName: 'inquiries' })
   const { register, handleSubmit, reset, resetField, getValues } = useForm()

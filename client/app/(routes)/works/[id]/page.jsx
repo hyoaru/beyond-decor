@@ -15,7 +15,7 @@ import useGetPackages from '@/app/_hooks/packages/useGetPackages'
 import Loading from '../loading'
 import { notFound } from 'next/navigation'
 
-export default function page({ params }) {
+export default function Page({ params }) {
   const { fetchWorkAlbum, workAlbum, isLoading, error } = useGetWorkAlbum({ recordId: params.id })
   const { fetchPackages, packages } = useGetPackages({ collectionName: "packages", defaultValue: [] })
   const { id: recordId, event_name: eventName, event_place: eventPlace, event_date: eventDate } = workAlbum

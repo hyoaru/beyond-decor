@@ -3,7 +3,7 @@ import React from 'react'
 // App imports
 import Inquiries from './Inquiries'
 
-export default function page() {
+export default function Page() {
   return (
     <>
       <div className="mx-6 my-10 md:my-20">

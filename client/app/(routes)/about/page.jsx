@@ -6,7 +6,7 @@ import React from 'react'
 import TeamMembers from './TeamMembers'
 import { useAuthStateContext } from '../../_context'
 
-export default function page() {
+export default function Page() {
   const authState = useAuthStateContext()
 
   return (
