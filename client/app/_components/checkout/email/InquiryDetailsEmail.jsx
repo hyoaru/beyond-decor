@@ -99,6 +99,7 @@ export function InquiryDetailsEmail({ inquiry }) {
               {preferredDesignSamplesImagePaths.length > 0 && <>
                 <Container className="mt-2">
                   {preferredDesignSamplesImagePaths.map((image_path, index) => (
+                    // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
                     <img className="my-2" key={`PreferredDesignSample-${index}`} src={image_path} />
                   ))}
                 </Container>
