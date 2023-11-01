@@ -5,6 +5,7 @@ import { useState } from 'react'
 // App imports
 import { useForm } from 'react-hook-form'
 import { useCollectionRecordCreate } from '../../_hooks/shared/useCollectionRecordCreate'
+import { resizeImage } from '@/app/_libraries/shared/resizeImage'
 
 export default function WorkAlbumAddModal(props) {
   const { packages, setState } = props
@@ -26,7 +27,7 @@ export default function WorkAlbumAddModal(props) {
   }
 
   async function onSubmit(data) {
-    const thumbnailFile = data.thumbnailInput[0]
+    const thumbnailFile = resizeImage(data.thumbnailInput[0])
     const imageFiles = data.imagesInput
     const eventName = data.eventNameInput
     const eventPlace = data.eventPlaceInput
@@ -43,7 +44,7 @@ export default function WorkAlbumAddModal(props) {
       formData.append('package_type', packageType)
       if (clientName) { formData.append('client_name', clientName) }
       Array.from(imageFiles).forEach((imageFile) => {
-        formData.append('image_files', imageFile)
+        formData.append('image_files', resizeImage(imageFile))
       })
 
       await collectionRecordCreate({ formData: formData })

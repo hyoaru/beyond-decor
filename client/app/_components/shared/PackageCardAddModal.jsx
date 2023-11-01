@@ -5,6 +5,7 @@ import { useState } from 'react'
 // App imports
 import { useForm } from 'react-hook-form'
 import { useCollectionRecordCreate } from '../../_hooks/shared/useCollectionRecordCreate'
+import { resizeImage } from '@/app/_libraries/shared/resizeImage'
 
 export default function PackageCardAddModal(props) {
   const { nextIndex, setState } = props
@@ -15,29 +16,34 @@ export default function PackageCardAddModal(props) {
   function onImageChange() { setImageUrl(URL.createObjectURL(getValues("imageInput")[0])) }
 
   async function onSubmit(data) {
-    const imageFile = data.imageInput[0]
-    const title = data.titleInput
-    const description = data.descriptionInput
-    const shortDescription = data.shortDescriptionInput
-    const inclusionsTrimmed = data.inclusionsInput.split(",").map((inclusion) => inclusion.trim())
-    const inclusions = JSON.stringify(inclusionsTrimmed)
-    const price = data.priceInput
-
-    if (imageFile && title && description && shortDescription && inclusions && price) {
-      const formData = new FormData()
-      formData.append('image_file', imageFile)
-      formData.append('title', title)
-      formData.append('description', description)
-      formData.append('short_description', shortDescription)
-      formData.append('inclusions', inclusions)
-      formData.append('price', price)
-
-      await collectionRecordCreate({ formData: formData })
-      setState(performance.now())
-      document.getElementById('AddPackageCardModal').close()
-
-    } else {
-      alert('Fill up all fields to proceed.')
+    try {
+      const imageFile = await resizeImage(data.imageInput[0])
+      const title = data.titleInput
+      const description = data.descriptionInput
+      const shortDescription = data.shortDescriptionInput
+      const inclusionsTrimmed = data.inclusionsInput.split(",").map((inclusion) => inclusion.trim())
+      const inclusions = JSON.stringify(inclusionsTrimmed)
+      const price = data.priceInput
+  
+      if (imageFile && title && description && shortDescription && inclusions && price) {
+        const formData = new FormData()
+        formData.append('image_file', imageFile)
+        formData.append('title', title)
+        formData.append('description', description)
+        formData.append('short_description', shortDescription)
+        formData.append('inclusions', inclusions)
+        formData.append('price', price)
+  
+        await collectionRecordCreate({ formData: formData })
+        setState(performance.now())
+        document.getElementById('AddPackageCardModal').close()
+  
+      } else {
+        alert('Fill up all fields to proceed.')
+      }
+      
+    } catch (error) {
+      alert(error.message)
     }
 
   }

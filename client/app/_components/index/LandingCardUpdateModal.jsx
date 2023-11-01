@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 
 // App imports
 import { useCollectionRecordUpdate } from '../../_hooks/shared/useCollectionRecordUpdate'
+import { resizeImage } from '@/app/_libraries/shared/resizeImage'
 
 export default function LandingCardUpdateModal(props) {
   const { landingCard, modalId, setState } = props
@@ -18,17 +19,22 @@ export default function LandingCardUpdateModal(props) {
   function onImageChange() { setImageUrl(URL.createObjectURL(getValues("imageInput")[0])) }
 
   async function onSubmit(data) {
-    const imageFile = data.imageInput[0]
-    const quotation = data.quotationInput
-
-    const formData = new FormData()
-    if (imageFile) { formData.append('image_file', imageFile) }
-    if (quotation) { formData.append('quotation', quotation) }
-
-    await collectionRecordUpdate({ formData: formData, recordId: cardId })
-    setValue('quotationInput', quotation)
-    setState(performance.now())
-    document.getElementById(modalId).close()
+    try {
+      const imageFile = await resizeImage(data.imageInput[0])
+      const quotation = data.quotationInput
+  
+      const formData = new FormData()
+      if (imageFile) { formData.append('image_file', imageFile) }
+      if (quotation) { formData.append('quotation', quotation) }
+  
+      await collectionRecordUpdate({ formData: formData, recordId: cardId })
+      setValue('quotationInput', quotation)
+      setState(performance.now())
+      document.getElementById(modalId).close()
+      
+    } catch (error) {
+      alert(error.message)
+    }
   }
 
   return (

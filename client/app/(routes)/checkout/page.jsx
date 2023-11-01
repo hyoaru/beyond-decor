@@ -12,6 +12,7 @@ import { useCollectionRecordCreate } from "../../_hooks/shared/useCollectionReco
 import CheckoutSubmitStatusModal from "../../_components/checkout/CheckoutSubmitStatusModal";
 import useGetInquiries from "../../_hooks/shared/useGetInquiries";
 import processInquiries from "../../_libraries/shared/processInquiries";
+import { resizeImage } from "@/app/_libraries/shared/resizeImage";
 
 export default function page() {
   const { mainPackage, addOns, removeAddOn, removeMainPackage, getTotalPrice } = useBagStore()
@@ -55,55 +56,60 @@ export default function page() {
   }
 
   async function onSubmit(data) {
-    const fullName = data.fullNameInput
-    const phoneNumber = data.phoneNumberInput
-    const emailAddress = data.emailAddressInput
-    const facebookLink = data.facebookLinkInput
-    const eventType = data.eventTypeInput
-    const eventPlace = data.eventPlaceInput
-    const eventDate = data.eventDateInput
-    const preferredDesignDescription = data.preferredDesignDescriptionInput
-    const preferredDesignSamples = data.preferredDesignSamplesInput
-    const acquisitionSurvey = data.acquisitionSurveyInput
-    const itemsTotalCost = getTotalPrice()
-
-    const formData = new FormData()
-    formData.append('full_name', fullName)
-    formData.append('phone_number', phoneNumber)
-    formData.append('email_address', emailAddress)
-    formData.append('facebook_link', facebookLink)
-    formData.append('event_type', eventType)
-    formData.append('event_place', eventPlace)
-    formData.append('event_date', eventDate)
-    formData.append('preferred_design_description', preferredDesignDescription)
-    formData.append('acquisition_survey', acquisitionSurvey)
-    formData.append('items_total_cost', itemsTotalCost)
-    Array.from(preferredDesignSamples).forEach((imageFile) => {
-      formData.append('preferred_design_samples', imageFile)
-    })
-
-    if (mainPackage) {
-      const mainPackageStripped = { title: mainPackage.title, price: mainPackage.price }
-      formData.append('main_package', JSON.stringify(mainPackageStripped))
-    }
-
-    if (addOns.length > 0) {
-      const addOnsStripped = addOns.map((addOn) => { return { title: addOn.title, price: addOn.price } })
-      formData.append('add_ons', JSON.stringify(addOnsStripped))
-    }
-
-    await collectionRecordCreate({ formData: formData })
-      .then((inquiryRes) => (processInquiries({ collectionName: 'inquiries', inquiries: [inquiryRes] })))
-      .then((processedInquiries) => {
-        sendInquiryDetailsToEmail({
-          emailAddress: processedInquiries[0]?.email_address,
-          inquiry: processedInquiries[0]
-        })
+    try {
+      const fullName = data.fullNameInput
+      const phoneNumber = data.phoneNumberInput
+      const emailAddress = data.emailAddressInput
+      const facebookLink = data.facebookLinkInput
+      const eventType = data.eventTypeInput
+      const eventPlace = data.eventPlaceInput
+      const eventDate = data.eventDateInput
+      const preferredDesignDescription = data.preferredDesignDescriptionInput
+      const preferredDesignSamples = data.preferredDesignSamplesInput
+      const acquisitionSurvey = data.acquisitionSurveyInput
+      const itemsTotalCost = getTotalPrice()
+  
+      const formData = new FormData()
+      formData.append('full_name', fullName)
+      formData.append('phone_number', phoneNumber)
+      formData.append('email_address', emailAddress)
+      formData.append('facebook_link', facebookLink)
+      formData.append('event_type', eventType)
+      formData.append('event_place', eventPlace)
+      formData.append('event_date', eventDate)
+      formData.append('preferred_design_description', preferredDesignDescription)
+      formData.append('acquisition_survey', acquisitionSurvey)
+      formData.append('items_total_cost', itemsTotalCost)
+      Array.from(preferredDesignSamples).forEach(async (imageFile) => {
+        formData.append('preferred_design_samples', await resizeImage(imageFile))
       })
-
-    setState(performance.now())
-    document.getElementById('CheckoutSubmitStatusModal').showModal()
-    reset()
+  
+      if (mainPackage) {
+        const mainPackageStripped = { title: mainPackage.title, price: mainPackage.price }
+        formData.append('main_package', JSON.stringify(mainPackageStripped))
+      }
+  
+      if (addOns.length > 0) {
+        const addOnsStripped = addOns.map((addOn) => { return { title: addOn.title, price: addOn.price } })
+        formData.append('add_ons', JSON.stringify(addOnsStripped))
+      }
+  
+      await collectionRecordCreate({ formData: formData })
+        .then((inquiryRes) => (processInquiries({ collectionName: 'inquiries', inquiries: [inquiryRes] })))
+        .then((processedInquiries) => {
+          sendInquiryDetailsToEmail({
+            emailAddress: processedInquiries[0]?.email_address,
+            inquiry: processedInquiries[0]
+          })
+        })
+  
+      setState(performance.now())
+      document.getElementById('CheckoutSubmitStatusModal').showModal()
+      reset()
+      
+    } catch (error) {
+      alert(error.message)
+    }
   }
 
   return (

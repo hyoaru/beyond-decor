@@ -5,6 +5,7 @@ import { useState } from 'react'
 // App imports
 import { useForm } from 'react-hook-form'
 import { useCollectionRecordCreate } from '../../_hooks/shared/useCollectionRecordCreate'
+import { resizeImage } from '@/app/_libraries/shared/resizeImage'
 
 export default function TeamMemberAddModal(props) {
   const { setState } = props
@@ -16,24 +17,29 @@ export default function TeamMemberAddModal(props) {
   function onImageChange() { setImageUrl(URL.createObjectURL(getValues("imageInput")[0])) }
 
   async function onSubmit(data) {
-    const imageFile = data.imageInput[0]
-    const name = data.nameInput
-    const role = data.roleInput
+    try {
+      const imageFile = await resizeImage(data.imageInput[0])
+      const name = data.nameInput
+      const role = data.roleInput
 
-    if (imageFile && name && role) {
-      const formData = new FormData()
-      formData.append('image_file', imageFile)
-      formData.append('name', name)
-      formData.append('role', role)
+      if (imageFile && name && role) {
+        const formData = new FormData()
+        formData.append('image_file', imageFile)
+        formData.append('name', name)
+        formData.append('role', role)
 
-      await collectionRecordCreate({ formData: formData })
-      setState(performance.now())
-      document.getElementById(modalId).close()
+        await collectionRecordCreate({ formData: formData })
+        reset()
+        setState(performance.now())
+        document.getElementById(modalId).close()
 
-    } else {
-      alert('Fill up all fields to proceed.')
+      } else {
+        alert('Fill up all fields to proceed.')
+      }
+
+    } catch (error) {
+      alert(error.message)
     }
-
   }
 
   return (

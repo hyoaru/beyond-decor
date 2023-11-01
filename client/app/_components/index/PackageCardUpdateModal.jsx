@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 
 // App imports
 import { useCollectionRecordUpdate } from '../../_hooks/shared/useCollectionRecordUpdate'
+import { resizeImage } from '@/app/_libraries/shared/resizeImage'
 
 export default function PackageCardUpdateModal(props) {
   const { packageCard, modalId, setState } = props
@@ -18,21 +19,26 @@ export default function PackageCardUpdateModal(props) {
   function onImageChange() { setImageUrl(URL.createObjectURL(getValues("imageInput")[0])) }
 
   async function onSubmit(data) {
-    const imageFile = data.imageInput[0]
-    const title = data.titleInput
-    const shortDescription = data.shortDescriptionInput
+    try {
+      const imageFile = await resizeImage(data.imageInput[0])
+      const title = data.titleInput
+      const shortDescription = data.shortDescriptionInput
 
-    const formData = new FormData()
-    if (imageFile) { formData.append('image_file', imageFile) }
-    if (title) { formData.append('title', title) }
-    if (shortDescription) { formData.append('short_description', shortDescription) }
+      const formData = new FormData()
+      if (imageFile) { formData.append('image_file', imageFile) }
+      if (title) { formData.append('title', title) }
+      if (shortDescription) { formData.append('short_description', shortDescription) }
 
-    await collectionRecordUpdate({ recordId: cardId, formData: formData })
+      await collectionRecordUpdate({ recordId: cardId, formData: formData })
 
-    setValue('titleInput', title)
-    setValue('shortDescriptionInput', shortDescription)
-    setState(performance.now())
-    document.getElementById(modalId).close()
+      setValue('titleInput', title)
+      setValue('shortDescriptionInput', shortDescription)
+      setState(performance.now())
+      document.getElementById(modalId).close()
+
+    } catch (error) {
+      alert(error.message)
+    }
   }
 
   return (

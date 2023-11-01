@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 
 // App imports
 import { useCollectionRecordUpdate } from '../../_hooks/shared/useCollectionRecordUpdate'
+import { resizeImage } from '@/app/_libraries/shared/resizeImage'
 
 export default function EventServingGroupUpdateModal(props) {
   const { eventServingGroup, modalId, setState } = props
@@ -18,21 +19,25 @@ export default function EventServingGroupUpdateModal(props) {
   function onImageChange() { setImageUrl(URL.createObjectURL(getValues("imageInput")[0])) }
 
   async function onSubmit(data) {
-    const imageFile = data.imageInput[0]
-    const title = data.titleInput
-    const description = data.descriptionInput
-
-    const formData = new FormData()
-    if (imageFile) { formData.append('image_file', imageFile) }
-    if (title) { formData.append('title', title) }
-    if (description) { formData.append('description', description) }
-
-    await collectionRecordUpdate({ recordId: groupId, formData: formData })
-
-    setValue("titleInput", title)
-    setValue("descriptionInput", description)
-    setState(performance.now())
-    document.getElementById(modalId).close()
+    try {
+      const imageFile = await resizeImage(data.imageInput[0])
+      const title = data.titleInput
+      const description = data.descriptionInput
+  
+      const formData = new FormData()
+      if (imageFile) { formData.append('image_file', imageFile) }
+      if (title) { formData.append('title', title) }
+      if (description) { formData.append('description', description) }
+  
+      await collectionRecordUpdate({ recordId: groupId, formData: formData })
+  
+      setValue("titleInput", title)
+      setValue("descriptionInput", description)
+      setState(performance.now())
+      document.getElementById(modalId).close()
+    } catch (error) {
+      alert(error.message)
+    }
   }
 
   return (

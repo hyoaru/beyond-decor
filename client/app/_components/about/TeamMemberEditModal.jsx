@@ -5,6 +5,7 @@ import { useState } from 'react'
 // App imports
 import { useForm } from 'react-hook-form'
 import { useCollectionRecordUpdate } from '../../_hooks/shared/useCollectionRecordUpdate'
+import { resizeImage } from '@/app/_libraries/shared/resizeImage'
 
 export default function TeamMemberEditModal(props) {
   const { teamMember, setState, modalId } = props
@@ -18,20 +19,26 @@ export default function TeamMemberEditModal(props) {
   function onImageChange() { setImageUrl(URL.createObjectURL(getValues("imageInput")[0])) }
 
   async function onSubmit(data) {
-    const imageFile = data.imageInput[0]
-    const name = data.nameInput
-    const role = data.roleInput
-
-    const formData = new FormData()
-    if (imageFile) { formData.append('image_file', imageFile) }
-    if (name) { formData.append('name', name) }
-    if (role) { formData.append('role', role) }
-
-    await collectionRecordUpdate({ recordId: recordId, formData: formData })
-    setValue('nameInput', name)
-    setValue('roleInput', role)
-    setState(performance.now())
-    document.getElementById(modalId).close()
+    try {
+      const imageFile = await resizeImage(data.imageInput[0])
+  
+      console.log(imageFile)
+      const name = data.nameInput
+      const role = data.roleInput
+  
+      const formData = new FormData()
+      if (imageFile) { formData.append('image_file', imageFile) }
+      if (name) { formData.append('name', name) }
+      if (role) { formData.append('role', role) }
+  
+      await collectionRecordUpdate({ recordId: recordId, formData: formData })
+      setValue('nameInput', name)
+      setValue('roleInput', role)
+      setState(performance.now())
+      document.getElementById(modalId).close()
+    } catch (error) {
+      alert(error.message)
+    }
   }
 
   return (

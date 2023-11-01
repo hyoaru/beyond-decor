@@ -6,6 +6,7 @@ import dayjs from 'dayjs'
 // App imports
 import { useForm } from 'react-hook-form'
 import { useCollectionRecordUpdate } from '@/app/_hooks/shared/useCollectionRecordUpdate'
+import { resizeImage } from '@/app/_libraries/shared/resizeImage'
 
 export default function WorkAlbumUpdateModal(props) {
   const { workAlbum, packages, setState } = props
@@ -38,7 +39,7 @@ export default function WorkAlbumUpdateModal(props) {
 
   async function onSubmit(data) {
 
-    const thumbnailFile = data.thumbnailInput[0]
+    const thumbnailFile = resizeImage(data.thumbnailInput[0])
     const imageFiles = data.imagesInput
     const eventName = data.eventNameInput
     const eventPlace = data.eventPlaceInput
@@ -55,7 +56,7 @@ export default function WorkAlbumUpdateModal(props) {
     if (packageType) { formData.append('package_type', packageType) }
     if (Array.from(imageFiles).length >= 1) {
       Array.from(imageFiles).forEach((imageFile) => {
-        formData.append('image_files', imageFile)
+        formData.append('image_files', resizeImage(imageFile))
       })
     }
 
