@@ -35,3 +35,5 @@ yarn-error.log*
 next-env.d.ts
 
 pb_data/
+
+deploy-master.py
