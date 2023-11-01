@@ -13,7 +13,7 @@ export default function LandingCards(props) {
   const { isAdmin } = props
   const [_, setState] = useState()
   const { fetchResources: fetchLandingCards, resources: landingCards, isLoading, error } = useGetResources(
-    { collectionName: 'landing_cards', defaultValue: defaultLandingCards }
+    { collectionName: 'landing_cards', defaultValue: [] }
   )
 
   useEffect(() => {
