@@ -2,7 +2,7 @@ import { useState } from 'react'
 import PocketBase from "pocketbase"
 
 // App imports
-import processInquiries from '@/app/libraries/admin/processInquiries'
+import processInquiries from '@/app/libraries/shared/processInquiries'
 
 export default function useGetInquiries({ collectionName = 'inquiries', defaultValue }) {
   const pocketbase = new PocketBase(process.env.NEXT_PUBLIC_POCKETBASE_URL)
