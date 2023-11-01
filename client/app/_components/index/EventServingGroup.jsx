@@ -2,6 +2,7 @@
 
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Image from 'next/image';
 
 // App imports
 import AnimationSlideOnShow from '../../_animations/index/AnimationSlideOnShow';
@@ -23,7 +24,7 @@ export default function EventServingGroup(props) {
             <p className='mt-3 sm:text-sm lg:text-base'>{description}</p>
           </div>
           <div className={'order-1 shadow-xl ' + (isRightAligned ? "sm:order-2" : "")}>
-            <img
+            <Image
               height={300}
               width={800}
               src={imgSrc}

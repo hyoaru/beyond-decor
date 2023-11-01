@@ -1,5 +1,6 @@
 import { faEllipsis } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import Image from "next/image"
 
 export default function TeamMember(props) {
   const { memberId, name, role, imgSrc, isAdmin, editModalIdToTrigger, deleteModalIdToTrigger } = props
@@ -28,10 +29,11 @@ export default function TeamMember(props) {
           </div>
         </>}
 
-        <img
+        <Image
           src={imgSrc}
           height={imgSizeInPx}
           width={imgSizeInPx}
+          alt=""
           style={{ width: `${imgSizeInPx}px`, height: `${imgSizeInPx}px` }}
           className={`${baseClass} object-cover`}
         />

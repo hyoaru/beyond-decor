@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import Image from 'next/image'
 
 // App imports
 import { useCollectionRecordUpdate } from '../../_hooks/shared/useCollectionRecordUpdate'
@@ -31,7 +32,7 @@ export default function LandingCardUpdateModal(props) {
       setValue('quotationInput', quotation)
       setState(performance.now())
       document.getElementById(modalId).close()
-      
+
     } catch (error) {
       alert(error.message)
     }
@@ -43,7 +44,7 @@ export default function LandingCardUpdateModal(props) {
         <div className="modal-box w-11/12 max-w-sm">
           <h3 className="font-bold text-lg">Edit card contents</h3>
           <div className="my-4">
-            <img
+            <Image
               width={300}
               height={450}
               src={imageUrl}

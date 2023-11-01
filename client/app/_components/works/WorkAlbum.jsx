@@ -1,7 +1,10 @@
 "use client"
 
-import AnimationOnHover from "@/app/_animations/shared/AnimationOnHover"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
+
+// App imports
+import AnimationOnHover from "@/app/_animations/shared/AnimationOnHover"
 
 export default function WorkAlbum(props) {
   const { albumId, imgSrc, eventName, eventPlace, eventDate, isAdmin } = props
@@ -31,12 +34,13 @@ export default function WorkAlbum(props) {
           initial={{ opacity: 1 }}
           animate={{ opacity: 0.10 }}
         >
-          <img
+          <Image
             className={`${baseClass} object-cover`}
             style={{width: `${imgSizeInPx}px`, height: `${imgSizeInPx}px`}}
             height={imgSizeInPx}
             width={imgSizeInPx}
             src={imgSrc}
+            alt=""
           />
         </AnimationOnHover>
       </div>

@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
 import React from 'react'
+import Image from 'next/image'
 
 export default function InquiryDetailsModal(props) {
   const { inquiry, modalId } = props
@@ -28,7 +29,12 @@ export default function InquiryDetailsModal(props) {
               </div>
               <div className="columns">
                 {preferredDesignSamplesImagePaths.map((image_path, index) => (
-                  <img key={`PreferredDesignSample-${recordId}-${index}`} src={image_path} className='m-1' />
+                  <Image
+                    key={`PreferredDesignSample-${recordId}-${index}`}
+                    src={image_path}
+                    className='m-1'
+                    alt=''
+                  />
                 ))}
               </div>
             </>}

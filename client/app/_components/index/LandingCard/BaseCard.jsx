@@ -1,5 +1,6 @@
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
 
 // App imports
 import AnimationOnHover from "../../../_animations/shared/AnimationOnHover"
@@ -26,7 +27,7 @@ export default function BaseCard(props) {
         >
           <div className={"relative " + (isAdmin ? ' cursor-pointer' : '')}>
             <div className="absolute w-full h-full rounded-xl rounded-tr-none rounded-bl-none"></div>
-            <img
+            <Image
               width={imgWidth}
               height={imgHeight}
               src={imgSrc}

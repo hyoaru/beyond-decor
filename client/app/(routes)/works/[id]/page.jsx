@@ -5,6 +5,7 @@ import { faEllipsis } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import dayjs from 'dayjs'
 import { v4 as uuidv4 } from 'uuid'
+import Image from 'next/image'
 
 // App imports
 import useGetWorkAlbum from '@/app/_hooks/works/useGetWorkAlbum'
@@ -82,7 +83,7 @@ export default function Page({ params }) {
 
         <div className="columns-1 gap-6 md:columns-2">
           {imagePaths && imagePaths.map((imagePath) => (
-            <img
+            <Image
               key={`WorkAlbumImage-${uuidv4()}`}
               src={imagePath}
               className='rounded-xl w-full rounded-tr-none rounded-bl-none my-6 shadow-xl'

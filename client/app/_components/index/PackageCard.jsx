@@ -1,5 +1,6 @@
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Image from 'next/image'
 
 export default function PackageCard(props) {
   const { imgSrc, title, description, isAdmin, editModalIdToTrigger, deleteModalIdToTrigger, recordId, setState } = props
@@ -35,7 +36,7 @@ export default function PackageCard(props) {
 
         <div className={"card w-64 bg-base-100 shadow-lg"}>
           <figure className='mt-0 mb-0'>
-            <img
+            <Image
               src={`${imgSrc}`}
               style={{ width: "300px", height: "200px" }}
               width={300} height={200}

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from 'react'
+import Image from 'next/image'
 
 // App imports
 import { useForm } from 'react-hook-form'
@@ -63,7 +64,7 @@ export default function WorkAlbumAddModal(props) {
         <div className="modal-box w-11/12 max-w-sm">
           <h3 className="font-bold text-lg mt-4">Add work album</h3>
           <div className="my-4">
-            <img
+            <Image
               width={300}
               height={300}
               src={thumbnailUrl}

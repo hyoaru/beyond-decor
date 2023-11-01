@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 // App imports
 import { useCollectionRecordDelete } from '@/app/_hooks/shared/useCollectionRecordDelete'
 import { useRouter } from 'next/navigation'
@@ -19,7 +21,7 @@ export default function WorkAlbumDeleteModal(props) {
         <div className="modal-box w-11/12 max-w-sm">
           <h3 className="font-bold text-lg mt-4">Delete work album</h3>
           <div className="my-4">
-            <img
+            <Image
               width={300}
               height={300}
               src={thumbnailSrc}

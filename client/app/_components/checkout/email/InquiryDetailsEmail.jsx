@@ -99,7 +99,7 @@ export function InquiryDetailsEmail({ inquiry }) {
               {preferredDesignSamplesImagePaths.length > 0 && <>
                 <Container className="mt-2">
                   {preferredDesignSamplesImagePaths.map((image_path, index) => (
-                    <Img className="my-2" key={`PreferredDesignSample-${index}`} src={image_path} />
+                    <img className="my-2" key={`PreferredDesignSample-${index}`} src={image_path} />
                   ))}
                 </Container>
               </>}

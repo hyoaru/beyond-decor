@@ -2,6 +2,7 @@
 
 import React, { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import Image from 'next/image'
 
 // App imports
 import { useCollectionRecordUpdate } from '../../_hooks/shared/useCollectionRecordUpdate'
@@ -47,7 +48,7 @@ export default function PackageCardUpdateModal(props) {
         <div className="modal-box w-11/12 max-w-sm">
           <h3 className="font-bold text-lg mt-4">Edit package contents</h3>
           <div className="my-4">
-            <img
+            <Image
               width={300}
               height={300}
               src={imageUrl}
