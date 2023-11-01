@@ -1,6 +1,6 @@
-export const revalidate = 0
-export const dynamic = 'force-dynamic'
-export const fetchCache = 'force-no-store'
+// export const revalidate = 0
+// export const dynamic = 'force-dynamic'
+// export const fetchCache = 'force-no-store'
 
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
