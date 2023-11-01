@@ -22,17 +22,6 @@ export default function page() {
           </p>
         </div>
 
-        {authState.isAdmin && <>
-          <div className="text-center my-10">
-            <span
-              className="text-primary font-mono opacity-40 text-sm cursor-pointer"
-              onClick={() => { document.getElementById('TeamMemberAddModal').showModal() }}
-            >
-              {"[ add member ]"}
-            </span>
-          </div>
-        </>}
-
         <TeamMembers isAdmin={authState.isAdmin} />
       </div>
     </>

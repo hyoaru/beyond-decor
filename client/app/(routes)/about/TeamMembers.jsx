@@ -8,6 +8,7 @@ import useGetTeamMembers from '../../_hooks/about/useGetTeamMembers'
 import TeamMemberAddModal from '../../_components/about/TeamMemberAddModal';
 import TeamMemberEditModal from '../../_components/about/TeamMemberEditModal';
 import TeamMemberDeleteModal from '../../_components/about/TeamMemberDeleteModal';
+import Loading from './loading';
 
 export default function TeamMembers(props) {
   const { isAdmin } = props
@@ -15,17 +16,24 @@ export default function TeamMembers(props) {
   const [_, setState] = useState()
 
   useEffect(() => {
-    async function fetchResources() {
-      await fetchTeamMembers()
-    }
-
-    fetchResources()
+    fetchTeamMembers()
   }, [_])
 
-  console.log(teamMembers)
+  if (isLoading) { return <Loading /> }
 
   return (
     <>
+      {isAdmin && <>
+        <div className="text-center my-10">
+          <span
+            className="text-primary font-mono opacity-40 text-sm cursor-pointer"
+            onClick={() => { document.getElementById('TeamMemberAddModal').showModal() }}
+          >
+            {"[ add member ]"}
+          </span>
+        </div>
+      </>}
+
       <div className="flex flex-wrap gap-4 justify-center mt-10 lg:gap-8">
         {teamMembers && teamMembers.map((teamMember) => {
           return (
