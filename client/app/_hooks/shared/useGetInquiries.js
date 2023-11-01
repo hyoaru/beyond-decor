@@ -6,7 +6,7 @@ import processInquiries from '@/app/_libraries/shared/processInquiries'
 
 export default function useGetInquiries({ collectionName = 'inquiries', defaultValue }) {
   const pocketbase = new PocketBase(process.env.NEXT_PUBLIC_POCKETBASE_URL)
-  const [isLoading, setIsLoading] = useState()
+  const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState()
   const [inquiries, setInquiries] = useState([])
 

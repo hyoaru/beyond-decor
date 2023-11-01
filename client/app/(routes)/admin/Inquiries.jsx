@@ -6,6 +6,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import useGetInquiries from '../../_hooks/shared/useGetInquiries';
 import InquiriesTable from '../../_components/admin/InquiriesTable';
 import InquiryDetailsModal from '../../_components/admin/InquiryDetailsModal';
+import Loading from './loading';
 
 export default function Inquiries(props) {
   const { fetchInquiries, inquiries, isLoading, error } = useGetInquiries({ collectionName: 'inquiries', defaultValue: [] })
@@ -14,6 +15,10 @@ export default function Inquiries(props) {
   useEffect(() => {
     fetchInquiries()
   }, [_])
+
+  if (isLoading) {
+    return (<Loading />)
+  }
 
   return (
     <>
