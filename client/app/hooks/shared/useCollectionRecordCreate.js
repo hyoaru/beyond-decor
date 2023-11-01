@@ -7,13 +7,15 @@ export function useCollectionRecordCreate({ collectionName }) {
   const [error, setError] = useState()
 
   async function collectionRecordCreate({ formData }) {
+    let operationResponse = {status: 500, message: "error"}
     setIsLoading(true)
     try {
-      await pocketbase.collection(collectionName).create(formData);
+      operationResponse = await pocketbase.collection(collectionName).create(formData);
     } catch (error) {
       setError(error)
     }
     setIsLoading(false)
+    return operationResponse
   }
 
   return { collectionRecordCreate, isLoading, error }

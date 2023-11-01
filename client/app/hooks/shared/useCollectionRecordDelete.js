@@ -7,13 +7,15 @@ export function useCollectionRecordDelete({ collectionName }) {
   const [error, setError] = useState()
 
   async function collectionRecordDelete({ recordId }) {
+    let operationResponse = {status: 500, message: "error"}
     setIsLoading(true)
     try {
-      await pocketbase.collection(`${collectionName}`).delete(recordId);
+      operationResponse = await pocketbase.collection(`${collectionName}`).delete(recordId);
     } catch (error) {
       setError(error)
     }
     setIsLoading(false)
+    return operationResponse
   }
 
   return { collectionRecordDelete, isLoading, error }
