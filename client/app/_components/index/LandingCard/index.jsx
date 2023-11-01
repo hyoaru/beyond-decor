@@ -3,7 +3,11 @@ import BaseCard from "./BaseCard";
 
 export default function LandingCard(props) {
   const { imgSrc, quotation, modalIdToTrigger, isAdmin } = props;
-  function onClick() { document.getElementById(`${modalIdToTrigger}`).showModal() }
+  function onClick() { 
+    if (isAdmin) {
+      document.getElementById(`${modalIdToTrigger}`).showModal() 
+    }
+  }
 
   return (
     <>
