@@ -13,7 +13,17 @@ export default function WorkAlbumAddModal(props) {
   const [thumbnailUrl, setThumbnailUrl] = useState()
   const packageTypes = Array.from(new Set(packages?.map((pkg) => pkg.title)))
 
-  function onImageChange() { setThumbnailUrl(URL.createObjectURL(getValues("thumbnailInput")[0])) }
+  function onThumbnailImageChange() {
+    setThumbnailUrl(URL.createObjectURL(getValues("thumbnailInput")[0]))
+  }
+
+  function onAlbumImagesChange() {
+    const albumImagesCount = Array.from(getValues("imagesInput")).length
+    if (albumImagesCount > 12) {
+      alert("You can only upload up to 12 images!")
+      resetField("imagesInput")
+    }
+  }
 
   async function onSubmit(data) {
     const thumbnailFile = data.thumbnailInput[0]
@@ -68,20 +78,20 @@ export default function WorkAlbumAddModal(props) {
                 type="file"
                 className="file-input file-input-md file-input-primary file-input-bordered w-full max-w-xs"
                 accept='.jpg, .jpeg, .png'
-                {...register("thumbnailInput", { onChange: onImageChange })}
+                {...register("thumbnailInput", { onChange: onThumbnailImageChange })}
                 required
               />
             </div>
 
             <div className="divider">
-              <small>Choose photos to upload</small>
+              <small>Upload <span className='font-bold'>up to 12 images</span> to display</small>
             </div>
             <div className="form-control w-full max-w-xs flex mx-auto my-3">
               <input
                 type="file"
                 className="file-input file-input-sm file-input-bordered w-full max-w-xs"
                 accept='.jpg, .jpeg, .png'
-                {...register("imagesInput")}
+                {...register("imagesInput", { onChange: onAlbumImagesChange })}
                 multiple
                 required
               />

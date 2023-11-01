@@ -24,7 +24,17 @@ export default function WorkAlbumUpdateModal(props) {
     }
   })
 
-  function onImageChange() { setThumbnailUrl(URL.createObjectURL(getValues("thumbnailInput")[0])) }
+  function onImageChange() {
+    setThumbnailUrl(URL.createObjectURL(getValues("thumbnailInput")[0]))
+  }
+
+  function onAlbumImagesChange() {
+    const albumImagesCount = Array.from(getValues("imagesInput")).length
+    if (albumImagesCount > 12) {
+      alert("You can only upload up to 12 images!")
+      resetField("imagesInput")
+    }
+  }
 
   async function onSubmit(data) {
 
@@ -87,16 +97,16 @@ export default function WorkAlbumUpdateModal(props) {
             </div>
 
             <div className="divider">
-              <small>Choose photos to upload</small>
+              <small>Upload <span className='font-bold'>up to 12 images</span> to display</small>
             </div>
             <div className="form-control w-full max-w-xs flex mx-auto my-3">
               <input
                 type="file"
                 className="file-input file-input-sm file-input-bordered w-full max-w-xs"
                 accept='.jpg, .jpeg, .png'
-                {...register("imagesInput")}
-                multiple
+                {...register("imagesInput", { onChange: onAlbumImagesChange })}
                 required
+                multiple
               />
             </div>
 
