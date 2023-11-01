@@ -13,7 +13,7 @@ export default function EventServingGroups(props) {
   const { isAdmin } = props
   const [_, setState] = useState()
   const { fetchResources: fetchEventServingGroups, resources: eventServingGroups, isLoading, error } = useGetResources(
-    { collectionName: 'events_serving', defaultValue: defaultEventServingGroups }
+    { collectionName: 'events_serving', defaultValue: [] }
   )
 
   useEffect(() => {

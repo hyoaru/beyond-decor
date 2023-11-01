@@ -25,7 +25,7 @@ export default function PackageCardAddModal(props) {
       const inclusionsTrimmed = data.inclusionsInput.split(",").map((inclusion) => inclusion.trim())
       const inclusions = JSON.stringify(inclusionsTrimmed)
       const price = data.priceInput
-  
+
       if (imageFile && title && description && shortDescription && inclusions && price) {
         const formData = new FormData()
         formData.append('image_file', imageFile)
@@ -34,15 +34,15 @@ export default function PackageCardAddModal(props) {
         formData.append('short_description', shortDescription)
         formData.append('inclusions', inclusions)
         formData.append('price', price)
-  
+
         await collectionRecordCreate({ formData: formData })
         setState(performance.now())
         document.getElementById('AddPackageCardModal').close()
-  
+
       } else {
         alert('Fill up all fields to proceed.')
       }
-      
+
     } catch (error) {
       alert(error.message)
     }
@@ -55,13 +55,15 @@ export default function PackageCardAddModal(props) {
         <div className="modal-box w-11/12 max-w-sm">
           <h3 className="font-bold text-lg mt-4">Add package</h3>
           <div className="my-4">
-            <Image
-              width={300}
-              height={300}
-              src={imageUrl}
-              style={{ width: `${300}px`, height: `${300}px` }}
-              alt="" className={'rounded-xl object-cover flex mx-auto'}
-            />
+            {imageUrl && <>
+              <Image
+                width={300}
+                height={300}
+                src={imageUrl}
+                style={{ width: `${300}px`, height: `${300}px` }}
+                alt="" className={'rounded-xl object-cover flex mx-auto'}
+              />
+            </>}
 
             <div className="">
               <div className="divider">

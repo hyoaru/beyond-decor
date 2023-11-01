@@ -64,13 +64,15 @@ export default function WorkAlbumAddModal(props) {
         <div className="modal-box w-11/12 max-w-sm">
           <h3 className="font-bold text-lg mt-4">Add work album</h3>
           <div className="my-4">
-            <Image
-              width={300}
-              height={300}
-              src={thumbnailUrl}
-              style={{ width: `${300}px`, height: `${300}px` }}
-              alt="" className={'rounded-xl object-cover flex mx-auto'}
-            />
+            {thumbnailUrl && <>
+              <Image
+                width={300}
+                height={300}
+                src={thumbnailUrl}
+                style={{ width: `${300}px`, height: `${300}px` }}
+                alt="" className={'rounded-xl object-cover flex mx-auto'}
+              />
+            </>}
 
             <div className="divider">
               <small className='font-bold text-primary'>Choose thumbnail to upload</small>

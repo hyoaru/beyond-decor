@@ -49,13 +49,15 @@ export default function TeamMemberAddModal(props) {
         <div className="modal-box w-11/12 max-w-sm">
           <h3 className="font-bold text-lg mt-4">Add member</h3>
           <div className="my-4">
-            <Image
-              width={300}
-              height={300}
-              src={imageUrl}
-              style={{ width: `${300}px`, height: `${300}px` }}
-              alt="" className={'rounded-xl object-cover flex mx-auto'}
-            />
+            {imageUrl && <>
+              <Image
+                width={300}
+                height={300}
+                src={imageUrl}
+                style={{ width: `${300}px`, height: `${300}px` }}
+                alt="" className={'rounded-xl object-cover flex mx-auto'}
+              />
+            </>}
 
             <div className="divider"><small className='font-bold'>Profile image</small></div>
             <div className="form-control w-full max-w-xs flex mx-auto my-3">

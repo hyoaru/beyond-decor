@@ -32,8 +32,10 @@ export default function InquiryDetailsModal(props) {
                   <Image
                     key={`PreferredDesignSample-${recordId}-${index}`}
                     src={image_path}
-                    className='m-1'
+                    className='m-1 mx-auto'
                     alt=''
+                    width={350}
+                    height={350}
                   />
                 ))}
               </div>

@@ -34,7 +34,7 @@ export default function Page({ params }) {
     return (<Loading />)
   }
 
-  if (!isLoading && workAlbum.length === 0) {
+  if (!isLoading && !workAlbum) {
     return (notFound())
   }
 
@@ -86,7 +86,10 @@ export default function Page({ params }) {
             <Image
               key={`WorkAlbumImage-${uuidv4()}`}
               src={imagePath}
+              width={650}
+              height={650}
               className='rounded-xl w-full rounded-tr-none rounded-bl-none my-6 shadow-xl'
+              alt=''
             />
           ))}
         </div>
