@@ -4,7 +4,7 @@ import Image from "next/image"
 
 export default function TeamMember(props) {
   const { memberId, name, role, imgSrc, isAdmin, editModalIdToTrigger, deleteModalIdToTrigger } = props
-  const baseClass = "rounded-xl rounded-tr-none rounded-bl-none"
+  const baseClass = "rounded-xl rounded-tr-none rounded-bl-none w-[300px]"
   const imgSizeInPx = 200
 
   function onEdit() { document.getElementById(editModalIdToTrigger).showModal() }
@@ -39,8 +39,8 @@ export default function TeamMember(props) {
         />
 
         <div className="prose max-w-none mt-5 text-center">
-          <h3 className='mb-0'>{name}</h3>
-          <p className='mt-0 mb-0'>{role}</p>
+          <h3 className='mb-0 text-primary'>{name}</h3>
+          <p className='mt-1 mb-0 text-sm leading-snug'>{role}</p>
         </div>
       </div>
     </>
