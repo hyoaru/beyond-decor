@@ -39,36 +39,39 @@ export default function WorkAlbumUpdateModal(props) {
   }
 
   async function onSubmit(data) {
+    try {
+      const thumbnailFile = await resizeImage(data.thumbnailInput[0])
+      const imageFiles = data.imagesInput
+      const eventName = data.eventNameInput
+      const eventPlace = data.eventPlaceInput
+      const clientName = data.clientNameInput
+      const eventDate = data.eventDateInput
+      const packageType = data.packageTypeInput
 
-    const thumbnailFile = resizeImage(data.thumbnailInput[0])
-    const imageFiles = data.imagesInput
-    const eventName = data.eventNameInput
-    const eventPlace = data.eventPlaceInput
-    const clientName = data.clientNameInput
-    const eventDate = data.eventDateInput
-    const packageType = data.packageTypeInput
+      const formData = new FormData()
+      if (thumbnailFile) { formData.append('thumbnail_file', thumbnailFile) }
+      if (eventName) { formData.append('event_name', eventName) }
+      if (eventPlace) { formData.append('event_place', eventPlace) }
+      if (eventDate) { formData.append('event_date', eventDate) }
+      if (clientName) { formData.append('client_name', clientName) }
+      if (packageType) { formData.append('package_type', packageType) }
+      if (Array.from(imageFiles).length >= 1) {
+        Array.from(imageFiles).forEach(async (imageFile) => {
+          formData.append('image_files', await resizeImage(imageFile))
+        })
+      }
 
-    const formData = new FormData()
-    if (thumbnailFile) { formData.append('thumbnail_file', thumbnailFile) }
-    if (eventName) { formData.append('event_name', eventName) }
-    if (eventPlace) { formData.append('event_place', eventPlace) }
-    if (eventDate) { formData.append('event_date', eventDate) }
-    if (clientName) { formData.append('client_name', clientName) }
-    if (packageType) { formData.append('package_type', packageType) }
-    if (Array.from(imageFiles).length >= 1) {
-      Array.from(imageFiles).forEach((imageFile) => {
-        formData.append('image_files', resizeImage(imageFile))
-      })
+      await collectionRecordUpdate({ recordId: recordId, formData: formData })
+      setValue('eventNameInput', eventName)
+      setValue('eventPlaceInput', eventPlace)
+      setValue('eventDateInput', eventDate)
+      setValue('clientNameInput', clientName)
+      setValue('packageTypeInput', packageType)
+      setState(performance.now())
+      document.getElementById(`WorkAlbumUpdateModal-${recordId}`).close()
+    } catch (error) {
+      alert(error.message)
     }
-
-    await collectionRecordUpdate({ recordId: recordId, formData: formData })
-    setValue('eventNameInput', eventName)
-    setValue('eventPlaceInput', eventPlace)
-    setValue('eventDateInput', eventDate)
-    setValue('clientNameInput', clientName)
-    setValue('packageTypeInput', packageType)
-    setState(performance.now())
-    document.getElementById(`WorkAlbumUpdateModal-${recordId}`).close()
   }
 
   return (

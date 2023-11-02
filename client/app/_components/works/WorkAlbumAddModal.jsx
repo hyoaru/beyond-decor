@@ -28,34 +28,38 @@ export default function WorkAlbumAddModal(props) {
   }
 
   async function onSubmit(data) {
-    const thumbnailFile = resizeImage(data.thumbnailInput[0])
-    const imageFiles = data.imagesInput
-    const eventName = data.eventNameInput
-    const eventPlace = data.eventPlaceInput
-    const clientName = data.clientNameInput
-    const eventDate = data.eventDateInput
-    const packageType = data.packageTypeInput
+    try {
+      const thumbnailFile = await resizeImage(data.thumbnailInput[0])
+      const imageFiles = data.imagesInput
+      const eventName = data.eventNameInput
+      const eventPlace = data.eventPlaceInput
+      const clientName = data.clientNameInput
+      const eventDate = data.eventDateInput
+      const packageType = data.packageTypeInput
 
-    if (thumbnailFile && imageFiles && eventName && eventPlace && eventDate) {
-      const formData = new FormData()
-      formData.append('thumbnail_file', thumbnailFile)
-      formData.append('event_name', eventName)
-      formData.append('event_place', eventPlace)
-      formData.append('event_date', eventDate)
-      formData.append('package_type', packageType)
-      if (clientName) { formData.append('client_name', clientName) }
-      Array.from(imageFiles).forEach((imageFile) => {
-        formData.append('image_files', resizeImage(imageFile))
-      })
+      if (thumbnailFile && imageFiles && eventName && eventPlace && eventDate) {
+        const formData = new FormData()
+        formData.append('thumbnail_file', thumbnailFile)
+        formData.append('event_name', eventName)
+        formData.append('event_place', eventPlace)
+        formData.append('event_date', eventDate)
+        formData.append('package_type', packageType)
+        if (clientName) { formData.append('client_name', clientName) }
+        Array.from(imageFiles).forEach(async (imageFile) => {
+          formData.append('image_files', await resizeImage(imageFile))
+        })
 
-      await collectionRecordCreate({ formData: formData })
-      setState(performance.now())
-      document.getElementById('WorkAlbumAddModal').close()
+        await collectionRecordCreate({ formData: formData })
+        setState(performance.now())
+        document.getElementById('WorkAlbumAddModal').close()
 
-    } else {
-      alert('Fill up all fields to proceed.')
+      } else {
+        alert('Fill up all fields to proceed.')
+      }
+
+    } catch (error) {
+      alert(error.message)
     }
-
   }
 
   return (
