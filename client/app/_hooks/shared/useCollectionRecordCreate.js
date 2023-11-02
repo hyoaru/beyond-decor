@@ -12,6 +12,7 @@ export function useCollectionRecordCreate({ collectionName }) {
     try {
       operationResponse = await pocketbase.collection(collectionName).create(formData);
     } catch (error) {
+      if (error.status === 403) { window.location.reload() }
       setError(error)
     }
     setIsLoading(false)

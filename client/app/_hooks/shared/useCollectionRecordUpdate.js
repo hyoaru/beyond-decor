@@ -7,15 +7,12 @@ export function useCollectionRecordUpdate({ collectionName }) {
   const [error, setError] = useState()
 
   async function collectionRecordUpdate({ recordId, formData }) {
-    let operationResponse = {status: 500, message: "error"}
+    let operationResponse = { status: 500, message: "error" }
     setIsLoading(true)
     try {
-      if (formData) {
-        operationResponse = await pocketbase.collection(`${collectionName}`).update(recordId, formData);
-      } else {
-        console.log("none")
-      }
+      operationResponse = await pocketbase.collection(`${collectionName}`).update(recordId, formData);
     } catch (error) {
+      if (error.status === 403) { window.location.reload() }
       setError(error)
     }
     setIsLoading(false)

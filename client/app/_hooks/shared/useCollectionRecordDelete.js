@@ -12,6 +12,7 @@ export function useCollectionRecordDelete({ collectionName }) {
     try {
       operationResponse = await pocketbase.collection(`${collectionName}`).delete(recordId);
     } catch (error) {
+      if (error.status === 403) { window.location.reload() }
       setError(error)
     }
     setIsLoading(false)
