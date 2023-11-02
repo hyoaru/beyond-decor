@@ -40,7 +40,7 @@ export default function WorkAlbumUpdateModal(props) {
 
   async function onSubmit(data) {
     try {
-      const thumbnailFile = await resizeImage(data.thumbnailInput[0])
+      const thumbnailFile = data.thumbnailInput[0]
       const imageFiles = data.imagesInput
       const eventName = data.eventNameInput
       const eventPlace = data.eventPlaceInput
@@ -49,7 +49,7 @@ export default function WorkAlbumUpdateModal(props) {
       const packageType = data.packageTypeInput
 
       const formData = new FormData()
-      if (thumbnailFile) { formData.append('thumbnail_file', thumbnailFile) }
+      if (thumbnailFile) { formData.append('thumbnail_file', await resizeImage(thumbnailFile)) }
       if (eventName) { formData.append('event_name', eventName) }
       if (eventPlace) { formData.append('event_place', eventPlace) }
       if (eventDate) { formData.append('event_date', eventDate) }

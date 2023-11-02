@@ -21,11 +21,11 @@ export default function LandingCardUpdateModal(props) {
 
   async function onSubmit(data) {
     try {
-      const imageFile = await resizeImage(data.imageInput[0])
+      const imageFile = data.imageInput[0]
       const quotation = data.quotationInput
   
       const formData = new FormData()
-      if (imageFile) { formData.append('image_file', imageFile) }
+      if (imageFile) { formData.append('image_file', await resizeImage(imageFile)) }
       if (quotation) { formData.append('quotation', quotation) }
   
       await collectionRecordUpdate({ formData: formData, recordId: cardId })

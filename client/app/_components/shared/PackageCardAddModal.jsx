@@ -18,7 +18,7 @@ export default function PackageCardAddModal(props) {
 
   async function onSubmit(data) {
     try {
-      const imageFile = await resizeImage(data.imageInput[0])
+      const imageFile = data.imageInput[0]
       const title = data.titleInput
       const description = data.descriptionInput
       const shortDescription = data.shortDescriptionInput
@@ -28,7 +28,7 @@ export default function PackageCardAddModal(props) {
 
       if (imageFile && title && description && shortDescription && inclusions && price) {
         const formData = new FormData()
-        formData.append('image_file', imageFile)
+        formData.append('image_file', await resizeImage(imageFile))
         formData.append('title', title)
         formData.append('description', description)
         formData.append('short_description', shortDescription)

@@ -21,12 +21,12 @@ export default function EventServingGroupUpdateModal(props) {
 
   async function onSubmit(data) {
     try {
-      const imageFile = await resizeImage(data.imageInput[0])
+      const imageFile = data.imageInput[0]
       const title = data.titleInput
       const description = data.descriptionInput
   
       const formData = new FormData()
-      if (imageFile) { formData.append('image_file', imageFile) }
+      if (imageFile) { formData.append('image_file', await resizeImage(imageFile)) }
       if (title) { formData.append('title', title) }
       if (description) { formData.append('description', description) }
   

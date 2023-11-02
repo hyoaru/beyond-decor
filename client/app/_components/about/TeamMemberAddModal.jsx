@@ -19,13 +19,13 @@ export default function TeamMemberAddModal(props) {
 
   async function onSubmit(data) {
     try {
-      const imageFile = await resizeImage(data.imageInput[0])
+      const imageFile = data.imageInput[0]
       const name = data.nameInput
       const role = data.roleInput
 
       if (imageFile && name && role) {
         const formData = new FormData()
-        formData.append('image_file', imageFile)
+        formData.append('image_file', await resizeImage(imageFile))
         formData.append('name', name)
         formData.append('role', role)
 
