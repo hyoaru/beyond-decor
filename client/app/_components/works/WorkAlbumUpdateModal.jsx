@@ -55,10 +55,13 @@ export default function WorkAlbumUpdateModal(props) {
       if (eventDate) { formData.append('event_date', eventDate) }
       if (clientName) { formData.append('client_name', clientName) }
       if (packageType) { formData.append('package_type', packageType) }
-      if (Array.from(imageFiles).length >= 1) {
-        Array.from(imageFiles).forEach(async (imageFile) => {
-          formData.append('image_files', await resizeImage(imageFile))
-        })
+
+      if (imageFiles.length >= 1) {
+        formData.append('image_files', '')
+        for await (const imageFile of imageFiles) {
+          const resizedImageFile = await resizeImage(imageFile)
+          formData.append('image_files', resizedImageFile)
+        }
       }
 
       await collectionRecordUpdate({ recordId: recordId, formData: formData })

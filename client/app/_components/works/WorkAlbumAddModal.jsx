@@ -37,7 +37,7 @@ export default function WorkAlbumAddModal(props) {
       const eventDate = data.eventDateInput
       const packageType = data.packageTypeInput
 
-      if (thumbnailFile && imageFiles && eventName && eventPlace && eventDate) {
+      if (thumbnailFile && imageFiles.length > 0 && eventName && eventPlace && eventDate) {
         const formData = new FormData()
         formData.append('thumbnail_file', thumbnailFile)
         formData.append('event_name', eventName)
@@ -45,9 +45,11 @@ export default function WorkAlbumAddModal(props) {
         formData.append('event_date', eventDate)
         formData.append('package_type', packageType)
         if (clientName) { formData.append('client_name', clientName) }
-        Array.from(imageFiles).forEach(async (imageFile) => {
-          formData.append('image_files', await resizeImage(imageFile))
-        })
+        
+        for await (const imageFile of imageFiles) {
+          const resizedImageFile = await resizeImage(imageFile)
+          formData.append('image_files', resizedImageFile)
+        }
 
         await collectionRecordCreate({ formData: formData })
         setState(performance.now())

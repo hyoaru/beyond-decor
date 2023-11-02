@@ -80,9 +80,11 @@ export default function Page() {
       formData.append('preferred_design_description', preferredDesignDescription)
       formData.append('acquisition_survey', acquisitionSurvey)
       formData.append('items_total_cost', itemsTotalCost)
-      Array.from(preferredDesignSamples).forEach(async (imageFile) => {
-        formData.append('preferred_design_samples', await resizeImage(imageFile))
-      })
+
+      for await (const imageFile of preferredDesignSamples) {
+        const resizedImageFile = await resizeImage(imageFile)
+        formData.append('preferred_design_samples', resizedImageFile)
+      }
   
       if (mainPackage) {
         const mainPackageStripped = { title: mainPackage.title, price: mainPackage.price }
