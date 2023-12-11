@@ -1,7 +1,15 @@
 {
   "compilerOptions": {
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@components/*": ["./app/_components/*"],
+      "@context/*": ["./app/_context/*"],
+      "@hooks/*": ["./app/_hooks/*"],
+      "@libraries/*": ["./app/_libraries/*"],
+      "@services/*": ["./app/_services/*"],
+      "@store/*": ["./app/_store/*"],
+      "@constants/*": ["./app/_constants/*"],
+      "@animations/*": ["./app/_animations/*"]
     }
   }
 }
