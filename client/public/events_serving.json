@@ -1,29 +1,20 @@
 [
   {
-    "id": 0,
     "title": "Birthdays, weddings, & other special events",
     "description": "With a nuanced approach, we transform each occasion into a masterpiece that resonates with your unique vision and emotions. Birthdays come alive with personalized decor and delightful surprises, while weddings become timeless love stories infused with grace and romance. Our expertise extends to all special events, where we delicately curate every detail, ensuring that your celebration is a work of art.",
     "image_file": "1.jpg",
-    "image_path": "events-serving/1.jpg",
-    "position": 0,
-    "isLocal": true
+    "image_path": "/events-serving/1.jpg"
   },
   {
-    "id": 1,
     "title": "Corporate events",
     "description": "Beyond Decor approaches corporate events with a refined touch, ensuring that every detail aligns seamlessly with your brand's identity and objectives. We understand that corporate gatherings are not just about business; they're about building connections and leaving a lasting impression. With meticulous planning and a creative flair, we delicately curate the ambiance, decor, and logistics to reflect the professionalism and sophistication your event demands.",
     "image_file": "2.jpg",
-    "image_path": "events-serving/2.jpg",
-    "position": 1,
-    "isLocal": true
+    "image_path": "/events-serving/2.jpg"
   },
   {
-    "id": 2,
     "title": "We've got you covered",
     "description": "At Beyond Decor, we've got you covered from every angle, ensuring your event surpasses expectations. Whether it's a birthday bash, a grand wedding, or a corporate affair, our team's expertise and attention to detail guarantee a seamless and memorable experience. With Beyond Decor by your side, you can relax and savor the moment, knowing that every element of your event is in expert hands",
     "image_file": "3.jpg",
-    "image_path": "events-serving/3.jpg",
-    "position": 2,
-    "isLocal": true
+    "image_path": "/events-serving/3.jpg"
   }
 ]

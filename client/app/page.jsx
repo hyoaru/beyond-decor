@@ -4,21 +4,25 @@ import Link from 'next/link';
 import LandingCards from './(routes)/index/LandingCards'
 import PackageCards from './(routes)/index/PackageCardsFeed'
 import ParallaxSection from './(routes)/index/ParallaxSection';
-import EventServingGroups from './(routes)/index/EventServingGroups';
+import EventServingGroupsFeed from './(routes)/index/EventServingGroupsFeed';
 import AnimationFadeOnShow from './_animations/shared/AnimationFadeOnShow';
 import LandingCardsFeed from '@/app/(routes)/index/LandingCardsFeed';
 import getAuthState from '@services/authentication/getAuthState';
 import TriggerModalButton from '@components/shared/TriggerModalButton';
 import getPackageCards from './_services/index/getPackageCards';
+import getEventServingGroups from './_services/index/getEventServingGroups';
+import getLandingCards from './_services/index/getLandingCards';
 
 export default async function Home() {
   const authState = await getAuthState()
+  const landingCards = await getLandingCards()
   const packages = await getPackageCards()
+  const eventServingGroups = await getEventServingGroups()
 
   return (
     <>
       <div className="px-4 mx-auto md:mt-8 xl:container">
-        <LandingCardsFeed />
+        <LandingCardsFeed landingCards={landingCards} />
       </div>
 
 
@@ -71,7 +75,7 @@ export default async function Home() {
             <TriggerModalButton
               className={'mx-auto mb-10'}
               modalIdToTrigger={'AddPackageCardModal'}
-              >
+            >
               {'[ add package ]'}
             </TriggerModalButton>
           </div>
@@ -86,23 +90,25 @@ export default async function Home() {
 
 
       {/* Events serving section */}
-      {/* <div className="mt-32 lg:mt-48">
-        <EventServingGroups isAdmin={authState.isAdmin} />
-      </div> */}
+      <div className="mt-32 lg:mt-48">
+        <EventServingGroupsFeed
+          eventServingGroups={eventServingGroups}
+          isAdmin={authState.isAdmin}
+        />
+      </div>
 
 
       {/* Call to action section */}
-      {/* <div className="my-40 lg:my-48">
+      <div className="my-40 lg:my-48">
         <AnimationFadeOnShow initialOpacity={0.3}>
           <div className='prose max-w-none px-10 md:px-20'>
-            <h1 className='text-center mb-2 mx-6 '>Let&apos;s start crafting your next priceless memory</h1>
+            <h1 className='text-center mb-2 mx-6 '>{"Let's start crafting your next priceless memory"}</h1>
             <Link href={"/works"} className='no-underline'>
               <button className="btn btn-primary flex mx-auto mt-6 ">Get a business quote</button>
             </Link>
           </div>
         </AnimationFadeOnShow>
-      </div> */}
-
+      </div>
 
     </>
   )

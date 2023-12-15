@@ -1,9 +1,7 @@
 import LandingCard from '@components/index/LandingCard';
-import getLandingCards from '@services/index/getLandingCards';
 
-export default async function LandingCardsFeed(props) {
-  const landingCards = await getLandingCards()
-
+export default function LandingCardsFeed(props) {
+  const { landingCards } = props
   return (
     <>
       <div className="justify-center justify-items-center gap-4 hidden xl:flex xl:flex-nowrap">
