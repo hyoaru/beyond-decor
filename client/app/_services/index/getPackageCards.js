@@ -1,5 +1,5 @@
 import getClient from "@services/pocketbase/getClient";
-import getThumbnailPublicUrl from "@libraries/shared/getThumbnailPublicUrl";
+import getImagePublicUrl from "@libraries/shared/getImagePublicUrl";
 
 export default async function getPackageCards() {
   const COLLECTION_NAME = 'packages'
@@ -10,7 +10,7 @@ export default async function getPackageCards() {
     .getFullList({ sort: 'price' })
     .then((packages) => {
       packages?.map((_package) => {
-        _package.image_path = getThumbnailPublicUrl({
+        _package.image_path = getImagePublicUrl({
           collectionName: COLLECTION_NAME,
           recordId: _package.id,
           fileName: _package.image_file
