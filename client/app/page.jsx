@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 // App imports
 import LandingCards from './(routes)/index/LandingCards'
-import PackageCards from './(routes)/index/PackageCards'
+import PackageCards from './(routes)/index/PackageCardsFeed'
 import ParallaxSection from './(routes)/index/ParallaxSection';
 import EventServingGroups from './(routes)/index/EventServingGroups';
 import AnimationFadeOnShow from './_animations/shared/AnimationFadeOnShow';
