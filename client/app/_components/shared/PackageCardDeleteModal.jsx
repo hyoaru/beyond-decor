@@ -2,22 +2,34 @@ import Image from 'next/image'
 
 // App imports
 import { useCollectionRecordDelete } from '@/app/_hooks/shared/useCollectionRecordDelete'
+import useDeletePackage from '@/app/_hooks/index/useDeletePackage'
+import revalidateAllData from '@/app/_services/shared/revalidateAllData'
 
 export default function PackageCardDeleteModal(props) {
   const { packageCard, modalId, setState } = props
   const { id: cardId, title: cardTitle, image_path: cardImgSrc } = packageCard
-  const { collectionRecordDelete, isLoading, error } = useCollectionRecordDelete({ collectionName: "packages" })
+  const { deletePackage, isLoading } = useDeletePackage()
 
-  async function onSubmit(data) {
-    await collectionRecordDelete({ recordId: cardId })
-    setState(performance.now())
+  function closeModal(){
     document.getElementById(modalId).close()
+  }
+  
+  async function onSubmit(data) {
+    await deletePackage({recordId: cardId})
+      .then(async ({data, error}) => {
+        if (error) {
+
+        } else {
+          await revalidateAllData()
+          closeModal()
+        }
+      })
   }
 
   return (
     <>
       <dialog id={modalId} className="modal ">
-        <div className="modal-box w-11/12 max-w-sm">
+        <div className="modal-box max-w-md">
           <h3 className="font-bold text-lg mt-4">Delete package</h3>
           <div className="my-4">
             <Image
@@ -28,7 +40,7 @@ export default function PackageCardDeleteModal(props) {
               alt="" className={'rounded-xl object-cover flex mx-auto'}
             />
             <div className="prose max-w-none text-center my-6">
-              <h2 className=''>{cardTitle}</h2>
+              <h3 className=''>{cardTitle}</h3>
             </div>
           </div>
           <div className="modal-action flex">

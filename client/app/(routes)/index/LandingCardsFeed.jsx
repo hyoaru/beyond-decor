@@ -1,26 +1,8 @@
-"use client";
+import LandingCard from '@components/index/LandingCard';
+import getLandingCards from '@services/index/getLandingCards';
 
-import { useEffect, useState } from "react";
-
-// App imports
-import defaultLandingCards from "@/public/landing_cards.json"
-import LandingCard from "../../_components/index/LandingCard";
-import LandingCardUpdateModal from "../../_components/index/LandingCardUpdateModal";
-import useGetResources from "../../_hooks/index/useGetResources";
-import Loading from "@/app/loading";
-
-export default function LandingCards(props) {
-  const { isAdmin } = props
-  const [_, setState] = useState()
-  const { fetchResources: fetchLandingCards, resources: landingCards, isLoading, error } = useGetResources(
-    { collectionName: 'landing_cards', defaultValue: [] }
-  )
-
-  useEffect(() => {
-    fetchLandingCards()
-  }, [_])
-
-  if (isLoading) { return <Loading /> }
+export default async function LandingCardsFeed(props) {
+  const landingCards = await getLandingCards()
 
   return (
     <>
@@ -45,5 +27,5 @@ export default function LandingCards(props) {
         ))}
       </div>
     </>
-  );
+  )
 }
