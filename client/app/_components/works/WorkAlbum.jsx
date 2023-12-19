@@ -1,48 +1,33 @@
-"use client"
-
-import { useRouter } from "next/navigation"
 import Image from "next/image"
-
-// App imports
-import AnimationOnHover from "@/app/_animations/shared/AnimationOnHover"
+import Link from "next/link"
 
 export default function WorkAlbum(props) {
-  const { albumId, imgSrc, eventName, eventPlace, eventDate, isAdmin } = props
-  const router = useRouter()
-  const baseClass = "rounded-xl rounded-tr-none rounded-bl-none"
+  const { albumId, imgSrc, eventName, eventPlace, eventDate } = props
   const imgSizeInPx = 500
-
-  function onClick() {
-    router.push(`/works/${albumId}`)
-  }
 
   return (
     <>
-      <div className={`${baseClass} relative cursor-pointer shadow-xl`} onClick={onClick}>
-        <div className={`absolute flex w-full h-full`}>
-          <div className={`${baseClass} prose relative text-center my-auto mx-auto flex flex-col w-[90%] h-[90%] p-10 border border-primary`}>
+      <div className={`group/work-album rounded-box relative shadow-xl`}>
+        <div className={`absolute flex w-full h-full opacity-0 group-hover/work-album:opacity-100 transition-all ease-in-out duration-500`}>
+          <div className={`rounded-box prose relative text-center my-auto mx-auto flex flex-col w-[90%] h-[90%] p-10 border border-primary`}>
             <small className=" uppercase font-bold text-primary">{eventDate}</small>
             <h2 className="mt-auto">{eventName}</h2>
             <small className="uppercase">{eventPlace}</small>
             <h4 className="mt-auto uppercase text-primary">
-              <span className="border-b border-primary p-1 z-40 cursor-pointer">Show me more</span>
+              <Link href={`/works/${albumId}`} className="underline-offset-8 text-primary ">Show me more</Link>
             </h4>
           </div>
         </div>
 
-        <AnimationOnHover
-          initial={{ opacity: 1 }}
-          animate={{ opacity: 0.10 }}
-        >
-          <Image
-            className={`${baseClass} object-cover`}
-            style={{width: `${imgSizeInPx}px`, height: `${imgSizeInPx}px`}}
-            height={imgSizeInPx}
-            width={imgSizeInPx}
-            src={imgSrc}
-            alt=""
-          />
-        </AnimationOnHover>
+        <Image
+          className={`rounded-box object-cover transition-all ease-in-out duration-500 group-hover/work-album:opacity-20 pointer-events-none`}
+          style={{ width: `${imgSizeInPx}px`, height: `${imgSizeInPx}px` }}
+          height={imgSizeInPx}
+          width={imgSizeInPx}
+          src={imgSrc}
+          alt=""
+        />
+
       </div>
     </>
   )

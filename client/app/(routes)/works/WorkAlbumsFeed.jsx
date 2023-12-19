@@ -9,37 +9,23 @@ import WorkAlbumAddModal from "../../_components/works/WorkAlbumAddModal";
 import useQueryParams from "../../_hooks/shared/useQueryParams";
 import { useRef, useState } from "react";
 
-export default function WorkAlbums(props) {
-  const { workAlbums, packages, isAdmin, setState } = props
-  const { urlSearchParams, router, pathname } = useQueryParams()
-  const [filterBy, setFilterBy] = useState(urlSearchParams.get("filterBy") || "none")
-  const [sortOrder, setSortOrder] = useState()
-  const workAlbumTypes = Array.from(new Set(workAlbums?.map((workAlbum) => workAlbum.package_type)))
+export default function WorkAlbumsFeed(props) {
+  const { workAlbums, packages, filterBySearchParam } = props
+  const [filterBy, setFilterBy] = useState(filterBySearchParam ?? "all")
+  const [_, setState] = useState()
+  const workAlbumTypes = Array.from(new Set(packages.map((_package) => _package.title)))
 
-  let filteredWorkAlbums = workAlbums
-  if (filterBy !== "none") {
-    filteredWorkAlbums = workAlbums.filter((workAlbum) => (
-      workAlbum.package_type.toLowerCase() === filterBy.toLowerCase()
-    ))
-  }
+  let filteredWorkAlbums = workAlbums.filter((workAlbum) => {
+    return filterBy === "all" ? true : workAlbum.package_type.toLowerCase() === filterBy.toLowerCase()
+  })
 
   function onFilterChange(event) {
-    if (urlSearchParams.get("filterBy")) {
-      urlSearchParams.delete("filterBy")
-      router.replace(pathname)
-    }
-
     setFilterBy(event.target.value)
   }
 
-  function onSortOrderChange(event) {
-    if (urlSearchParams.get("sortOrder")) {
-      urlSearchParams.delete("sortOrder")
-      router.replace(pathname)
-    }
-
-    filteredWorkAlbums.reverse()
-    setSortOrder(event.target.checked ? "asc" : "desc")
+  function onSortOrderChange() {
+    workAlbums.reverse()
+    setState(performance.now())
   }
 
   return (
@@ -52,7 +38,7 @@ export default function WorkAlbums(props) {
             onChange={onFilterChange}
             value={filterBy}
           >
-            <option value={"none"} defaultValue>None</option>
+            <option value={"all"} defaultValue>All</option>
             {workAlbumTypes.map((workAlbumType, index) => (
               <option
                 key={`workAlbumType-${index}`}

@@ -1,24 +1,17 @@
-"use client";
-
-import React, { useEffect, useState } from 'react'
-
-// App imports
-import WorkAlbums from './WorkAlbums'
-import { useAuthStateContext } from '../../_context';
-import useGetWorkAlbums from "../../_hooks/works/useGetWorkAlbums";
-import useGetPackages from '../../_hooks/packages/useGetPackages';
+import WorkAlbumsFeed from './WorkAlbumsFeed'
+// import { useAuthStateContext } from '../../_context';
+// import useGetWorkAlbums from "../../_hooks/works/useGetWorkAlbums";
+// import useGetPackages from '../../_hooks/packages/useGetPackages';
+import getWorkAlbums from '@/app/_services/works/getWorkAlbums';
 import Loading from './loading';
+import getAuthState from '@services/authentication/getAuthState';
+import TriggerModalButton from '@components/shared/TriggerModalButton';
+import getPackages from '@services/shared/getPackages';
 
-export default function Page() {
-  const { fetchWorkAlbums, workAlbums, isLoading, error } = useGetWorkAlbums({ collectionName: "work_albums", defaultValue: [] })
-  const { fetchPackages, packages } = useGetPackages({ collectionName: "packages", defaultValue: [] })
-  const authState = useAuthStateContext()
-  const [_, setState] = useState()
-
-  useEffect(() => {
-    fetchWorkAlbums()
-    fetchPackages()
-  }, [_])
+export default async function Page({ searchParams }) {
+  const { data: workAlbums, error } = await getWorkAlbums()
+  const { data: packages } = await getPackages()
+  const authState = await getAuthState()
 
   return (
     <>
@@ -38,23 +31,17 @@ export default function Page() {
 
         {authState.isAdmin && <>
           <div className="text-center mt-10">
-            <span
-              className="text-primary font-mono opacity-40 text-sm cursor-pointer"
-              onClick={() => { document.getElementById('WorkAlbumAddModal').showModal() }}
-            >
-              {"[ add album ]"}
-            </span>
+            <TriggerModalButton modalIdToTrigger={'WorkAlbumAddModal'}>
+              {'[ add album ]'}
+            </TriggerModalButton>
           </div>
         </>}
 
-        {isLoading
-          ? <Loading />
-          : <WorkAlbums
-            workAlbums={workAlbums}
-            setState={setState}
-            packages={packages}
-            />
-        }
+        <WorkAlbumsFeed
+          workAlbums={workAlbums}
+          packages={packages}
+          filterBySearchParam={searchParams.filterBy}
+        />
       </div>
 
     </>
