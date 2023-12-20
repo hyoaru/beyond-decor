@@ -5,14 +5,14 @@ import { faEllipsis } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function WorkAlbumAction(props) {
-  const { recordId } = props
+  const { recordId, editModalIdToTrigger, deleteModalIdToTrigger } = props
 
   function onEdit() {
-    document.getElementById(`WorkAlbumUpdateModal-${recordId}`).showModal()
+    document.getElementById(editModalIdToTrigger).showModal()
   }
 
   async function onDelete() {
-    document.getElementById(`WorkAlbumDeleteModal-${recordId}`).showModal()
+    document.getElementById(deleteModalIdToTrigger).showModal()
   }
 
   return (

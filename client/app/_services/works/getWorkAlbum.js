@@ -13,12 +13,19 @@ export default async function getWorkAlbum({ recordId }) {
       .collection(COLLECTION_NAME)
       .getOne(recordId)
       .then(async (workAlbum) => {
+        const thumbnail_path = getImagePublicUrl({
+          collectionName: COLLECTION_NAME,
+          recordId: recordId,
+          fileName: workAlbum.thumbnail_file
+        })
+
         const image_paths = workAlbum.image_files.map((imageFileName) => getImagePublicUrl({
           collectionName: COLLECTION_NAME,
           recordId: recordId,
           fileName: imageFileName
         }))
 
+        workAlbum.thumbnail_path = thumbnail_path
         workAlbum.image_paths = image_paths
         return workAlbum
       })

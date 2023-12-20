@@ -4,8 +4,8 @@ import Image from 'next/image'
 // App imports
 // import useGetWorkAlbum from '@/app/_hooks/works/useGetWorkAlbum'
 // import { useAuthStateContext } from '@/app/_context'
-// import WorkAlbumUpdateModal from '@/app/_components/works/WorkAlbumUpdateModal'
-// import WorkAlbumDeleteModal from '@/app/_components/works/WorkAlbumDeleteModal'
+import WorkAlbumUpdateModal from '@/app/_components/works/WorkAlbumUpdateModal'
+import WorkAlbumDeleteModal from '@/app/_components/works/WorkAlbumDeleteModal'
 // import useGetPackages from '@/app/_hooks/packages/useGetPackages'
 // import Loading from '../loading'
 import { notFound } from 'next/navigation'
@@ -36,7 +36,13 @@ export default async function Page({ params }) {
             </h1>
           </div>
           <div className="text-center md:justify-self-start md:text-left lg:w-10/12 xl:w-8/12">
-            {authState.isAdmin && <WorkAlbumDropdownAction recordId={recordId} />}
+            {authState.isAdmin && <>
+              <WorkAlbumDropdownAction 
+                recordId={recordId} 
+                editModalIdToTrigger={`WorkAlbumUpdateModal-${recordId}`}
+                deleteModalIdToTrigger={`WorkAlbumDeleteModal-${recordId}`}
+              />
+            </>}
             <p className='font-bold'>{eventPlace}</p>
             <p>{formattedEventDate}</p>
             <p>{clientName}</p>
@@ -57,20 +63,20 @@ export default async function Page({ params }) {
         </div>
       </div>
 
-      {/* {(authState.isAdmin && workAlbum?.thumbnail_path) && <>
+      {(authState.isAdmin) && <>
         <WorkAlbumUpdateModal
+          modalId={`WorkAlbumUpdateModal-${recordId}`}
           workAlbum={workAlbum}
           packages={packages}
-          setState={setState}
         />
 
         <WorkAlbumDeleteModal
+          modalId={`WorkAlbumDeleteModal-${recordId}`}
           recordId={recordId}
-          setState={setState}
           thumbnailSrc={thumbnailPath}
           eventName={eventName}
         />
-      </>} */}
+      </>}
     </>
   )
 }
