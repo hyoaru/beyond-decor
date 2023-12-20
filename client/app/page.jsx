@@ -1,17 +1,16 @@
 import Link from 'next/link';
 
 // App imports
-import LandingCards from './(routes)/index/LandingCards'
-import PackageCards from './(routes)/index/PackageCardsFeed'
-import ParallaxSection from './(routes)/index/ParallaxSection';
-import EventServingGroupsFeed from './(routes)/index/EventServingGroupsFeed';
-import AnimationFadeOnShow from './_animations/shared/AnimationFadeOnShow';
+import PackageCardsFeed from '@/app/(routes)/index/PackageCardsFeed'
+import ParallaxSection from '@/app/(routes)/index/ParallaxSection';
+import EventServingGroupsFeed from '@/app/(routes)/index/EventServingGroupsFeed';
+import AnimationFadeOnShow from '@animations/shared/AnimationFadeOnShow';
 import LandingCardsFeed from '@/app/(routes)/index/LandingCardsFeed';
 import getAuthState from '@services/authentication/getAuthState';
 import TriggerModalButton from '@components/shared/TriggerModalButton';
-import getPackageCards from './_services/index/getPackageCards';
-import getEventServingGroups from './_services/index/getEventServingGroups';
-import getLandingCards from './_services/index/getLandingCards';
+import getPackageCards from '@services/index/getPackageCards';
+import getEventServingGroups from '@services/index/getEventServingGroups';
+import getLandingCards from '@services/index/getLandingCards';
 
 export default async function Home() {
   const authState = await getAuthState()
@@ -81,7 +80,7 @@ export default async function Home() {
           </div>
         </>}
 
-        <PackageCards packages={packages} isAdmin={authState.isAdmin} />
+        <PackageCardsFeed packages={packages} isAdmin={authState.isAdmin} />
 
         <Link href="/works" className='no-underline'>
           <button className="btn flex mx-auto mt-16 btn-outline">View Packages</button>
