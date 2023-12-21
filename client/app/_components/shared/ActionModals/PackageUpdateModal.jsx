@@ -72,8 +72,8 @@ export default function PackageUpdateModal(props) {
 
         } else {
           await revalidateAllData()
-          toast.success('Package updated successfully.')
           closeModal()
+          toast.success('Package updated successfully.')
         }
       })
   }

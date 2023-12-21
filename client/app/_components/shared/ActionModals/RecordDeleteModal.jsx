@@ -7,7 +7,7 @@ import { toast } from 'sonner'
 import revalidateAllData from '@services/shared/revalidateAllData'
 import useDeleteRecord from '@hooks/shared/useDeleteRecord'
 
-export default function DeleteRecordModal(props) {
+export default function RecordDeleteModal(props) {
   const { modalId, collectionName, recordId } = props
   const { deleteRecord, isLoading } = useDeleteRecord()
 
@@ -22,9 +22,9 @@ export default function DeleteRecordModal(props) {
         if (error) {
           toast.error('An error has occured.')
         } else {
-          toast.success('Record deleted successfully.')
           await revalidateAllData()
           closeModal()
+          toast.success('Record deleted successfully.')
         }
       })
   }

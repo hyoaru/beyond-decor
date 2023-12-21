@@ -6,28 +6,30 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 
 // App imports
-import revalidateAllData from '@services/shared/revalidateAllData'
-import useUpdatePackage from '@hooks/index/useUpdatePackage'
-import { UPDATE_PACKAGE_FORM_SCHEMA as formSchema } from '@constants/index/forms'
+import { ADD_PACKAGE_FORM_SCHEMA as formSchema } from '@constants/shared/forms'
+import useAddPackage from '@hooks/shared/useAddPackage'
 import FormErrorMessage from '@components/shared/FormErrorMessage'
+import revalidateAllData from '@services/shared/revalidateAllData'
+import { toast } from 'sonner'
 
-export default function PackageCardUpdateModal(props) {
-  const { packageCard, modalId } = props
-  const { id: packageId, image_path: cardImgSrc, title, short_description: shortDescription } = packageCard
-
-  const [imageUrl, setImageUrl] = useState(cardImgSrc)
-  const { updatePackage, isLoading } = useUpdatePackage()
+export default function PackageAddModal(props) {
+  const modalId = "AddPackageCardModal"
+  const [imageUrl, setImageUrl] = useState()
+  const { addPackage, isLoading } = useAddPackage()
 
   const { handleSubmit, register, getValues, reset, formState: { errors } } = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: title,
-      shortDescription: shortDescription,
-      imageFile: ''
+      title: '',
+      description: '',
+      shortDescription: '',
+      price: 0,
+      inclusions: '',
+      imageFile: '',
     }
   })
 
-  function closeAndResetModal(){
+  function closeAndResetModal() {
     closeModal()
     resetFields()
   }
@@ -36,9 +38,9 @@ export default function PackageCardUpdateModal(props) {
     document.getElementById(modalId).close()
   }
 
-  function resetFields(){
+  function resetFields() {
     document.querySelector('#imageFileInput').value = null
-    setImageUrl(cardImgSrc)
+    setImageUrl(null)
     reset()
   }
 
@@ -53,37 +55,41 @@ export default function PackageCardUpdateModal(props) {
   }
 
   async function onSubmit(data) {
-    await updatePackage({
-      recordId: packageId,
+    await addPackage({
       title: data.title,
+      description: data.description,
       shortDescription: data.shortDescription,
+      inclusions: data.inclusions,
+      price: data.price,
       imageFile: data.imageFile
     })
-    .then(async ({data, error}) => {
-      if (error) {
-        console.log(error)
-
-      } else {
-        await revalidateAllData()
-        closeModal()
-      }
-    })
+      .then(async ({ data, error }) => {
+        if (error) {
+          toast.error("An error has occured.")
+        } else {
+          await revalidateAllData()
+          closeAndResetModal()
+          toast.success("Package has been added successfully.")
+        }
+      })
   }
 
   return (
     <>
-      <dialog id={modalId} className="modal">
+      <dialog id={modalId} className="modal ">
         <div className="modal-box max-w-md">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <h3 className="font-bold text-lg mt-4">Edit package contents</h3>
+            <h3 className="font-bold text-lg mt-4">Add package</h3>
             <div className="my-4">
-              <Image
-                width={300}
-                height={300}
-                src={imageUrl}
-                style={{ width: `${300}px`, height: `${300}px` }}
-                alt="" className={'rounded-xl object-cover flex mx-auto'}
-              />
+              {imageUrl && <>
+                <Image
+                  width={300}
+                  height={300}
+                  src={imageUrl}
+                  style={{ width: `${300}px`, height: `${300}px` }}
+                  alt="" className={'rounded-xl object-cover flex mx-auto'}
+                />
+              </>}
 
               <div className="">
                 <div className="divider">
@@ -91,8 +97,8 @@ export default function PackageCardUpdateModal(props) {
                 </div>
                 <div className="form-control w-full flex mx-auto my-3">
                   <input
-                    type="file"
                     id='imageFileInput'
+                    type="file"
                     className="file-input file-input-md file-input-primary file-input-bordered w-full"
                     accept='.jpg, .jpeg, .png'
                     {...register("imageFile", { onChange: onImageChange })}
@@ -118,10 +124,46 @@ export default function PackageCardUpdateModal(props) {
                 </div>
 
                 <div className="flex mx-auto form-control w-full my-2">
+                  <input
+                    type="number"
+                    placeholder={"Enter package price"}
+                    className={`input input-bordered w-full ${errors.price ? 'input-error' : ''}`}
+                    {...register("price")}
+                  />
+                  {errors.price && <>
+                    <FormErrorMessage>{errors.price.message}</FormErrorMessage>
+                  </>}
+                </div>
+
+                <div className="flex mx-auto form-control w-full my-2">
+                  <textarea
+                    className={`textarea textarea-bordered w-full ${errors.inclusions ? 'textarea-error' : ''}`}
+                    placeholder="Enter comma separated inclusions e.g: wall backdrop, themed balloons, garland"
+                    {...register("inclusions")}
+                  >
+                  </textarea>
+                  {errors.inclusions && <>
+                    <FormErrorMessage>{errors.inclusions.message}</FormErrorMessage>
+                  </>}
+                </div>
+
+                <div className="flex mx-auto form-control w-full my-2">
+                  <textarea
+                    className={`textarea textarea-bordered w-full ${errors.description ? 'textarea-error' : ''}`}
+                    placeholder="Enter full description"
+                    {...register("description")}
+                  >
+                  </textarea>
+                  {errors.description && <>
+                    <FormErrorMessage>{errors.description.message}</FormErrorMessage>
+                  </>}
+
+                </div>
+
+                <div className="flex mx-auto form-control w-full my-2">
                   <textarea
                     className={`textarea textarea-bordered w-full ${errors.shortDescription ? 'textarea-error' : ''}`}
                     placeholder="Enter short description"
-                    rows={5}
                     {...register("shortDescription")}
                   >
                   </textarea>
@@ -134,7 +176,7 @@ export default function PackageCardUpdateModal(props) {
             </div>
             <div className="modal-action flex">
               <button type='submit' className="btn btn-primary" disabled={isLoading}>Save</button>
-              <button type='button' className="btn" onClick={closeAndResetModal}>Close</button>
+              <button onClick={closeAndResetModal} type='button' className="btn">Close</button>
             </div>
           </form>
         </div>
