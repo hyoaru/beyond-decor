@@ -3,7 +3,7 @@
 import PackageCard from '@components/index/PackageCard';
 import PackageCardUpdateModal from '@components/index/ActionModals/PackageCardUpdateModal';
 import PackageCardAddModal from '@components/shared/PackageCardAddModal';
-import PackageCardDeleteModal from '@components/shared/PackageCardDeleteModal';
+import DeleteRecordModal from '@/app/_components/shared/DeleteRecordModal';
 
 export default function PackageCardsFeed(props) {
   const { packages, isAdmin } = props
@@ -31,8 +31,9 @@ export default function PackageCardsFeed(props) {
             modalId={`PackageCardEditModal-${_package.id}`}
           />
 
-          <PackageCardDeleteModal
-            packageCard={_package}
+          <DeleteRecordModal
+            collectionName={'packages'}
+            recordId={_package.id}
             modalId={`PackageCardDeleteModal-${_package.id}`}
           />
         </div>
