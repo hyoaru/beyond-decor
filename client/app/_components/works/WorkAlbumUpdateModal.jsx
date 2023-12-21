@@ -5,10 +5,9 @@ import React, { useRef, useState } from 'react'
 import Image from 'next/image'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { toast } from 'sonner'
 
 // App imports
-// import { useCollectionRecordUpdate } from '@/app/_hooks/shared/useCollectionRecordUpdate'
-// import { resizeImage } from '@/app/_libraries/shared/resizeImage'
 import { UPDATE_WORK_ALBUM_FORM_SCHEMA as formSchema } from '@/app/_constants/works/forms'
 import FormErrorMessage from '@components/shared/FormErrorMessage'
 import useUpdateWorkAlbum from '@/app/_hooks/works/useUpdateWorkAlbum'
@@ -20,7 +19,6 @@ export default function WorkAlbumUpdateModal(props) {
   const { event_place: eventPlace, event_date: eventDate, client_name: clientName, package_type: packageType } = workAlbum
   const { updateWorkAlbum, isLoading } = useUpdateWorkAlbum()
   const [thumbnailUrl, setThumbnailUrl] = useState(thumbnailSrc)
-  // const { collectionRecordUpdate, isLoading, error } = useCollectionRecordUpdate({ collectionName: 'work_albums' })
 
   const { handleSubmit, register, getValues, reset, formState: { errors } } = useForm({
     resolver: zodResolver(formSchema),
@@ -68,11 +66,12 @@ export default function WorkAlbumUpdateModal(props) {
     })
       .then(async ({ data, error }) => {
         if (error) {
-          console.log(error)
+          toast.error('An error has occured.')
 
         } else {
           await revalidateAllData()
           closeModal()
+          toast.success('Work album has been updated successfully.')
         }
       })
   }
@@ -198,8 +197,6 @@ export default function WorkAlbumUpdateModal(props) {
                   <FormErrorMessage>{errors.clientName.message}</FormErrorMessage>
                 </>}
               </div>
-
-
             </div>
             <div className="modal-action flex">
               <button type='submit' className="btn btn-primary" disabled={isLoading}>Save</button>
