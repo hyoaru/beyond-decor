@@ -51,7 +51,7 @@ export default function AddOnsUpdateModal(props) {
           toast.error("An error has occured.")
         } else {
           await revalidateAllData()
-          closeAndResetModal()
+          closeModal()
           toast.success("Addons has been updated successfully.")
         }
       })
