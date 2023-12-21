@@ -10,8 +10,9 @@ import { ADD_PACKAGE_FORM_SCHEMA as formSchema } from '@constants/shared/forms'
 import useAddPackage from '@hooks/shared/useAddPackage'
 import FormErrorMessage from '@components/shared/FormErrorMessage'
 import revalidateAllData from '@services/shared/revalidateAllData'
+import { toast } from 'sonner'
 
-export default function PackageCardAddModal(props) {
+export default function PackageAddModal(props) {
   const modalId = "AddPackageCardModal"
   const [imageUrl, setImageUrl] = useState()
   const { addPackage, isLoading } = useAddPackage()
@@ -63,13 +64,12 @@ export default function PackageCardAddModal(props) {
       imageFile: data.imageFile
     })
       .then(async ({ data, error }) => {
-        console.log(data)
         if (error) {
-          console.log(error)
-
+          toast.error("An error has occured.")
         } else {
+          toast.success("Package has been added successfully.")
           await revalidateAllData()
-          closeModal()
+          closeAndResetModal()
         }
       })
   }

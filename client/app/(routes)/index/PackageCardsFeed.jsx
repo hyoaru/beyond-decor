@@ -2,7 +2,7 @@
 
 import PackageCard from '@components/index/PackageCard';
 import PackageCardUpdateModal from '@components/index/ActionModals/PackageCardUpdateModal';
-import PackageCardAddModal from '@components/shared/PackageCardAddModal';
+import PackageAddModal from '@/app/_components/shared/PackageAddModal';
 import DeleteRecordModal from '@/app/_components/shared/DeleteRecordModal';
 
 export default function PackageCardsFeed(props) {
@@ -39,7 +39,7 @@ export default function PackageCardsFeed(props) {
         </div>
       ))}
 
-      {isAdmin && <PackageCardAddModal />}
+      {isAdmin && <PackageAddModal />}
 
     </>
   )

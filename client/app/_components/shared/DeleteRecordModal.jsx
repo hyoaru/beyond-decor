@@ -1,6 +1,7 @@
 "use client"
 
 import React from 'react'
+import { toast } from 'sonner'
 
 // App imports
 import revalidateAllData from '@services/shared/revalidateAllData'
@@ -19,8 +20,9 @@ export default function DeleteRecordModal(props) {
     await deleteRecord({ collectionName: collectionName, recordId: recordId })
       .then(async ({ data, error }) => {
         if (error) {
-          console.log(error)
+          toast.error('An error has occured.')
         } else {
+          toast.success('Record deleted successfully.')
           await revalidateAllData()
           closeModal()
         }
