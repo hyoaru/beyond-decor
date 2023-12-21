@@ -1,7 +1,7 @@
 import Image from "next/image";
 
-export default function BaseCard(props) {
-  const { imgWidth, imgHeight, imgSrc, quotation, className } = props;
+export default function LandingCard(props) {
+  const { imgSrc, quotation, className } = props;
 
   return (
     <>
@@ -11,11 +11,9 @@ export default function BaseCard(props) {
         </div>
 
         <Image
-          width={imgWidth}
-          height={imgHeight}
-          src={imgSrc}
-          style={{ width: `${imgWidth}px`, height: `${imgHeight}px` }}
-          alt="" className={'rounded-box object-cover shadow-lg transition-all ease-in-out duration-500 group-hover/card:opacity-20'}
+          width={250} height={600}
+          src={imgSrc} alt="" 
+          className={'rounded-box object-cover shadow-lg transition-all ease-in-out duration-500 w-[250px] h-[600px] xl:h-[450px] xl:w-[180px] group-hover/card:opacity-20'}
         />
       </div>
 
