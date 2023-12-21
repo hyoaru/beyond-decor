@@ -1,30 +1,24 @@
 import dayjs from 'dayjs'
 import Image from 'next/image'
+import { notFound } from 'next/navigation'
 
 // App imports
-// import useGetWorkAlbum from '@/app/_hooks/works/useGetWorkAlbum'
-// import { useAuthStateContext } from '@/app/_context'
-import WorkAlbumUpdateModal from '@/app/_components/works/WorkAlbumUpdateModal'
-import WorkAlbumDeleteModal from '@/app/_components/works/WorkAlbumDeleteModal'
-// import useGetPackages from '@/app/_hooks/packages/useGetPackages'
-// import Loading from '../loading'
-import { notFound } from 'next/navigation'
-import getWorkAlbum from '@/app/_services/works/getWorkAlbum'
-import getPackages from '@/app/_services/shared/getPackages'
-import getAuthState from '@/app/_services/authentication/getAuthState'
-import WorkAlbumDropdownAction from '@/app/_components/works/WorkAlbumDropdownAction'
+import WorkAlbumUpdateModal from '@components/works/WorkAlbumUpdateModal'
+import getWorkAlbum from '@services/works/getWorkAlbum'
+import getPackages from '@services/shared/getPackages'
+import getAuthState from '@services/authentication/getAuthState'
+import WorkAlbumDropdownAction from '@components/works/WorkAlbumDropdownAction'
+import RecordDeleteModal from '@components/shared/ActionModals/RecordDeleteModal'
 
 export default async function Page({ params }) {
   const { data: workAlbum, error } = await getWorkAlbum({ recordId: params?.id })
   const { data: packages } = await getPackages()
   const authState = await getAuthState()
+  if (error) { return notFound() }
+  
   const { id: recordId, event_name: eventName, event_place: eventPlace, event_date: eventDate } = workAlbum
   const { client_name: clientName, thumbnail_path: thumbnailPath, image_paths: imagePaths } = workAlbum
   const formattedEventDate = dayjs(eventDate).format("MMMM DD, YYYY")
-
-  if (error) {
-    return (notFound())
-  }
 
   return (
     <>
@@ -37,8 +31,8 @@ export default async function Page({ params }) {
           </div>
           <div className="text-center md:justify-self-start md:text-left lg:w-10/12 xl:w-8/12">
             {authState.isAdmin && <>
-              <WorkAlbumDropdownAction 
-                recordId={recordId} 
+              <WorkAlbumDropdownAction
+                recordId={recordId}
                 editModalIdToTrigger={`WorkAlbumUpdateModal-${recordId}`}
                 deleteModalIdToTrigger={`WorkAlbumDeleteModal-${recordId}`}
               />
@@ -70,11 +64,10 @@ export default async function Page({ params }) {
           packages={packages}
         />
 
-        <WorkAlbumDeleteModal
+        <RecordDeleteModal
           modalId={`WorkAlbumDeleteModal-${recordId}`}
+          collectionName={'work_albums'}
           recordId={recordId}
-          thumbnailSrc={thumbnailPath}
-          eventName={eventName}
         />
       </>}
     </>

@@ -1,4 +1,5 @@
 import { useState } from "react"
+import dayjs from "dayjs"
 
 // App imports
 import getClient from "@services/pocketbase/getClient"
@@ -17,7 +18,7 @@ export default function useUpdateWorkAlbum() {
     try {
       const formData = new FormData()
       formData.append('event_name', eventName)
-      formData.append('event_date', eventDate)
+      formData.append('event_date', dayjs(eventDate))
       formData.append('event_place', eventPlace)
       formData.append('package_type', packageType)
       formData.append('client_name', clientName)
