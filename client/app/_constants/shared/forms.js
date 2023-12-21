@@ -7,7 +7,15 @@ export const PACKAGES_BASE_FORM_SCHEMA = {
   description: z.string().min(10).max(800),
   shortDescription: z.string().min(10).max(400),
   price: z.coerce.number(),
-  inclusions: z.string().refine((value) => JSON.parse(value).then((_) => true).catch((_) => false), `Invalid JSON`),
+  inclusions: z.string()
+    .refine((value) => {
+      try {
+        JSON.parse(value.length === 0 ? value : `[${value}]`)
+        return true
+      } catch (error) {
+        return false
+      }
+    }, `Invalid inclusions`),
   imageFile: z.any()
     .refine((files) => files?.length !== 0, `Thumbnail is required`)
     .refine((files) => files[0]?.size <= MAX_FILE_SIZE_IN_MB, `Max image size is 10MB.`),
@@ -27,3 +35,27 @@ export const WORK_ALBUMS_BASE_FORM_SCHEMA = {
     .refine((files) => Array.from(files)?.length <= 12, `You can only select up to 12 images`)
     .refine((files) => Array.from(files)?.every((file) => file?.size <= MAX_FILE_SIZE_IN_MB), `Max image size is 10MB`),
 }
+
+
+// DERIVED FORM SCHEMAS
+export const UPDATE_PACKAGE_FORM_SCHEMA = z.object({
+  title: PACKAGES_BASE_FORM_SCHEMA.title,
+  description: PACKAGES_BASE_FORM_SCHEMA.description,
+  shortDescription: PACKAGES_BASE_FORM_SCHEMA.shortDescription,
+  price: PACKAGES_BASE_FORM_SCHEMA.price,
+  inclusions: PACKAGES_BASE_FORM_SCHEMA.inclusions,
+  imageFile: z.any()
+    .refine((files) => {
+      if (files.length === 0) { return true }
+      return files[0]?.size <= MAX_FILE_SIZE_IN_MB
+    }, `Max image size is 5MB.`),
+})
+
+export const ADD_PACKAGE_FORM_SCHEMA = z.object({
+  title: PACKAGES_BASE_FORM_SCHEMA.title,
+  description: PACKAGES_BASE_FORM_SCHEMA.description,
+  shortDescription: PACKAGES_BASE_FORM_SCHEMA.shortDescription,
+  price: PACKAGES_BASE_FORM_SCHEMA.price,
+  inclusions: PACKAGES_BASE_FORM_SCHEMA.inclusions,
+  imageFile: PACKAGES_BASE_FORM_SCHEMA.imageFile,
+})  
