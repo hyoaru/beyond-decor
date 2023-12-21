@@ -6,10 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 
 // App imports
-import { useCollectionRecordUpdate } from '../../_hooks/shared/useCollectionRecordUpdate'
-import { resizeImage } from '@/app/_libraries/shared/resizeImage'
-import revalidateAllData from '@/app/_services/shared/revalidateAllData'
-import useUpdatePackage from '@/app/_hooks/index/useUpdatePackage'
+import revalidateAllData from '@services/shared/revalidateAllData'
+import useUpdatePackage from '@hooks/index/useUpdatePackage'
 import { UPDATE_PACKAGE_FORM_SCHEMA as formSchema } from '@constants/index/forms'
 import FormErrorMessage from '@components/shared/FormErrorMessage'
 

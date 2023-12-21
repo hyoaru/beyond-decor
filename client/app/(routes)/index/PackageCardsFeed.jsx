@@ -1,12 +1,9 @@
 "use client"
 
-import defaultPackageCards from "@/public/package_cards.json"
-import PackageCard from '../../_components/index/PackageCard';
-import PackageCardUpdateModal from '../../_components/index/PackageCardUpdateModal';
-import PackageCardAddModal from '../../_components/shared/PackageCardAddModal';
-// import useGetResources from '../../_hooks/index/useGetResources';
-import PackageCardDeleteModal from '../../_components/shared/PackageCardDeleteModal';
-import Loading from '@/app/loading';
+import PackageCard from '@components/index/PackageCard';
+import PackageCardUpdateModal from '@components/index/ActionModals/PackageCardUpdateModal';
+import PackageCardAddModal from '@components/shared/PackageCardAddModal';
+import PackageCardDeleteModal from '@components/shared/PackageCardDeleteModal';
 
 export default function PackageCardsFeed(props) {
   const { packages, isAdmin } = props

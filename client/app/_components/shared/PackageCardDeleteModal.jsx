@@ -1,12 +1,11 @@
 import Image from 'next/image'
 
 // App imports
-import { useCollectionRecordDelete } from '@/app/_hooks/shared/useCollectionRecordDelete'
 import useDeletePackage from '@/app/_hooks/index/useDeletePackage'
 import revalidateAllData from '@/app/_services/shared/revalidateAllData'
 
 export default function PackageCardDeleteModal(props) {
-  const { packageCard, modalId, setState } = props
+  const { packageCard, modalId } = props
   const { id: cardId, title: cardTitle, image_path: cardImgSrc } = packageCard
   const { deletePackage, isLoading } = useDeletePackage()
 

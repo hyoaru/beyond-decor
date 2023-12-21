@@ -1,8 +1,4 @@
-import EventServingGroup from '../../_components/index/EventServingGroup'
-// import useGetResources from '../../_hooks/index/useGetResources';
-import defaultEventServingGroups from '@/public/events_serving.json'
-import EventServingGroupUpdateModal from '../../_components/index/EventServingGroupUpdateModal';
-import Loading from '@/app/loading';
+import EventServingGroup from '@components/index/EventServingGroup'
 
 export default function EventServingGroupsFeed(props) {
   const { isAdmin, eventServingGroups } = props
