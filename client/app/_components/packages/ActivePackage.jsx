@@ -2,7 +2,10 @@ import React from 'react'
 import Link from 'next/link'
 import { faPen, faPencil, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { useBagStore } from '@/app/_store/Bag'
+import { toast } from 'sonner'
+
+// App imports
+import { useBagStore } from '@store/Bag'
 
 export default function ActivePackage(props) {
   const { activePackage, isAdmin, editModalIdToTrigger, deleteModalIdToTrigger } = props
@@ -10,19 +13,16 @@ export default function ActivePackage(props) {
   const { addMainPackage } = useBagStore()
 
   function onEdit() {
-    if (isAdmin) {
-      document.getElementById(editModalIdToTrigger).showModal()
-    }
+    document.getElementById(editModalIdToTrigger).showModal()
   }
 
   function onDelete() {
-    if (isAdmin) {
-      document.getElementById(deleteModalIdToTrigger).showModal()
-    }
+    document.getElementById(deleteModalIdToTrigger).showModal()
   }
 
   function onAddToBag() {
     addMainPackage(activePackage)
+    toast.info(`'${title}' added to bag.`)
   }
 
   return (

@@ -1,89 +1,108 @@
 "use client"
 
-import { useState } from 'react'
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { toast } from 'sonner'
 
 // App imports
-import { useForm } from 'react-hook-form'
-import { useCollectionRecordCreate } from '../../_hooks/shared/useCollectionRecordCreate'
+import { ADD_ADDONS_BASE_FORM_SCHEMA as formSchema } from '@constants/packages/forms'
+import FormErrorMessage from '@components/shared/FormErrorMessage'
+import revalidateAllData from '@services/shared/revalidateAllData'
+import useAddAddons from '@hooks/packages/useAddAddons'
 
 export default function AddOnsAddModal(props) {
-  const { nextIndex, setState } = props
-  const { register, handleSubmit, reset, resetField, getValues } = useForm()
-  const { collectionRecordCreate, isLoading, error } = useCollectionRecordCreate({ collectionName: 'addons' })
+  const modalId = 'AddAddOnsModal'
+  const { addAddons, isLoading } = useAddAddons()
+
+  const { handleSubmit, register, getValues, reset, formState: { errors } } = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: '',
+      category: '',
+      price: 0,
+    }
+  })
+
+  function closeAndResetModal() {
+    closeModal()
+    resetFields()
+  }
+
+  function closeModal() {
+    document.getElementById(modalId).close()
+  }
+
+  function resetFields() {
+    reset()
+  }
 
   async function onSubmit(data) {
-    const title = data.titleInput
-    const category = data.categoryInput
-    const price = data.priceInput
-
-    if (title && category && price) {
-      const formData = new FormData()
-      formData.append('title', title)
-      formData.append('category', category)
-      formData.append('price', price)
-
-      await collectionRecordCreate({ formData: formData })
-      setState(performance.now())
-      document.getElementById('AddAddOnsModal').close()
-
-    } else {
-      alert('Fill up all fields to proceed.')
-    }
-
+    await addAddons({
+      title: data.title,
+      category: data.category,
+      price: data.price,
+    })
+      .then(async ({ data, error }) => {
+        if (error) {
+          toast.error("An error has occured.")
+        } else {
+          await revalidateAllData()
+          closeAndResetModal()
+          toast.success("Addons has been added successfully.")
+        }
+      })
   }
 
   return (
     <>
-      <dialog id={'AddAddOnsModal'} className="modal ">
-        <div className="modal-box w-11/12 max-w-sm">
-          <h3 className="font-bold text-lg mt-4">Add add-ons</h3>
-          <div className="my-4">
+      <dialog id={modalId} className="modal ">
+        <div className="modal-box max-w-md">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <h3 className="font-bold text-lg mt-4">Add add-on</h3>
+            <div className="my-4">
+              <div className="">
+                <div className="flex mx-auto form-control w-full my-2">
+                  <input
+                    type="text"
+                    placeholder={"Enter title to display"}
+                    className="input input-bordered w-full"
+                    {...register("title")}
+                  />
+                  {errors.title && <>
+                    <FormErrorMessage>{errors.title.message}</FormErrorMessage>
+                  </>}
+                </div>
 
-            <div className="">
-              <div className="divider">
-                <small className='text-primary font-bold'>Required fields</small>
-              </div>
-              <div className="flex mx-auto form-control w-full max-w-xs my-2">
-                <input
-                  type="text"
-                  placeholder={"Enter title to display"}
-                  className="input input-bordered w-full max-w-xs"
-                  {...register("titleInput")}
-                  required
-                />
-              </div>
+                <div className="flex mx-auto form-control w-full my-2">
+                  <input
+                    type="text"
+                    placeholder={"Enter category"}
+                    className="input input-bordered w-full"
+                    {...register("category")}
+                  />
+                  {errors.category && <>
+                    <FormErrorMessage>{errors.category.message}</FormErrorMessage>
+                  </>}
+                </div>
 
-              <div className="flex mx-auto form-control w-full max-w-xs my-2">
-                <input
-                  type="text"
-                  placeholder={"Enter category"}
-                  className="input input-bordered w-full max-w-xs"
-                  {...register("categoryInput")}
-                  required
-                />
+                <div className="flex mx-auto form-control w-full my-2">
+                  <input
+                    type="number"
+                    placeholder={"Enter price"}
+                    className="input input-bordered w-full"
+                    {...register("price")}
+                  />
+                  {errors.price && <>
+                    <FormErrorMessage>{errors.price.message}</FormErrorMessage>
+                  </>}
+                </div>
               </div>
-
-              <div className="flex mx-auto form-control w-full max-w-xs my-2">
-                <input
-                  type="number"
-                  placeholder={"Enter price"}
-                  className="input input-bordered w-full max-w-xs"
-                  {...register("priceInput")}
-                  required
-                />
-              </div>
-
             </div>
-
-          </div>
-          <div className="modal-action flex">
-            <form>
-              <button onClick={handleSubmit(onSubmit)} className="btn btn-primary" disabled={isLoading}>Save</button>
-            </form>
-            <form method="dialog">
-              <button className="btn">Close</button>
-            </form>
-          </div>
+            <div className="modal-action flex">
+              <button type='submit' className="btn btn-primary" disabled={isLoading}>Save</button>
+              <button onClick={closeAndResetModal} type='button' className="btn">Close</button>
+            </div>
+          </form>
         </div>
       </dialog>
     </>

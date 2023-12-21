@@ -3,13 +3,14 @@
 import { useState } from "react"
 
 // App imports
-import PackageTab from "../../_components/packages/PackageTab"
-import ActivePackage from "../../_components/packages/ActivePackage"
-import PackageUpdateModal from "../../_components/packages/PackageUpdateModal"
-import PackageCardDeleteModal from "../../_components/shared/PackageCardDeleteModal"
+import PackageTab from "@components/packages/PackageTab"
+import ActivePackage from "@components/packages/ActivePackage"
+import PackageUpdateModal from "@components/shared/PackageUpdateModal"
+import RecordDeleteModal from "@components/shared/RecordDeleteModal"
+import PackageAddModal from "@components/shared/PackageAddModal"
 
-export default function PackagesTabPanel(props) {
-  const { packages, isAdmin, setState } = props
+export default function PackagesFeed(props) {
+  const { packages, isAdmin } = props
   const [activeIndex, setActiveIndex] = useState(0)
   const activePackage = packages[activeIndex]
 
@@ -40,21 +41,23 @@ export default function PackagesTabPanel(props) {
         </>}
       </div>
 
-      {(isAdmin && packages) && packages.map((pkg, index) => (
-        <div key={`PackageModifyModals-${index}`}>
-          <PackageUpdateModal
-            modalId={`PackageEditModal-${pkg.id}`}
-            packageCard={pkg}
-            setState={setState}
-          />
-          <PackageCardDeleteModal 
-            modalId={`PackageDeleteModal-${pkg.id}`}
-            packageCard={pkg}
-            setState={setState}
-          />
-        </div>
-      ))}
+      {isAdmin && <>
+        <PackageAddModal />
 
+        {packages.map((pkg, index) => (
+          <div key={`PackageModifyModals-${index}`}>
+            <PackageUpdateModal
+              modalId={`PackageEditModal-${pkg.id}`}
+              packageCard={pkg}
+            />
+            <RecordDeleteModal 
+              modalId={`PackageDeleteModal-${pkg.id}`}
+              collectionName={'packages'}
+              recordId={pkg.id}
+            />
+          </div>
+        ))}
+      </>}
     </>
   )
 }

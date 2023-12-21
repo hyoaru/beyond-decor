@@ -1,8 +1,12 @@
+"use client"
+
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons'
-import { useBagStore } from '@/app/_store/Bag'
+import { toast } from 'sonner'
 
+// App imports
+import { useBagStore } from '@store/Bag'
 
 export default function AddOnCard(props) {
   const { isAdmin, addOnCard, editModalIdToTrigger, deleteModalIdToTrigger } = props
@@ -10,19 +14,16 @@ export default function AddOnCard(props) {
   const { addAddOn } = useBagStore()
 
   function onEdit() {
-    if (isAdmin) {
-      document.getElementById(editModalIdToTrigger).showModal()
-    }
+    document.getElementById(editModalIdToTrigger).showModal()
   }
 
   function onDelete() {
-    if (isAdmin) {
-      document.getElementById(deleteModalIdToTrigger).showModal()
-    }
+    document.getElementById(deleteModalIdToTrigger).showModal()
   }
 
   function onAddToBag() {
     addAddOn(addOnCard)
+    toast.info(`'${title}' added to bag.`)
   }
 
   return (

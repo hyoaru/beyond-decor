@@ -37,6 +37,11 @@ export const WORK_ALBUMS_BASE_FORM_SCHEMA = {
     .refine((files) => Array.from(files)?.every((file) => file?.size <= MAX_FILE_SIZE_IN_MB), `Max image size is 10MB`),
 }
 
+export const ADDONS_BASE_FORM_SCHEMA = {
+  title: z.string().min(2).max(50),
+  category: z.string().min(2).max(50),
+  price: z.coerce.number()
+}
 
 // DERIVED FORM SCHEMAS
 export const UPDATE_PACKAGE_FORM_SCHEMA = z.object({
