@@ -1,9 +1,9 @@
 "use client"
 
 import PackageCard from '@components/index/PackageCard';
-import PackageCardUpdateModal from '@components/index/ActionModals/PackageCardUpdateModal';
-import PackageAddModal from '@/app/_components/shared/PackageAddModal';
-import DeleteRecordModal from '@/app/_components/shared/DeleteRecordModal';
+import PackageUpdateModal from '@components/shared/PackageUpdateModal';
+import PackageAddModal from '@components/shared/PackageAddModal';
+import DeleteRecordModal from '@components/shared/DeleteRecordModal';
 
 export default function PackageCardsFeed(props) {
   const { packages, isAdmin } = props
@@ -26,7 +26,7 @@ export default function PackageCardsFeed(props) {
 
       {(isAdmin && packages) && packages.map((_package, index) => (
         <div key={`PackageCardModifyModals-${index}`}>
-          <PackageCardUpdateModal
+          <PackageUpdateModal
             packageCard={_package}
             modalId={`PackageCardEditModal-${_package.id}`}
           />

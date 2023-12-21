@@ -5,12 +5,12 @@ import getClient from "@services/pocketbase/getClient"
 import { resizeImage } from "@libraries/shared/resizeImage"
 import processInclusions from "@libraries/shared/processInclusions"
 
-export default function useAddPackage() {
+export default function useUpdatePackage() {
   const COLLECTION_NAME = 'packages'
   const pocketbase = getClient()
   const [isLoading, setIsLoading] = useState(false)
 
-  async function addPackage({ title, description, shortDescription, inclusions, price, imageFile }) {
+  async function updatePackage({ recordId, title, description, shortDescription, inclusions, price, imageFile }) {
     const response = { data: null, error: null }
 
     setIsLoading(true)
@@ -21,11 +21,15 @@ export default function useAddPackage() {
       formData.append('short_description', shortDescription)
       formData.append('inclusions', JSON.stringify(processInclusions(inclusions)))
       formData.append('price', price)
-      formData.append('image_file', await resizeImage(imageFile[0]))
+
+      if (imageFile?.[0]) {
+        const resizedImage = await resizeImage(imageFile[0])
+        formData.append('image_file', resizedImage)
+      }
 
       response.data = await pocketbase
         .collection(COLLECTION_NAME)
-        .create(formData)
+        .update(recordId, formData)
         
     } catch (error) {
       response.error = error
@@ -35,5 +39,5 @@ export default function useAddPackage() {
     return response
   }
 
-  return { addPackage, isLoading }
+  return { updatePackage, isLoading }
 }

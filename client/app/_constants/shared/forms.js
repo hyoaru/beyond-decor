@@ -1,4 +1,5 @@
 import * as z from "zod"
+import processInclusions from "@libraries/shared/processInclusions"
 
 export const MAX_FILE_SIZE_IN_MB = 10 * 1000000
 
@@ -10,11 +11,11 @@ export const PACKAGES_BASE_FORM_SCHEMA = {
   inclusions: z.string()
     .refine((value) => {
       try {
-        JSON.parse(value.length === 0 ? value : `[${value}]`)
-        return true
+        JSON.parse(value.length <= 0 ? value : JSON.stringify(processInclusions(value)))
       } catch (error) {
         return false
       }
+      return true
     }, `Invalid inclusions`),
   imageFile: z.any()
     .refine((files) => files?.length !== 0, `Thumbnail is required`)
