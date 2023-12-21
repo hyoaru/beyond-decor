@@ -1,12 +1,9 @@
 import WorkAlbumsFeed from './WorkAlbumsFeed'
-// import { useAuthStateContext } from '../../_context';
-// import useGetWorkAlbums from "../../_hooks/works/useGetWorkAlbums";
-// import useGetPackages from '../../_hooks/packages/useGetPackages';
-import getWorkAlbums from '@/app/_services/works/getWorkAlbums';
-import Loading from './loading';
+import getWorkAlbums from '@services/works/getWorkAlbums';
 import getAuthState from '@services/authentication/getAuthState';
 import TriggerModalButton from '@components/shared/TriggerModalButton';
 import getPackages from '@services/shared/getPackages';
+import WorkAlbumAddModal from '@components/works/WorkAlbumAddModal';
 
 export default async function Page({ searchParams }) {
   const { data: workAlbums, error } = await getWorkAlbums()
@@ -43,7 +40,10 @@ export default async function Page({ searchParams }) {
           filterBySearchParam={searchParams.filterBy}
         />
       </div>
-
+      
+      {authState.isAdmin && <>
+        <WorkAlbumAddModal packages={packages} />
+      </>}
     </>
   )
 }

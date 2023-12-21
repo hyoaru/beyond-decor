@@ -1,19 +1,16 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import dayjs from "dayjs";
 
 // App imports
-import WorkAlbum from "../../_components/works/WorkAlbum";
-import WorkAlbumAddModal from "../../_components/works/WorkAlbumAddModal";
-import useQueryParams from "../../_hooks/shared/useQueryParams";
+import WorkAlbum from "@components/works/WorkAlbum";
 import { useRef, useState } from "react";
 
 export default function WorkAlbumsFeed(props) {
   const { workAlbums, packages, filterBySearchParam } = props
   const [filterBy, setFilterBy] = useState(filterBySearchParam ?? "all")
-  const [_, setState] = useState()
   const workAlbumTypes = Array.from(new Set(packages.map((_package) => _package.title)))
+  const [_, setState] = useState()
 
   let filteredWorkAlbums = workAlbums.filter((workAlbum) => {
     return filterBy === "all" ? true : workAlbum.package_type.toLowerCase() === filterBy.toLowerCase()
@@ -75,9 +72,7 @@ export default function WorkAlbumsFeed(props) {
             />
           )
         })}
-      </div>
-
-      <WorkAlbumAddModal setState={setState} packages={packages} />
+      </div>  
     </>
   )
 }

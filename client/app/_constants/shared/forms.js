@@ -25,8 +25,8 @@ export const PACKAGES_BASE_FORM_SCHEMA = {
 export const WORK_ALBUMS_BASE_FORM_SCHEMA = {
   eventName: z.string().min(5).max(70),
   eventPlace: z.string().min(5).max(70),
-  eventDate: z.any(),
-  clientName: z.string().min(5).max(70),
+  eventDate: z.coerce.date(),
+  clientName: z.string().optional(),
   packageType: z.string().refine((value) => value?.length !== 0, `Package type is required`),
   thumbnailFile: z.any()
     .refine((files) => files?.length !== 0, `Thumbnail is required`)
