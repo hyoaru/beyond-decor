@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import useGetPackages from "../../_hooks/packages/useGetPackages";
 import defaultPackages from "@/public/packages.json"
 import PackagesTabPanel from './PackagesTabPanel'
-import PackageCardAddModal from "../../_components/shared/ActionModals/PackageAddModal";
+import PackageCardAddModal from "../../_components/shared/PackageAddModal";
 import Loading from "./loading";
 
 export default function Packages(props) {

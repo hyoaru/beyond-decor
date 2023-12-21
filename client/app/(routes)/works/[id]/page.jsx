@@ -8,7 +8,7 @@ import getWorkAlbum from '@services/works/getWorkAlbum'
 import getPackages from '@services/shared/getPackages'
 import getAuthState from '@services/authentication/getAuthState'
 import WorkAlbumDropdownAction from '@components/works/WorkAlbumDropdownAction'
-import RecordDeleteModal from '@components/shared/ActionModals/RecordDeleteModal'
+import RecordDeleteModal from '@components/shared/RecordDeleteModal'
 
 export default async function Page({ params }) {
   const { data: workAlbum, error } = await getWorkAlbum({ recordId: params?.id })
