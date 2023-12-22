@@ -25,7 +25,7 @@ export default function useGetInquiriesTable({ inquiries, setState }) {
   const columnDefinition = [
     { accessorKey: 'id' }, { accessorKey: 'full_name' }, { accessorKey: 'email_address' },
     { accessorKey: 'facebook_link' }, { accessorKey: 'phone_number' }, { accessorKey: 'event_date' },
-    { accessorFn: (row) => (row.main_package?.title ?? null), header: 'main_package' },
+    { accessorFn: (row) => (row.expand.main_package?.title ?? null), header: 'main_package' },
     { accessorKey: 'acquisition_survey', header: 'how_they_heard_about_byd'},
     { id:'ViewOtherDetails', accessorKey: 'id', header: 'other_details', cell: (info) => (<ViewInquiryDetailsButton inquiryId={info.getValue()}>View</ViewInquiryDetailsButton>) }
   ]

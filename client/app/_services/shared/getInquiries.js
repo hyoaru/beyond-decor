@@ -1,6 +1,7 @@
 "use server"
 
 import getClient from "@services/pocketbase/getClient";
+import processInquiry from "@libraries/shared/processInquiry";
 
 export default async function getInquiries({ sortBy = "created" } = {}) {
   const COLLECTION_NAME = 'inquiries'
@@ -13,6 +14,10 @@ export default async function getInquiries({ sortBy = "created" } = {}) {
       .getFullList({ 
         sort: sortBy, 
         expand: "main_package, addons"
+      })
+      .then((inquiries) => {
+        inquiries.map((inquiry) => processInquiry(inquiry))
+        return inquiries
       })
 
   } catch (error) {

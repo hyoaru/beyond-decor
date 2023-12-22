@@ -1,9 +1,12 @@
 import React from 'react'
 
 // App imports
-import Inquiries from './Inquiries'
+import InquiriesFeed from './InquiriesFeed'
+import getInquiries from '@services/shared/getInquiries'
 
-export default function Page() {
+export default async function Page() {
+  const { data: inquiries, error } = await getInquiries()
+
   return (
     <>
       <div className="mx-6 my-10 md:my-20">
@@ -13,7 +16,7 @@ export default function Page() {
           </h1>
         </div>
 
-        <Inquiries />
+        <InquiriesFeed inquiries={inquiries} />
       </div>
     </>
   )

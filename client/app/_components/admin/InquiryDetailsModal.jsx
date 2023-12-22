@@ -5,7 +5,7 @@ import Image from 'next/image'
 export default function InquiryDetailsModal(props) {
   const { inquiry, modalId } = props
   const { id: recordId, event_type: eventType, event_date: eventDate, event_place: eventPlace } = inquiry
-  const { preferred_design_description: preferredDesignDescription, main_package: mainPackage, add_ons: addOns } = inquiry
+  const { preferred_design_description: preferredDesignDescription, expand: { main_package: mainPackage, addons: addOns } } = inquiry
   const { items_total_cost: itemsTotalCost, preferred_design_samples_image_paths: preferredDesignSamplesImagePaths } = inquiry
   const eventDateFormatted = dayjs(eventDate).format('MMMM DD, YYYY')
   const addOnsFormatted = `[${addOns?.map((addOn) => addOn.title).join(", ")}]` ?? '[]'
@@ -13,7 +13,7 @@ export default function InquiryDetailsModal(props) {
   return (
     <>
       <dialog id={modalId} className="modal">
-        <div className="modal-box w-11/12 max-w-sm">
+        <div className="modal-box max-w-md">
           <h3 className="font-bold text-lg mt-4">Inquiry details</h3>
           <div className="my-4">
             <p><span className='text-primary font-bold'>Occasion: </span>{eventType}</p>

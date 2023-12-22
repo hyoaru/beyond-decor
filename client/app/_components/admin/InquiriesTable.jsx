@@ -5,16 +5,19 @@ import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
 import { saveAs } from 'file-saver';
 import { Parser as CsvParser } from '@json2csv/plainjs';
 import dayjs from 'dayjs';
+import { toast } from 'sonner';
 
 // Ap imports
-import useGetInquiriesTable from '@/app/_hooks/admin/useGetInquiriesTable';
+import useGetInquiriesTable from '@hooks/admin/useGetInquiriesTable';
+import revalidateAllData from '@services/shared/revalidateAllData';
 
 export default function InquiriesTable(props) {
   const { inquiries, setState } = props
   const { flexRender, inquiriesTable, globalFilter, setGlobalFilter, pageRef } = useGetInquiriesTable({ inquiries })
 
-  function onRefreshTable() { 
-    setState(performance.now())
+  async function onRefreshTable() { 
+    await revalidateAllData()
+    toast.info('Revalidated all data.')
   }
 
   function onGlobalFilterChange(event) { setGlobalFilter(event.target.value) }

@@ -4,7 +4,7 @@ export default function processInquiries({ collectionName, inquiries }) {
     const recordId = inquiry.id
     const baseUrl = `${process.env.NEXT_PUBLIC_POCKETBASE_URL}/api/files`
     const imagePaths = []
-    inquiry.preferred_design_samples.forEach((preferred_design_sample) => {
+    inquiry.preferred_design_samples?.forEach((preferred_design_sample) => {
       const imageFile = preferred_design_sample
       const imagePath = `${baseUrl}/${collectionName}/${recordId}/${imageFile}`
       imagePaths.push(imagePath)
