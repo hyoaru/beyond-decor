@@ -5,7 +5,7 @@ export default function LandingCardsFeed(props) {
   return (
     <>
       <div className="justify-center justify-items-center gap-4 hidden xl:flex xl:flex-nowrap">
-        {landingCards && landingCards.map((card, index) => (
+        {landingCards?.[0] && landingCards.map((card, index) => (
           <LandingCard
             key={`LandingCard-${index}`}
             imgSrc={card.image_path}
@@ -15,7 +15,7 @@ export default function LandingCardsFeed(props) {
       </div>
 
       <div className="carousel carousel-center w-full p-4 space-x-4 bg-base-100 rounded-box xl:hidden">
-        {landingCards && landingCards.map((card, index) => (
+        {landingCards?.[0] && landingCards.map((card, index) => (
           <div key={`LandingCardCarouselItem-${index}`} className="carousel-item" >
             <LandingCard
               imgSrc={card.image_path}

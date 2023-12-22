@@ -9,7 +9,7 @@ export default function AddOnsFeed(props) {
   return (
     <>
       <div className="grid grid-cols-1 grid-flow-row mt-10 gap-2 lg:grid-cols-2">
-        {addOns && addOns?.map((addOn, index) => (
+        {addOns?.[0] && addOns?.map((addOn, index) => (
           <AddOnCard
             key={`AddOn-${addOn.id}-${index}`}
             addOnCard={addOn}
@@ -23,7 +23,7 @@ export default function AddOnsFeed(props) {
       {isAdmin && <>
         <AddOnsAddModal />
 
-        {addOns?.map((addOn) => (
+        {addOns?.[0] && addOns.map((addOn) => (
           <div key={`AddOnsModifyModals-${addOn.id}`}>
             <AddOnsUpdateModal
               modalId={`AddOnUpdateModal-${addOn.id}`}

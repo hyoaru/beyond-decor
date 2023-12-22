@@ -18,7 +18,7 @@ export default function PackagesFeed(props) {
     <>
       <div className={`flex justify-center mt-10 ${isAdmin ? "sm:mt-10" : "sm:mt-20"}`}>
         <div className="tabs justify-center">
-          {packages && packages.map((pkg, index) => (
+          {packages?.[0] && packages.map((pkg, index) => (
             <PackageTab
               key={`PackageTab-${pkg.id}`}
               title={pkg.title}
@@ -31,7 +31,7 @@ export default function PackagesFeed(props) {
       </div>
 
       <div className={`mt-10 ${isAdmin ? "lg:mt-10" : "lg:mt-20"}`}>
-        {(packages && activePackage) && <>
+        {(packages?.[0] && activePackage) && <>
           <ActivePackage
             activePackage={activePackage}
             isAdmin={isAdmin}
@@ -44,7 +44,7 @@ export default function PackagesFeed(props) {
       {isAdmin && <>
         <PackageAddModal />
 
-        {packages.map((pkg, index) => (
+        {packages?.[0] && packages.map((pkg, index) => (
           <div key={`PackageModifyModals-${index}`}>
             <PackageUpdateModal
               modalId={`PackageEditModal-${pkg.id}`}

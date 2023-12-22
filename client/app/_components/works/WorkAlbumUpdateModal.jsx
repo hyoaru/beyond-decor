@@ -168,7 +168,7 @@ export default function WorkAlbumUpdateModal(props) {
                   className={`select select-bordered w-full ${errors.packageType ? 'select-error' : ''}`}
                   {...register("packageType")}
                 >
-                  {packages.map((_package, index) => (
+                  {packages?.[0] && packages.map((_package, index) => (
                     <option
                       key={`PackageType-${index}`}
                       value={_package.title}

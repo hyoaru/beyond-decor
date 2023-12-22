@@ -179,7 +179,7 @@ export default function WorkAlbumAddModal(props) {
                   className={`select select-bordered w-full ${errors.packageType ? 'select-error' : ''}`}
                   {...register("packageType")}
                 >
-                  {packageTypes.map((packageType, index) => (
+                  {packageTypes?.[0] && packageTypes.map((packageType, index) => (
                     <option
                       key={`PackageType-${index}`}
                       value={packageType}

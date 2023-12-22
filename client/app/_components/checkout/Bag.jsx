@@ -19,7 +19,7 @@ export default function Bag(props) {
           />
         </>}
 
-        {addOns && addOns.map((addOn) => (
+        {addOns?.[0] && addOns.map((addOn) => (
           <BagItemAddOn
             key={`CheckoutBagItemAddOn-${addOn.id}`}
             addOn={addOn}

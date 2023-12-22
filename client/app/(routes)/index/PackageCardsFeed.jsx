@@ -11,7 +11,7 @@ export default function PackageCardsFeed(props) {
   return (
     <>
       <div className="px-6 flex flex-wrap gap-6 gap-y-10 justify-center">
-        {packages && packages.map((_package, index) => {
+        {packages?.[0] && packages.map((_package, index) => {
           return (
             <PackageCard
               key={`PackageCard-${_package.id}`}
@@ -24,22 +24,26 @@ export default function PackageCardsFeed(props) {
         })}
       </div>
 
-      {(isAdmin && packages) && packages.map((_package, index) => (
-        <div key={`PackageCardModifyModals-${index}`}>
-          <PackageUpdateModal
-            packageCard={_package}
-            modalId={`PackageCardEditModal-${_package.id}`}
-          />
+      {isAdmin && <>
+        <PackageAddModal />
 
-          <RecordDeleteModal
-            collectionName={'packages'}
-            recordId={_package.id}
-            modalId={`PackageCardDeleteModal-${_package.id}`}
-          />
-        </div>
-      ))}
+        {packages?.[0] && packages.map((_package, index) => (
+          <div key={`PackageCardModifyModals-${index}`}>
+            <PackageUpdateModal
+              packageCard={_package}
+              modalId={`PackageCardEditModal-${_package.id}`}
+            />
 
-      {isAdmin && <PackageAddModal />}
+            <RecordDeleteModal
+              collectionName={'packages'}
+              recordId={_package.id}
+              modalId={`PackageCardDeleteModal-${_package.id}`}
+            />
+          </div>
+        ))}
+      </>}
+
+
 
     </>
   )

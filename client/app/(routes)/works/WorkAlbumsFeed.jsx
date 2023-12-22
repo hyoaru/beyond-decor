@@ -9,7 +9,7 @@ import { useRef, useState } from "react";
 export default function WorkAlbumsFeed(props) {
   const { workAlbums, packages, filterBySearchParam } = props
   const [filterBy, setFilterBy] = useState(filterBySearchParam ?? "all")
-  const workAlbumTypes = Array.from(new Set(packages.map((_package) => _package.title)))
+  const workAlbumTypes = Array.from(new Set(packages.map((_package) => _package?.title)))
   const [_, setState] = useState()
 
   let filteredWorkAlbums = workAlbums.filter((workAlbum) => {
@@ -36,7 +36,7 @@ export default function WorkAlbumsFeed(props) {
             value={filterBy}
           >
             <option value={"all"} defaultValue>All</option>
-            {workAlbumTypes.map((workAlbumType, index) => (
+            {workAlbumTypes?.[0] && workAlbumTypes.map((workAlbumType, index) => (
               <option
                 key={`workAlbumType-${index}`}
                 value={workAlbumType}
@@ -58,7 +58,7 @@ export default function WorkAlbumsFeed(props) {
       </div>
 
       <div className="grid grid-cols-1 gap-8 justify-items-center sm:grid-cols-2 lg:grid-cols-3 mt-20">
-        {filteredWorkAlbums && filteredWorkAlbums.map((album, index) => {
+        {filteredWorkAlbums?.[0] && filteredWorkAlbums.map((album, index) => {
           const eventDate = album.event_date
           const formattedEventDate = dayjs(eventDate).format("MMMM YYYY")
           return (

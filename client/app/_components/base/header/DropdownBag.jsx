@@ -38,7 +38,7 @@ export default function DropdownBag() {
                 </div>
               </>}
 
-              {addOns && addOns.map((addOn) => (
+              {addOns?.[0] && addOns.map((addOn) => (
                 <div key={`AddOnsBagItem-${addOn.id}`} className="flex items-center">
                   <p className="text-lg me-auto">{addOn.title}</p>
                   <FontAwesomeIcon

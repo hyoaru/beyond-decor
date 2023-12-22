@@ -44,7 +44,7 @@ export default async function Page({ params }) {
         </div>
 
         <div className="columns-1 gap-6 md:columns-2">
-          {imagePaths && imagePaths.map((imagePath, index) => (
+          {imagePaths?.[0] && imagePaths.map((imagePath, index) => (
             <Image
               key={`WorkAlbumImage-${index}`}
               src={imagePath}

@@ -58,7 +58,7 @@ export default function ActivePackage(props) {
           </div>
           <div className="mt-5 sm:row-span-2 xl:col-span-3">
             <div className="grid grid-cols-1 grid-flow-row list-none sm:list-disc">
-              {inclusions.map((inclusion, index) => (
+              {inclusions?.[0] && inclusions.map((inclusion, index) => (
                 <li
                   key={`ActivePackage-${packageId}-${index}`}
                   className="sm:text-sm font-semibold text-primary text-center m-0 sm:text-left md:m-0"

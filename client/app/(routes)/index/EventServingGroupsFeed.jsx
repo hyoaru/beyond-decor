@@ -6,7 +6,7 @@ export default function EventServingGroupsFeed(props) {
   return (
     <>
       <div className="grid grid-cols-1 gap-10">
-        {eventServingGroups && eventServingGroups.map((group, index) => (
+        {eventServingGroups?.[0] && eventServingGroups.map((group, index) => (
           <EventServingGroup
             key={`EventGroup-${group.id}`}
             eventServingGroup={group}
