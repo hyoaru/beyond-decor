@@ -9,9 +9,9 @@ export default function AddOnsFeed(props) {
   return (
     <>
       <div className="grid grid-cols-1 grid-flow-row mt-10 gap-2 lg:grid-cols-2">
-        {addOns && addOns?.map((addOn) => (
+        {addOns && addOns?.map((addOn, index) => (
           <AddOnCard
-            key={`AddOn-${addOn.id}`}
+            key={`AddOn-${addOn.id}-${index}`}
             addOnCard={addOn}
             editModalIdToTrigger={`AddOnUpdateModal-${addOn.id}`}
             deleteModalIdToTrigger={`AddOnDeleteModal-${addOn.id}`}
