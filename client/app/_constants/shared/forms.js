@@ -51,6 +51,27 @@ export const TEAM_MEMBERS_BASE_FORM_SCHEMA = {
     .refine((files) => files[0]?.size <= MAX_FILE_SIZE_IN_MB, `Max image size is 10MB.`),
 }
 
+export const INQUIRIES_BASE_FORM_SCHEMA = {
+  fullName: z.string().min(2).max(80),
+  phoneNumber: z.string().max(15).optional(),
+  emailAddress: z.string().email(),
+  facebookLink: z.string().min(2).max(80),
+  eventType: z.string().min(2).max(50),
+  eventPlace: z.string().min(2).max(50),
+  eventDate: z.coerce.date(),
+  acquisitionSurvey: z.string().max(100).optional(),
+  preferredDesignDescription: z.string().max(800).optional(),
+  preferredDesignSamples: z.any()
+    .refine((files) => {
+      if (files.length === 0) { return true }
+      return Array.from(files)?.length <= 3
+    }, `You can only select up to 3 images`)
+    .refine((files) => {
+      if (files.length === 0) { return true }
+      return Array.from(files)?.every((file) => file?.size <= MAX_FILE_SIZE_IN_MB)
+    }, `Max image size is 10MB.`),
+}
+
 // DERIVED FORM SCHEMAS
 export const UPDATE_PACKAGE_FORM_SCHEMA = z.object({
   title: PACKAGES_BASE_FORM_SCHEMA.title,

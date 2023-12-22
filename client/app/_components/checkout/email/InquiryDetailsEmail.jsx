@@ -4,7 +4,7 @@ import dayjs from "dayjs"
 
 export function InquiryDetailsEmail({ inquiry }) {
   const { full_name: fullName, email_address: emailAddress, facebook_link: facebookLink, phone_number: phoneNumber } = inquiry
-  const { event_type: eventType, event_place: eventPlace, event_date: eventDate, main_package: mainPackage, add_ons: addOns } = inquiry
+  const { event_type: eventType, event_place: eventPlace, event_date: eventDate, expand: { main_package: mainPackage, addons: addOns } } = inquiry
   const { items_total_cost: itemsTotalCost, preferred_design_description: preferredDesignDescription } = inquiry
   const { preferred_design_samples_image_paths: preferredDesignSamplesImagePaths, acquisition_survey: acquisitionSurvey } = inquiry
   const formattedEventDate = dayjs(eventDate).format('MMMM-DD-YYYY')
@@ -126,7 +126,7 @@ export function InquiryDetailsEmail({ inquiry }) {
                 <Text className="inline">beyonddecorph@gmail.com</Text>
               </Container>
             </Container>
-            
+
           </Container>
         </Body>
       </Tailwind>

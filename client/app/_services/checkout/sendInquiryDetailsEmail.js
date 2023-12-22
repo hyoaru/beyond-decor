@@ -1,8 +1,12 @@
+"use server"
+
 import { render } from "@react-email/render";
-import { InquiryDetailsEmail } from "@/app/_components/checkout/email/InquiryDetailsEmail";
+import { InquiryDetailsEmail } from "@components/checkout/email/InquiryDetailsEmail";
 
 var nodemailer = require("nodemailer")
 export async function sendInquiryDetailsEmail({ to, from, subject, inquiry }) {
+  const response = {data: null, error: null}
+
   const transporter = nodemailer.createTransport({
     host: process.env.NEXT_PUBLIC_SMTP_HOST,
     port: process.env.NEXT_PUBLIC_SMTP_PORT,
@@ -13,9 +17,15 @@ export async function sendInquiryDetailsEmail({ to, from, subject, inquiry }) {
     },
   })
 
-  await transporter.sendMail({
-    to: to, from: from, subject: subject,
-    html: render(<InquiryDetailsEmail inquiry={inquiry} />)
-  })
+  try {
+    response.data = await transporter.sendMail({
+      to: to, from: from, subject: subject,
+      html: render(<InquiryDetailsEmail inquiry={inquiry} />)
+    })
+  } catch (error) {
+    response.error = error
+  }
+
+  return response
 }
 

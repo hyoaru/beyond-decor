@@ -5,9 +5,10 @@ import Link from 'next/link'
 // App imports
 import BagItemAddOn from './BagItemAddOn';
 import BagItemMainPackage from './BagItemMainPackage';
+import { useBagStore } from '@store/Bag';
 
 export default function Bag(props) {
-  const { mainPackage, addOns, removeAddOn, removeMainPackage, getTotalPrice } = props
+  const { mainPackage, addOns, removeAddOn, removeMainPackage, getTotalPrice } = useBagStore()
   return (
     <>
       <p className='font-bold text-primary mb-2'>Your bag</p>
