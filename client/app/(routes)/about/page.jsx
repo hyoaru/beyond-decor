@@ -1,13 +1,12 @@
-"use client";
-
-import React from 'react'
-
 // App imports
-import TeamMembers from './TeamMembers'
-import { useAuthStateContext } from '../../_context'
+import TeamMembersFeed from './TeamMembersFeed';
+import getAuthState from '@services/authentication/getAuthState';
+import TriggerModalButton from '@components/shared/TriggerModalButton';
+import getTeamMembers from '@services/about/getTeamMembers';
 
-export default function Page() {
-  const authState = useAuthStateContext()
+export default async function Page() {
+  const authState = await getAuthState()
+  const { data: teamMembers, error } = await getTeamMembers()
 
   return (
     <>
@@ -22,7 +21,15 @@ export default function Page() {
           </p>
         </div>
 
-        <TeamMembers isAdmin={authState.isAdmin} />
+        {authState.isAdmin && <>
+          <div className="text-center my-10">
+            <TriggerModalButton modalIdToTrigger={'TeamMemberAddModal'}>
+              {"[ add member ]"}
+            </TriggerModalButton>
+          </div>
+        </>}
+
+        <TeamMembersFeed teamMembers={teamMembers} isAdmin={authState.isAdmin} />
       </div>
     </>
   )

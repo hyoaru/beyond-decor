@@ -3,16 +3,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Image from "next/image"
 
 export default function TeamMember(props) {
-  const { memberId, name, role, imgSrc, isAdmin, editModalIdToTrigger, deleteModalIdToTrigger } = props
-  const baseClass = "rounded-xl rounded-tr-none rounded-bl-none w-[300px]"
+  const { teamMember, isAdmin, editModalIdToTrigger, deleteModalIdToTrigger } = props
+  const { id: memberId, name, role, image_path: imgSrc } = teamMember
+
   const imgSizeInPx = 200
 
-  function onEdit() { document.getElementById(editModalIdToTrigger).showModal() }
-  function onDelete() { document.getElementById(deleteModalIdToTrigger).showModal() }
+  function onEdit() {
+    document.getElementById(editModalIdToTrigger).showModal()
+  }
+  
+  function onDelete() {
+    document.getElementById(deleteModalIdToTrigger).showModal()
+  }
 
   return (
     <>
-      <div className={`${baseClass} border px-8 pb-6 w-[400x] flex flex-col items-center ${isAdmin ? "pt-4" : "pt-8"}`}>
+      <div className={`rounded-box border px-8 pb-6 w-[300px] flex flex-col items-center ${isAdmin ? "pt-4" : "pt-8"}`}>
         {isAdmin && <>
           <div className="dropdown flex dropdown-bottom dropdown-end self-end opacity-90">
             <label tabIndex={0} className='ms-auto'>
@@ -35,7 +41,7 @@ export default function TeamMember(props) {
           width={imgSizeInPx}
           alt=""
           style={{ width: `${imgSizeInPx}px`, height: `${imgSizeInPx}px` }}
-          className={`${baseClass} object-cover`}
+          className={`rounded-box w-[300px] object-cover`}
         />
 
         <div className="prose max-w-none mt-5 text-center">

@@ -43,6 +43,14 @@ export const ADDONS_BASE_FORM_SCHEMA = {
   price: z.coerce.number()
 }
 
+export const TEAM_MEMBERS_BASE_FORM_SCHEMA = {
+  name: z.string().min(2).max(80),
+  role: z.string().min(2).max(150),
+  imageFile: z.any()
+    .refine((files) => files?.length !== 0, `Thumbnail is required`)
+    .refine((files) => files[0]?.size <= MAX_FILE_SIZE_IN_MB, `Max image size is 10MB.`),
+}
+
 // DERIVED FORM SCHEMAS
 export const UPDATE_PACKAGE_FORM_SCHEMA = z.object({
   title: PACKAGES_BASE_FORM_SCHEMA.title,
@@ -54,7 +62,7 @@ export const UPDATE_PACKAGE_FORM_SCHEMA = z.object({
     .refine((files) => {
       if (files.length === 0) { return true }
       return files[0]?.size <= MAX_FILE_SIZE_IN_MB
-    }, `Max image size is 5MB.`),
+    }, `Max image size is 10MB.`),
 })
 
 export const ADD_PACKAGE_FORM_SCHEMA = z.object({

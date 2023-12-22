@@ -10,5 +10,5 @@ export const UPDATE_PACKAGE_FORM_SCHEMA = z.object({
     .refine((files) => {
       if (files.length === 0) { return true }
       return files[0]?.size <= MAX_FILE_SIZE_IN_MB
-    }, `Max image size is 5MB.`),
+    }, `Max image size is 10MB.`),
 })

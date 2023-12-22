@@ -7,21 +7,23 @@ import { useForm } from "react-hook-form"
 import { toast } from 'sonner'
 
 // App imports
-import { ADD_TEAM_MEMBER_FORM_SCHEMA as formSchema } from '@constants/about/forms'
+import { UPDATE_TEAM_MEMBER_FORM_SCHEMA as formSchema } from '@constants/about/forms'
 import FormErrorMessage from '@components/shared/FormErrorMessage'
 import revalidateAllData from '@services/shared/revalidateAllData'
-import useAddTeamMember from '@hooks/about/useAddTeamMember'
+import useUpdateTeamMember from '@/app/_hooks/about/useUpdateTeamMember'
 
-export default function TeamMemberAddModal(props) {
-  const modalId = 'TeamMemberAddModal'
-  const [imageUrl, setImageUrl] = useState()
-  const { addTeamMember, isLoading } = useAddTeamMember()
+export default function TeamMemberUpdateModal(props) {
+  const { teamMember, modalId } = props
+  const { id: teamMemberId, name, role, image_path: imgSrc } = teamMember
+
+  const [imageUrl, setImageUrl] = useState(imgSrc)
+  const { updateTeamMember, isLoading } = useUpdateTeamMember()
 
   const { handleSubmit, register, getValues, reset, formState: { errors } } = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
-      role: '',
+      name: name,
+      role: role,
       imageFile: ''
     }
   })
@@ -53,7 +55,8 @@ export default function TeamMemberAddModal(props) {
 
 
   async function onSubmit(data) {
-    await addTeamMember({
+    await updateTeamMember({
+      recordId: teamMemberId,
       name: data.name,
       role: data.role,
       imageFile: data.imageFile
@@ -63,7 +66,7 @@ export default function TeamMemberAddModal(props) {
           toast.error("An error has occured.")
         } else {
           await revalidateAllData()
-          closeAndResetModal()
+          closeModal()
           toast.success("Team member has been added successfully.")
         }
       })
