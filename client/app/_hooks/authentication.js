@@ -1,33 +1,31 @@
-import PocketBase from "pocketbase";
 import { useState } from "react";
-import Cookies from "js-cookie";
-
-const pocketbase = new PocketBase(process.env.NEXT_PUBLIC_POCKETBASE_URL)
+import getClient from "@services/pocketbase/getClient";
 
 export function useAdminLogin() {
-  const [isLoading, setIsLoading] = useState()
-  const [error, setError] = useState()
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const pocketbase = getClient()
+  const [isLoading, setIsLoading] = useState(false)
 
   async function adminLogin({ email, password }) {
+    const response = { data: null, error: null }
     setIsLoading(true)
+
     try {
-      const authData = await pocketbase
-        .admins
-        .authWithPassword(email, password)
-
-      if (authData) {
-        document.cookie = pocketbase.authStore.exportToCookie({httpOnly: false})
-        setIsLoggedIn(true)
-      }
-
+      await pocketbase.admins.authWithPassword(email, password)
+        .then((authData) => {
+          if (authData) {
+            response.data = authData
+            document.cookie = pocketbase.authStore.exportToCookie({ httpOnly: false })
+          }
+        })
     } catch (error) {
-      setError(error)
+      response.error = error
     }
+
     setIsLoading(false)
+    return response
   }
 
-  return { adminLogin, isLoggedIn, isLoading, error }
+  return { adminLogin, isLoading}
 }
 
 export function useLogout() {

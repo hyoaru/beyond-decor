@@ -1,59 +1,80 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from 'react'
-import { useForm } from 'react-hook-form';
+import React, { useRef, useState } from 'react'
+import Image from 'next/image'
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { toast } from 'sonner'
 
 // App imports
-import { useAdminLogin } from '@/app/_hooks/authentication';
+import FormErrorMessage from '@components/shared/FormErrorMessage'
+import { useAdminLogin } from '@hooks/authentication';
+import { LOGIN_ADMIN_BASE_FORM_SCHEMA as formSchema } from '@constants/admin/forms';
 
 export default function Page() {
-  const { register, handleSubmit, reset, resetField } = useForm()
-  const { adminLogin, isLoggedIn, isLoading, error } = useAdminLogin()
+  const { adminLogin, isLoading } = useAdminLogin()
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      window.location.href="/admin"
+  const { handleSubmit, register, getValues, reset, formState: { errors } } = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: '',
+      password: '',
     }
-  }, [isLoggedIn])
+  })
 
   async function onSubmit(data) {
     await adminLogin({ email: data.email, password: data.password })
+      .then(({ data, error }) => {
+        if (error) {
+          if (error.status === 400) {
+            toast.error('Invalid credentials.')
+          } else {
+            toast.error('An error has occured.')
+          }
+        } else {
+          setIsLoggedIn(true)
+          toast.success('Redirecting to admin page.')
+          window.location.href = '/admin'
+        }
+      })
   }
 
   return (
     <>
-      <div className="mx-6 my-16">
+      <div className="mx-6 my-20 md:my-28 lg:my-40">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="prose max-w-none">
             <h1 className='text-center'>Admin Login</h1>
           </div>
-          <div className="flex flex-col mt-6 gap-y-4">
-
-            {isLoading ? <>
-              <span className="loading loading-ring loading-lg flex mx-auto"></span>
-            </> : <>
+          <div className="mt-6 space-y-4 max-w-lg mx-auto">
+            <div className="flex flex-col w-full">
               <input
                 type="email"
                 name='email'
                 placeholder="Email"
-                className="mx-auto input input-bordered w-full max-w-xs"
+                className={`input input-bordered w-full ${errors.email ? 'input-error' : ''}`}
                 {...register('email')}
               />
+              {errors.email && <>
+                <FormErrorMessage>{errors.email.message}</FormErrorMessage>
+              </>}
+            </div>
+
+            <div className="flex flex-col w-full">
               <input
                 type="password"
                 name='password'
                 placeholder="Password"
-                className="mx-auto input input-bordered w-full max-w-xs"
+                className={`input input-bordered w-full ${errors.password ? 'input-error' : ''}`}
                 {...register('password')}
               />
-            </>}
-
-            {error && <>
-              <small className='text-error-content text-center'>{error.message}</small>
-            </>}
-
-            <div className='mx-auto'>
-              <input type="submit" value="Submit" className='btn' disabled={isLoading} />
+              {errors.password && <>
+                <FormErrorMessage>{errors.password.message}</FormErrorMessage>
+              </>}
+            </div>
+            <div className='flex justify-center'>
+              <input type="submit" value="Submit" className='btn px-8' disabled={isLoading | isLoggedIn} />
             </div>
           </div>
         </form>

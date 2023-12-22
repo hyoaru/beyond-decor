@@ -72,6 +72,11 @@ export const INQUIRIES_BASE_FORM_SCHEMA = {
     }, `Max image size is 10MB.`),
 }
 
+export const ADMINS_BASE_FORM_SCHEMA = {
+  email: z.string().email(),
+  password: z.string().min(8)
+}
+
 // DERIVED FORM SCHEMAS
 export const UPDATE_PACKAGE_FORM_SCHEMA = z.object({
   title: PACKAGES_BASE_FORM_SCHEMA.title,
