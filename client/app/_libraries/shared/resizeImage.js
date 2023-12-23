@@ -4,10 +4,10 @@ export const resizeImage = (file) =>
   new Promise((resolve) => {
     FileResizer.imageFileResizer(
       file,
-      1200,
-      1200,
+      800,
+      800,
       "JPEG",
-      85,
+      80,
       0,
       (uri) => {
         resolve(uri);
