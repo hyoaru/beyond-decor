@@ -199,7 +199,13 @@ export default function WorkAlbumUpdateModal(props) {
               </div>
             </div>
             <div className="modal-action flex">
-              <button type='submit' className="btn btn-primary" disabled={isLoading}>Save</button>
+              <button type='submit' className="btn btn-primary" disabled={isLoading}>
+              {
+                  isLoading
+                    ? <span className='loading loading-ring text-black'></span>
+                    : 'Save'
+                }
+              </button>
               <button type='button' className="btn" onClick={closeAndResetModal}>Close</button>
             </div>
           </form>

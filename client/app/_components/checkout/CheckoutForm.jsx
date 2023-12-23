@@ -25,6 +25,7 @@ export default function CheckoutForm(props) {
   const { addInquiry, isLoading } = useAddInquiry()
   const { mainPackage, addOns, getTotalPrice } = useBagStore()
   const [inquiryError, setInquiryError] = useState()
+  const [isTransactionLoading, setIsTransactionLoading] = useState(false)
 
   const { handleSubmit, register, getValues, reset, formState: { errors } } = useForm({
     resolver: zodResolver(formSchema),
@@ -57,8 +58,8 @@ export default function CheckoutForm(props) {
     reset()
   }
 
-  function showStatusModal(){
-    document.getElementById('CheckoutSubmitStatusModal').showModal()    
+  function showStatusModal() {
+    document.getElementById('CheckoutSubmitStatusModal').showModal()
   }
 
   async function onSubmit(data) {
@@ -86,16 +87,18 @@ export default function CheckoutForm(props) {
             setInquiryError(error)
             showStatusModal()
           } else {
-            await revalidateAllData()
-            resetFields()
-            showStatusModal()
-
+            setIsTransactionLoading(true)
             await sendInquiryDetailsEmail({
               to: `${emailAddress}, beyonddecordev1@gmail.com`,
               from: "beyonddecordev1@gmail.com",
               subject: "Beyond Decor Inquiry",
               inquiry: processInquiry(data)
-            }) 
+            })
+
+            await revalidateAllData()
+            resetFields()
+            showStatusModal()
+            setIsTransactionLoading(false)
           }
         })
     }
@@ -284,9 +287,13 @@ export default function CheckoutForm(props) {
               <button
                 type="submit"
                 className="btn btn-primary btn-lg font-bold text-white flex w-full"
-                disabled={isLoading}
+                disabled={isLoading | isTransactionLoading}
               >
-                Checkout
+                {
+                  isLoading | isTransactionLoading
+                    ? <span className='loading loading-ring loading-lg text-black'></span>
+                    : 'Checkout'
+                }
               </button>
             </div>
           </div>

@@ -74,7 +74,13 @@ export default function Page() {
               </>}
             </div>
             <div className='flex justify-center'>
-              <input type="submit" value="Submit" className='btn px-8' disabled={isLoading | isLoggedIn} />
+              <button type="submit" className='btn px-8' disabled={isLoading | isLoggedIn}>
+              {
+                  isLoading | isLoggedIn
+                    ? <span className='loading loading-ring text-black'></span>
+                    : 'Submit'
+                }
+              </button>
             </div>
           </div>
         </form>

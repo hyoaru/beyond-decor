@@ -37,7 +37,13 @@ export default function RecordDeleteModal(props) {
             <h3 className="font-bold text-lg">Are you absolutely sure?</h3>
             <p className="py-4 text-sm">This action cannot be undone. This will permanently delete your account and remove your data from our servers.</p>
             <div className="modal-action flex">
-              <button type='submit' className="btn btn-error" disabled={isLoading}>Continue</button>
+              <button type='submit' className="btn btn-error" disabled={isLoading}>
+              {
+                  isLoading
+                    ? <span className='loading loading-ring text-black'></span>
+                    : 'Continue'
+                }
+              </button>
               <button onClick={closeModal} type='button' className='btn'>close</button>
             </div>
           </form>
