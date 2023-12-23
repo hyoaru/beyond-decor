@@ -54,11 +54,11 @@ export function InquiryDetailsEmail({ inquiry }) {
                 <Text className="inline">{formattedEventDate}</Text>
               </Container>
               <Container className="flex gap-10">
-                <Text className="inline capitalize opacity-60">Package</Text>
+                <Text className="inline capitalize opacity-60">Package: </Text>
                 <Text className="inline">{mainPackage?.title ?? ''}</Text>
               </Container>
               <Container className="flex  gap-10">
-                <Text className="inline capitalize opacity-60">Add-ons</Text>
+                <Text className="inline capitalize opacity-60">Add-ons: </Text>
                 <Text className="inline">{formattedAddOns}</Text>
               </Container>
             </Container>
