@@ -88,7 +88,7 @@ export default function CheckoutForm(props) {
             showStatusModal()
           } else {
             setIsTransactionLoading(true)
-            
+
             await revalidateAllData()
             resetFields()
             showStatusModal()

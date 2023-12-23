@@ -58,7 +58,8 @@ export const INQUIRIES_BASE_FORM_SCHEMA = {
   facebookLink: z.string().min(2).max(80),
   eventType: z.string().min(2).max(50),
   eventPlace: z.string().min(2).max(50),
-  eventDate: z.coerce.date(),
+  eventDate: z.coerce.date()
+    .refine((value) => value > new Date(), 'Event date must be in the future.'),
   acquisitionSurvey: z.string().max(100).optional(),
   preferredDesignDescription: z.string().max(800).optional(),
   preferredDesignSamples: z.any()
