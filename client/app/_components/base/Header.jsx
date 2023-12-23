@@ -41,7 +41,7 @@ export default async function Header() {
               {navigations.map((navigation, index) => (
                 <Link
                   key={`NavigationExpanded-${index}`}
-                  className="btn btn-sm font-light text-sm normal-case btn-ghost"
+                  className="p-2 rounded-box font-light text-sm btn-ghost"
                   href={navigation.pathName}
                 >
                   {navigation.label}

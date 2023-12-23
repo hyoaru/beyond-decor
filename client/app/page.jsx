@@ -2,7 +2,6 @@ import Link from 'next/link';
 
 // App imports
 import PackageCardsFeed from '@/app/(routes)/index/PackageCardsFeed'
-import ParallaxSection from '@/app/(routes)/index/ParallaxSection';
 import EventServingGroupsFeed from '@/app/(routes)/index/EventServingGroupsFeed';
 import AnimationFadeOnShow from '@animations/shared/AnimationFadeOnShow';
 import LandingCardsFeed from '@/app/(routes)/index/LandingCardsFeed';
@@ -49,7 +48,11 @@ export default async function Home() {
 
       {/* Parallax section */}
       <div className="mt-20 lg:mt-32">
-        <ParallaxSection />
+        <div className='h-[25rem] md:h-[30rem] bg-fixed bg-bottom bg-cover shadow-xl' style={{backgroundImage: 'url(/ParallaxImage.jpg)'}}>
+          <div className='flex justify-center items-center h-full md:hidden'>
+            <h1 className="text-white font-black text-4xl p-5 border rounded-box">Beyond Decor</h1>
+          </div>
+        </div>
       </div>
 
 

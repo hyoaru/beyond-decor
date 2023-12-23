@@ -5,3 +5,7 @@
 .modal-box {
   @apply rounded-box;
 }
+
+.btn {
+  @apply uppercase;
+}

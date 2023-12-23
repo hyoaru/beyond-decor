@@ -16,8 +16,8 @@ export default function PackagesFeed(props) {
 
   return (
     <>
-      <div className={`flex justify-center mt-10 ${isAdmin ? "sm:mt-10" : "sm:mt-20"}`}>
-        <div className="tabs justify-center">
+      <div className={`mt-10 ${isAdmin ? "sm:mt-10" : "sm:mt-20"}`}>
+        <div className="tabs tabs-lifted tabs-md justify-center flex flex-wrap">
           {packages?.[0] && packages.map((pkg, index) => (
             <PackageTab
               key={`PackageTab-${pkg.id}`}
