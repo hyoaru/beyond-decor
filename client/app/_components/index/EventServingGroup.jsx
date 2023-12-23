@@ -20,6 +20,7 @@ export default function EventServingGroup(props) {
             <Image
               height={300} width={800}
               src={imgSrc} alt=""
+              priority={true}
               className={`h-[300px] w-[1000px] object-cover rounded-none shadow-xl ${isRightAligned ? "sm:rounded-tl-xl" : "sm:rounded-tr-xl"}`}
             />
           </div>

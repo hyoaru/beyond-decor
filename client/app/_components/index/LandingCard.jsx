@@ -13,6 +13,7 @@ export default function LandingCard(props) {
         <Image
           width={250} height={600}
           src={imgSrc} alt="" 
+          priority={true}
           className={'rounded-box object-cover shadow-lg transition-all ease-in-out duration-500 w-[250px] h-[600px] xl:h-[450px] xl:w-[180px] group-hover/card:opacity-20'}
         />
       </div>
