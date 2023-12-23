@@ -88,16 +88,18 @@ export default function CheckoutForm(props) {
             showStatusModal()
           } else {
             setIsTransactionLoading(true)
+            
+            await revalidateAllData()
+            resetFields()
+            showStatusModal()
+
             await sendInquiryDetailsEmail({
               to: `${emailAddress}, beyonddecordev1@gmail.com`,
               from: "beyonddecordev1@gmail.com",
               subject: "Beyond Decor Inquiry",
               inquiry: processInquiry(data)
-            })
+            }).then(({ error: emailResponseError }) => setInquiryError(emailResponseError))
 
-            await revalidateAllData()
-            resetFields()
-            showStatusModal()
             setIsTransactionLoading(false)
           }
         })
