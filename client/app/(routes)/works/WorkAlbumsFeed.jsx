@@ -13,7 +13,7 @@ export default function WorkAlbumsFeed(props) {
   const [_, setState] = useState()
 
   let filteredWorkAlbums = workAlbums.filter((workAlbum) => {
-    return filterBy === "all" ? true : workAlbum.package_type.toLowerCase() === filterBy.toLowerCase()
+    return filterBy === "all" ? true : workAlbum.expand.package_type.title.toLowerCase() === filterBy.toLowerCase()
   })
 
   function onFilterChange(event) {

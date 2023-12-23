@@ -15,8 +15,8 @@ import revalidateAllData from '@/app/_services/shared/revalidateAllData'
 
 export default function WorkAlbumUpdateModal(props) {
   const { workAlbum, packages, modalId } = props
-  const { id: recordId, thumbnail_path: thumbnailSrc, event_name: eventName, packageTypes } = workAlbum
-  const { event_place: eventPlace, event_date: eventDate, client_name: clientName, package_type: packageType } = workAlbum
+  const { id: recordId, thumbnail_path: thumbnailSrc, event_name: eventName } = workAlbum
+  const { event_place: eventPlace, event_date: eventDate, client_name: clientName, expand: { package_type: packageType } } = workAlbum
   const { updateWorkAlbum, isLoading } = useUpdateWorkAlbum()
   const [thumbnailUrl, setThumbnailUrl] = useState(thumbnailSrc)
 
@@ -27,7 +27,7 @@ export default function WorkAlbumUpdateModal(props) {
       eventPlace: eventPlace,
       eventDate: dayjs(eventDate).format("YYYY-MM-DD"),
       clientName: clientName,
-      packageType: packageType,
+      packageType: packageType.id,
       thumbnailFile: '',
       imageFiles: '',
     }
@@ -171,7 +171,7 @@ export default function WorkAlbumUpdateModal(props) {
                   {packages?.[0] && packages.map((_package, index) => (
                     <option
                       key={`PackageType-${index}`}
-                      value={_package.title}
+                      value={_package.id}
                     >
                       {_package.title}
                     </option>

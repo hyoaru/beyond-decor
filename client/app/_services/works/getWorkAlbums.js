@@ -11,7 +11,10 @@ export default async function getWorkAlbums() {
   try {
     response.data = await pocketbase
       .collection(COLLECTION_NAME)
-      .getFullList({ sort: 'event_date' })
+      .getFullList({ 
+        sort: 'event_date',
+        expand: "package_type" 
+      })
       .then(async (workAlbums) => {
         workAlbums.map((workAlbum) => {
           workAlbum.thumbnail_path = getImagePublicUrl({

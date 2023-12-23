@@ -17,7 +17,7 @@ export default function WorkAlbumAddModal(props) {
   const modalId = 'WorkAlbumAddModal'
   const [thumbnailUrl, setThumbnailUrl] = useState()
   const { addWorkAlbum, isLoading } = useAddWorkAlbum()
-  const packageTypes = Array.from(new Set(packages?.map((pkg) => pkg.title)))
+  const packageTypes = packages
 
   const { handleSubmit, register, getValues, reset, formState: { errors } } = useForm({
     resolver: zodResolver(formSchema),
@@ -26,7 +26,7 @@ export default function WorkAlbumAddModal(props) {
       eventPlace: '',
       eventDate: '',
       clientName: '',
-      packageType: packageTypes[0],
+      packageType: '',
       thumbnailFile: '',
       imageFiles: '',
     }
@@ -174,17 +174,18 @@ export default function WorkAlbumAddModal(props) {
                 </>}
               </div>
 
-              <div className="flex mx-auto mt-2 w-full">
+              <div className="flex mx-auto mt-2 w-full form-control">
                 <select
                   className={`select select-bordered w-full ${errors.packageType ? 'select-error' : ''}`}
                   {...register("packageType")}
                 >
+                  <option value="" hidden>Select a package</option>
                   {packageTypes?.[0] && packageTypes.map((packageType, index) => (
                     <option
                       key={`PackageType-${index}`}
-                      value={packageType}
+                      value={packageType.id}
                     >
-                      {packageType}
+                      {packageType.title}
                     </option>
                   ))}
                 </select>

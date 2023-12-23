@@ -11,7 +11,7 @@ export default async function getWorkAlbum({ recordId }) {
   try {
     response.data = await pocketbase
       .collection(COLLECTION_NAME)
-      .getOne(recordId)
+      .getOne(recordId, { expand: "package_type" })
       .then(async (workAlbum) => {
         const thumbnail_path = getImagePublicUrl({
           collectionName: COLLECTION_NAME,
