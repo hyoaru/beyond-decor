@@ -4,7 +4,7 @@ import { render } from "@react-email/render";
 import { InquiryDetailsEmail } from "@components/checkout/email/InquiryDetailsEmail";
 
 var nodemailer = require("nodemailer")
-export async function sendInquiryDetailsEmail({ to, from, subject, inquiry }) {
+export async function sendInquiryDetailsEmail({ emailAddress, inquiry }) {
   const response = {data: null, error: null}
 
   const transporter = nodemailer.createTransport({
@@ -19,7 +19,9 @@ export async function sendInquiryDetailsEmail({ to, from, subject, inquiry }) {
 
   try {
     response.data = await transporter.sendMail({
-      to: to, from: from, subject: subject,
+      to: `${emailAddress}, beyonddecorph@gmail.com`, 
+      from: "beyonddecordev1@gmail.com", 
+      subject: "Beyond Decor Inquiry",
       html: render(<InquiryDetailsEmail inquiry={inquiry} />)
     })
   } catch (error) {

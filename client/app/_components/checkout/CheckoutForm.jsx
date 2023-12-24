@@ -94,9 +94,7 @@ export default function CheckoutForm(props) {
             showStatusModal()
 
             await sendInquiryDetailsEmail({
-              to: `${emailAddress}, beyonddecordev1@gmail.com`,
-              from: "beyonddecordev1@gmail.com",
-              subject: "Beyond Decor Inquiry",
+              emailAddress: emailAddress,
               inquiry: processInquiry(data)
             }).then(({ error: emailResponseError }) => setInquiryError(emailResponseError))
 
