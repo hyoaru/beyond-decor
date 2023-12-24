@@ -3,20 +3,21 @@ import React from 'react'
 // App imports
 import InquiriesFeed from './InquiriesFeed'
 import getInquiries from '@services/shared/getInquiries'
+import DashboardOverviewFeed from './DashboardOverviewFeed'
+import getPackages from '@services/shared/getPackages'
 
 export default async function Page() {
   const { data: inquiries, error } = await getInquiries()
+  const { data: packages } = await getPackages()
 
   return (
     <>
-      <div className="mx-6 my-10 md:my-20">
-        <div className="prose max-w-none md:prose-lg text-center">
-          <h1 className='leading-normal'>
-            <span className='bg-primary p-1 text-white rounded-xl rounded-tr-none rounded-bl-none'>Inquiries</span>
-          </h1>
-        </div>
+      <div className="px-4 mx-auto mt-10 md:mt-16 xl:container">
+        <DashboardOverviewFeed initialInquiries={inquiries} packages={packages} />
 
-        <InquiriesFeed inquiries={inquiries} />
+        <div className="my-16 md:my-8">
+          <InquiriesFeed inquiries={inquiries} />
+        </div>
       </div>
     </>
   )

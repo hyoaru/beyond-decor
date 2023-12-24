@@ -64,7 +64,7 @@ export default function InquiriesTable(props) {
 
   return (
     <>
-      <div className="mt-16 mx-4 md:mx-16 lg:mx-32 mb-6 flex flex-col sm:flex-row items-center gap-2">
+      <div className="mb-6 flex flex-col sm:flex-row items-center gap-2">
         <div className="flex">
           <label className='me-4 rounded-box bg-primary text-white p-1 px-3 font-bold max-w-xs uppercase text-sm'>Global filter</label>
           <a className="flex btn btn-primary btn-outine btn-sm text-white sm:hidden" onClick={onExportToCsv}>Export to CSV</a>
@@ -76,12 +76,14 @@ export default function InquiriesTable(props) {
           value={globalFilter}
           onChange={onGlobalFilterChange}
         />
-        <FontAwesomeIcon icon={faArrowsRotate} size='xl' className='text-primary cursor-pointer mt-5 sm:mt-0 sm:ms-5 sm:me-auto' onClick={onRefreshTable} />
+        <div className="tooltip mt-5 sm:mt-0 sm:ms-5 sm:me-auto" data-tip="Refresh data">
+          <FontAwesomeIcon icon={faArrowsRotate} size='xl' className='text-primary cursor-pointer' onClick={onRefreshTable} />
+        </div>
         <a className="hidden btn btn-primary btn-outline btn-sm text-white sm:flex" onClick={onExportToCsv}>Export to CSV</a>
       </div>
 
-      <div className="overflow-x-auto mx-4 md:mx-16 lg:mx-32">
-        <table className="table table-pin-rows table-pin-cols">
+      <div className="overflow-x-auto">
+        <table className="table table-xs table-pin-rows table-pin-cols md:table-md">
           <thead>
             {inquiries && inquiriesTable.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
@@ -113,20 +115,20 @@ export default function InquiriesTable(props) {
         </table>
       </div>
 
-      <div className="flex justify-center mt-16 text-white font-black text-lg mx-4 md:mx-16 lg:mx-32">
+      <div className="flex justify-center mt-8 text-white font-black text-lg ">
         <div className="join">
-          <button className="join-item btn btn-sm btn-primary sm:btn-md" onClick={onFirstPagePagination}>«</button>
-          <button className="join-item btn btn-sm btn-primary sm:btn-md" onClick={onPreviousPagePagination}>{'<'}</button>
+          <button className="join-item btn btn-primary" onClick={onFirstPagePagination}>«</button>
+          <button className="join-item btn btn-primary" onClick={onPreviousPagePagination}>{'<'}</button>
           <div className="join-item mx-auto px-5 bg-primary flex">
             <input
               type="number"
-              className="input text-primary input-sm text-center max-w-[5rem] sm:btn-md sm:max-w-[10rem]"
+              className="input text-primary text-center max-w-[5rem] sm:max-w-[10rem]"
               value={pageRef.current}
               onChange={onPageJump}
             />
           </div>
-          <button className="join-item btn btn-sm btn-primary sm:btn-md" onClick={onNextPagePagination}>{'>'}</button>
-          <button className="join-item btn btn-sm btn-primary sm:btn-md" onClick={onLastPagePagination}>»</button>
+          <button className="join-item btn btn-primary" onClick={onNextPagePagination}>{'>'}</button>
+          <button className="join-item btn btn-primary" onClick={onLastPagePagination}>»</button>
         </div>
       </div>
     </>
