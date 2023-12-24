@@ -60,16 +60,17 @@ export default function DashboardOverviewFeed(props) {
           </div>
         </div>
 
-        <div className="flex gap-4 flex-nowrap overflow-x-auto">
-          <MetricCard label={'Inquiries'} data={inquiries.length} />
-          {packages.map((_package) => {
-            const label = _package.title
-            const data = inquiries.filter(
-              (inquiry) => _package?.id === inquiry.main_package)
-              .length
-
-            return <MetricCard key={`MetricCard-${_package.id}`} label={label} data={data} />
-          })}
+        <div className="whitespace-nowrap overflow-x-auto">
+          <div className="mx-auto flex w-max gap-4">
+            <MetricCard label={'Inquiries'} data={inquiries.length} />
+            {packages.map((_package) => {
+              const label = _package.title
+              const data = inquiries.filter(
+                (inquiry) => _package?.id === inquiry.main_package)
+                .length
+              return <MetricCard key={`MetricCard-${_package.id}`} label={label} data={data} />
+            })}
+          </div>
         </div>
       </div>
     </>
