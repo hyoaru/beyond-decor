@@ -19,7 +19,7 @@ export async function sendInquiryDetailsEmail({ emailAddress, inquiry }) {
 
   try {
     response.data = await transporter.sendMail({
-      to: `${emailAddress}, beyonddecorph@gmail.com`, 
+      to: `${emailAddress}, beyonddecordev1@gmail.com`, 
       from: "beyonddecordev1@gmail.com", 
       subject: "Beyond Decor Inquiry",
       html: render(<InquiryDetailsEmail inquiry={inquiry} />)
