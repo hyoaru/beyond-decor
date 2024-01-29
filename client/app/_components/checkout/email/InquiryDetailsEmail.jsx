@@ -123,7 +123,7 @@ export function InquiryDetailsEmail({ inquiry }) {
               </Container>
               <Container className="flex gap-10">
                 <Text className="inline capitalize opacity-60">Email: </Text>
-                <Text className="inline">beyonddecorph@gmail.com</Text>
+                <Text className="inline">beyonddecoreventsph@gmail.com</Text>
               </Container>
             </Container>
 

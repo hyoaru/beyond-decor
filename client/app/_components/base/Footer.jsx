@@ -24,7 +24,7 @@ export default function Footer() {
                 <a href="https://www.facebook.com/beyonddecorph" target='_blank' className='tooltip tooltip-left' data-tip="www.facebook.com/beyonddecorph">
                   <FontAwesomeIcon icon={faFacebook} size='xl' />
                 </a>
-                <a href="mailto:beyonddecorph@gmail.com" className='tooltip tooltip-left' data-tip="beyonddecorph@gmail.com">
+                <a href="mailto:beyonddecoreventsph@gmail.com" className='tooltip tooltip-left' data-tip="beyonddecoreventsph@gmail.com">
                   <FontAwesomeIcon icon={faEnvelope} size='xl' />
                 </a>
               </div>
