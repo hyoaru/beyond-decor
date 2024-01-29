@@ -44,7 +44,7 @@ export default function DashboardOverviewFeed(props) {
         <div className="flex flex-col md:flex-row items-center mb-10 gap-y-3">
           <h3 className='text-4xl text-center font-bold md:me-auto'>Inquiries Dashboard</h3>
           <div className="flex items-center gap-x-4">
-            <div className="border rounded-box border-primary p-1">
+            <div className="rounded-box p-1 border">
               <input
                 type="date"
                 className='input input-sm'
@@ -61,7 +61,7 @@ export default function DashboardOverviewFeed(props) {
         </div>
 
         <div className="whitespace-nowrap overflow-x-auto">
-          <div className="mx-auto flex w-max gap-4">
+          <div className="mx-auto flex gap-4">
             <MetricCard label={'Inquiries'} data={inquiries.length} />
             {packages.map((_package) => {
               const label = _package.title

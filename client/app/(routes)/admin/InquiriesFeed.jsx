@@ -20,6 +20,8 @@ export default function InquiriesFeed(props) {
           modalId={`InquiryDetailsModal-${inquiry.id}`}
         />
       ))}
+
+      <div className="h-[4rem]"></div>
     </>
   )
 }

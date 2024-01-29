@@ -1,12 +1,15 @@
 import React from 'react'
 
 export default function MetricCard(props) {
-  const { label, data, className } = props
+  const { label, data } = props
   return (
     <>
-      <div className={`w-[14rem] text-center py-5 px-2 md:px-5 border rounded-box ${className}`}>
-        <p className="font-bold text-sm text-primary">{label}</p>
-        <h1 className="text-4xl font-semibold mt-1">{data.toLocaleString()}</h1>
+      <div className={`grow border rounded-box p-5 px-8`}>
+        <div className="flex items-center opacity-60">
+          <p className="font-semibold me-auto">{label}</p>
+          <p className='font-mono'>{'()'}</p>
+        </div>
+        <h4 className="font-bold text-2xl mt-1">{data.toLocaleString()}</h4>
       </div>
     </>
   )

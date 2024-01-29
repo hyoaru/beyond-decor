@@ -71,7 +71,7 @@ export default function InquiriesTable(props) {
         </div>
         <input
           type="text"
-          className="input input-sm input-bordered input-primary w-full max-w-[17rem]"
+          className="input input-sm input-bordered w-full max-w-[17rem]"
           placeholder='Search record'
           value={globalFilter}
           onChange={onGlobalFilterChange}
@@ -117,18 +117,18 @@ export default function InquiriesTable(props) {
 
       <div className="flex justify-center mt-8 text-white font-black text-lg ">
         <div className="join">
-          <button className="join-item btn btn-primary" onClick={onFirstPagePagination}>«</button>
-          <button className="join-item btn btn-primary" onClick={onPreviousPagePagination}>{'<'}</button>
-          <div className="join-item mx-auto px-5 bg-primary flex">
+          <button className="join-item btn" onClick={onFirstPagePagination}>«</button>
+          <button className="join-item btn" onClick={onPreviousPagePagination}>{'<'}</button>
+          <div className="join-item mx-auto px-5 bg-base-200 flex">
             <input
               type="number"
-              className="input text-primary text-center max-w-[5rem] sm:max-w-[10rem]"
+              className="input text-black text-center max-w-[5rem] sm:max-w-[10rem]"
               value={pageRef.current}
               onChange={onPageJump}
             />
           </div>
-          <button className="join-item btn btn-primary" onClick={onNextPagePagination}>{'>'}</button>
-          <button className="join-item btn btn-primary" onClick={onLastPagePagination}>»</button>
+          <button className="join-item btn" onClick={onNextPagePagination}>{'>'}</button>
+          <button className="join-item btn" onClick={onLastPagePagination}>»</button>
         </div>
       </div>
     </>
