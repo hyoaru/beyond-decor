@@ -9,7 +9,6 @@ export default function PackageCardsFeed(props) {
   const { packages, isAdmin } = props
   const filteredPackages = packages?.filter((_package) => isAdmin ? _package : _package.is_displayed === true)
 
-  console.log(filteredPackages)
 
   return (
     <>

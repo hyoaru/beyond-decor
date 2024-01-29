@@ -29,7 +29,7 @@ export default function AnimationOnHover(props) {
           transition={{duration: 0.3}}
           onMouseEnter={() => {setIsHovered(true)}}
           onMouseLeave={() => {setIsHovered(false)}}
-          onTouchStart={() => {console.log(isHovered); setIsHovered(!isHovered)}}
+          onTouchStart={() => {setIsHovered(!isHovered)}}
         >
           {props.children}
         </motion.span>
