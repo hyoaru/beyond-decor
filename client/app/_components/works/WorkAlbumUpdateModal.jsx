@@ -8,15 +8,15 @@ import { useForm } from "react-hook-form"
 import { toast } from 'sonner'
 
 // App imports
-import { UPDATE_WORK_ALBUM_FORM_SCHEMA as formSchema } from '@/app/_constants/works/forms'
+import { UPDATE_WORK_ALBUM_FORM_SCHEMA as formSchema } from '@constants/works/forms'
 import FormErrorMessage from '@components/shared/FormErrorMessage'
-import useUpdateWorkAlbum from '@/app/_hooks/works/useUpdateWorkAlbum'
-import revalidateAllData from '@/app/_services/shared/revalidateAllData'
+import useUpdateWorkAlbum from '@hooks/works/useUpdateWorkAlbum'
+import revalidateAllData from '@services/shared/revalidateAllData'
 
 export default function WorkAlbumUpdateModal(props) {
   const { workAlbum, packages, modalId } = props
   const { id: recordId, thumbnail_path: thumbnailSrc, event_name: eventName } = workAlbum
-  const { event_place: eventPlace, event_date: eventDate, client_name: clientName, expand: { package_type: packageType } } = workAlbum
+  const { event_place: eventPlace, event_date: eventDate, client_name: clientName, package_type: packageType } = workAlbum
   const { updateWorkAlbum, isLoading } = useUpdateWorkAlbum()
   const [thumbnailUrl, setThumbnailUrl] = useState(thumbnailSrc)
 
@@ -27,7 +27,7 @@ export default function WorkAlbumUpdateModal(props) {
       eventPlace: eventPlace,
       eventDate: dayjs(eventDate).format("YYYY-MM-DD"),
       clientName: clientName,
-      packageType: packageType.id,
+      packageType: packageType?.id,
       thumbnailFile: '',
       imageFiles: '',
     }
