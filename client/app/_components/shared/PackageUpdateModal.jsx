@@ -14,7 +14,8 @@ import FormErrorMessage from '@components/shared/FormErrorMessage'
 
 export default function PackageUpdateModal(props) {
   const { packageCard, modalId } = props
-  const { id: packageId, image_path: cardImgSrc, title, description, price, short_description: shortDescription, inclusions } = packageCard
+  const { id: packageId, image_path: cardImgSrc, title, description, price } = packageCard
+  const { short_description: shortDescription, inclusions, is_displayed: isDisplayed } = packageCard
 
   const [imageUrl, setImageUrl] = useState(cardImgSrc)
   const { updatePackage, isLoading } = useUpdatePackage()
@@ -27,6 +28,7 @@ export default function PackageUpdateModal(props) {
       shortDescription: shortDescription,
       price: price,
       inclusions: inclusions.join(', '),
+      isDisplayed: isDisplayed,
       imageFile: '',
     }
   })
@@ -63,6 +65,7 @@ export default function PackageUpdateModal(props) {
       description: data.description,
       shortDescription: data.shortDescription,
       price: data.price,
+      isDisplayed: data.isDisplayed,
       inclusions: data.inclusions,
       imageFile: data.imageFile
     })
@@ -140,6 +143,16 @@ export default function PackageUpdateModal(props) {
                 </div>
 
                 <div className="flex mx-auto form-control w-full my-2">
+                  <select {...register('isDisplayed')} className='select select-bordered'>
+                    <option value={true}>Shown to users</option>
+                    <option value={false}>Hidden from users</option>
+                  </select>
+                  {errors.isDisplayed && <>
+                    <FormErrorMessage>{errors.isDisplayed.message}</FormErrorMessage>
+                  </>}
+                </div>
+
+                <div className="flex mx-auto form-control w-full my-2">
                   <textarea
                     className={`textarea textarea-bordered w-full ${errors.inclusions ? 'textarea-error' : ''}`}
                     placeholder="Enter comma separated inclusions e.g: wall backdrop, themed balloons, garland"
@@ -180,7 +193,7 @@ export default function PackageUpdateModal(props) {
             </div>
             <div className="modal-action flex">
               <button type='submit' className="btn btn-primary" disabled={isLoading}>
-              {
+                {
                   isLoading
                     ? <span className='loading loading-ring text-black'></span>
                     : 'Save'

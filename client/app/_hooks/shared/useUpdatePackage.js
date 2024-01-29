@@ -10,7 +10,7 @@ export default function useUpdatePackage() {
   const pocketbase = getClient()
   const [isLoading, setIsLoading] = useState(false)
 
-  async function updatePackage({ recordId, title, description, shortDescription, inclusions, price, imageFile }) {
+  async function updatePackage({ recordId, title, description, shortDescription, inclusions, price, imageFile, isDisplayed }) {
     const response = { data: null, error: null }
 
     setIsLoading(true)
@@ -21,6 +21,7 @@ export default function useUpdatePackage() {
       formData.append('short_description', shortDescription)
       formData.append('inclusions', JSON.stringify(processInclusions(inclusions)))
       formData.append('price', price)
+      formData.append('is_displayed', isDisplayed)
 
       if (imageFile?.[0]) {
         const resizedImage = await resizeImage(imageFile[0])

@@ -8,6 +8,7 @@ export const PACKAGES_BASE_FORM_SCHEMA = {
   description: z.string().min(10).max(800),
   shortDescription: z.string().min(10).max(400),
   price: z.coerce.number(),
+  isDisplayed: z.coerce.boolean(),
   inclusions: z.string()
     .refine((value) => {
       try {
@@ -85,6 +86,7 @@ export const UPDATE_PACKAGE_FORM_SCHEMA = z.object({
   shortDescription: PACKAGES_BASE_FORM_SCHEMA.shortDescription,
   price: PACKAGES_BASE_FORM_SCHEMA.price,
   inclusions: PACKAGES_BASE_FORM_SCHEMA.inclusions,
+  isDisplayed: PACKAGES_BASE_FORM_SCHEMA.isDisplayed,
   imageFile: z.any()
     .refine((files) => {
       if (files.length === 0) { return true }

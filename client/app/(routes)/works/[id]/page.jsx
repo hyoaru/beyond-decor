@@ -5,14 +5,14 @@ import { notFound } from 'next/navigation'
 // App imports
 import WorkAlbumUpdateModal from '@components/works/WorkAlbumUpdateModal'
 import getWorkAlbum from '@services/works/getWorkAlbum'
+import getPackages from '@services/shared/getPackages'
 import getAuthState from '@services/authentication/getAuthState'
 import WorkAlbumDropdownAction from '@components/works/WorkAlbumDropdownAction'
 import RecordDeleteModal from '@components/shared/RecordDeleteModal'
-import getAllPackages from '@services/shared/getAllPackages'
 
 export default async function Page({ params }) {
   const { data: workAlbum, error } = await getWorkAlbum({ recordId: params?.id })
-  const { data: packages } = await getAllPackages()
+  const { data: packages } = await getPackages()
   const authState = await getAuthState()
   if (error) { return notFound() }
   

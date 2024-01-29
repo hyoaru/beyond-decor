@@ -11,6 +11,7 @@ import PackageAddModal from "@components/shared/PackageAddModal"
 
 export default function PackagesFeed(props) {
   const { packages, isAdmin } = props
+  const filteredPackages = packages?.filter((_package) => isAdmin ? _package : _package.is_displayed === true)
   const [activeIndex, setActiveIndex] = useState(0)
   const activePackage = packages[activeIndex]
 
@@ -18,7 +19,7 @@ export default function PackagesFeed(props) {
     <>
       <div className={`mt-10 ${isAdmin ? "sm:mt-10" : "sm:mt-20"}`}>
         <div className="tabs tabs-lifted tabs-md justify-center flex flex-wrap">
-          {packages?.[0] && packages.map((pkg, index) => (
+          {filteredPackages?.[0] && filteredPackages.map((pkg, index) => (
             <PackageTab
               key={`PackageTab-${pkg.id}`}
               title={pkg.title}
@@ -31,7 +32,7 @@ export default function PackagesFeed(props) {
       </div>
 
       <div className={`mt-10 ${isAdmin ? "lg:mt-10" : "lg:mt-20"}`}>
-        {(packages?.[0] && activePackage) && <>
+        {(filteredPackages?.[0] && activePackage) && <>
           <ActivePackage
             activePackage={activePackage}
             isAdmin={isAdmin}
@@ -44,7 +45,7 @@ export default function PackagesFeed(props) {
       {isAdmin && <>
         <PackageAddModal />
 
-        {packages?.[0] && packages.map((pkg, index) => (
+        {filteredPackages?.[0] && filteredPackages.map((pkg, index) => (
           <div key={`PackageModifyModals-${index}`}>
             <PackageUpdateModal
               modalId={`PackageEditModal-${pkg.id}`}

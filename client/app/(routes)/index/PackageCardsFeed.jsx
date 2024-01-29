@@ -7,11 +7,14 @@ import RecordDeleteModal from '@components/shared/RecordDeleteModal';
 
 export default function PackageCardsFeed(props) {
   const { packages, isAdmin } = props
+  const filteredPackages = packages?.filter((_package) => isAdmin ? _package : _package.is_displayed === true)
+
+  console.log(filteredPackages)
 
   return (
     <>
       <div className="px-6 flex flex-wrap gap-6 gap-y-10 justify-center">
-        {packages?.[0] && packages.map((_package, index) => {
+        {filteredPackages?.[0] && filteredPackages.map((_package, index) => {
           return (
             <PackageCard
               key={`PackageCard-${_package.id}`}
@@ -27,7 +30,7 @@ export default function PackageCardsFeed(props) {
       {isAdmin && <>
         <PackageAddModal />
 
-        {packages?.[0] && packages.map((_package, index) => (
+        {filteredPackages?.[0] && filteredPackages.map((_package, index) => (
           <div key={`PackageCardModifyModals-${index}`}>
             <PackageUpdateModal
               packageCard={_package}

@@ -11,10 +11,7 @@ export default async function getPackages() {
   try {
     response.data = await pocketbase
       .collection(COLLECTION_NAME)
-      .getFullList({ 
-        sort: 'price',
-        filter: 'is_displayed = true'
-       })
+      .getFullList({ sort: 'price' })
       .then((packages) => {
         packages?.map((_package) => {
           _package.image_path = getImagePublicUrl({
