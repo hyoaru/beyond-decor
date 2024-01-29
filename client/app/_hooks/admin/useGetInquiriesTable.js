@@ -27,6 +27,7 @@ export default function useGetInquiriesTable({ inquiries, setState }) {
     { accessorKey: 'facebook_link' }, { accessorKey: 'phone_number' }, { accessorKey: 'event_date' },
     { accessorFn: (row) => (row.expand.main_package?.title ?? null), header: 'main_package' },
     { accessorKey: 'acquisition_survey', header: 'how_they_heard_about_byd'},
+    { accessorKey: 'created', header: 'created_at'},
     { id:'ViewOtherDetails', accessorKey: 'id', header: 'other_details', cell: (info) => (<ViewInquiryDetailsButton inquiryId={info.getValue()}>View</ViewInquiryDetailsButton>) }
   ]
 

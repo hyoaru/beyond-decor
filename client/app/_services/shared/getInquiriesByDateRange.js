@@ -8,7 +8,7 @@ export default async function getInquiriesByDateRange({ startDate, endDate }) {
   const pocketbase = getClient()
   const response = { data: null, error: null }
   const startDateFormatted = dayjs(startDate).format('YYYY-MM-DD')
-  const endDateFormatted = dayjs(endDate).format('YYYY-MM-DD')
+  const endDateFormatted = dayjs(endDate).add(1, 'day').format('YYYY-MM-DD')
 
   try {
     response.data = await pocketbase

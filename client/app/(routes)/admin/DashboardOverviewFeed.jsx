@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
+import dayjs from 'dayjs'
 
 // App imports
 import MetricCard from '@components/admin/MetricCard'
@@ -13,8 +14,8 @@ export default function DashboardOverviewFeed(props) {
   const [inquiries, setInquiries] = useState(initialInquiries)
   const { register, getValues } = useForm({
     defaultValues: {
-      startDate: '',
-      endDate: ''
+      startDate: dayjs('2024-01-01').format('YYYY-MM-DD'),
+      endDate: dayjs().format('YYYY-MM-DD')
     }
   })
 

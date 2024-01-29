@@ -3,7 +3,7 @@
 import getClient from "@services/pocketbase/getClient";
 import processInquiry from "@libraries/shared/processInquiry";
 
-export default async function getInquiries({ sortBy = "created" } = {}) {
+export default async function getInquiries() {
   const COLLECTION_NAME = 'inquiries'
   const pocketbase = getClient()
   const response = { data: null, error: null }
@@ -12,7 +12,7 @@ export default async function getInquiries({ sortBy = "created" } = {}) {
     response.data = await pocketbase
       .collection(COLLECTION_NAME)
       .getFullList({ 
-        sort: sortBy, 
+        sort: '-created', 
         expand: "main_package, addons"
       })
       .then((inquiries) => {
