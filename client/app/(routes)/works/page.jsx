@@ -2,12 +2,12 @@ import WorkAlbumsFeed from './WorkAlbumsFeed'
 import getWorkAlbums from '@services/works/getWorkAlbums';
 import getAuthState from '@services/authentication/getAuthState';
 import TriggerModalButton from '@components/shared/TriggerModalButton';
-import getPackages from '@services/shared/getPackages';
 import WorkAlbumAddModal from '@components/works/WorkAlbumAddModal';
+import getAllPackages from '@services/shared/getAllPackages';
 
 export default async function Page({ searchParams }) {
   const { data: workAlbums, error } = await getWorkAlbums()
-  const { data: packages } = await getPackages()
+  const { data: packages } = await getAllPackages()
   const authState = await getAuthState()
 
   return (

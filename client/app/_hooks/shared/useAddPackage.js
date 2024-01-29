@@ -22,6 +22,7 @@ export default function useAddPackage() {
       formData.append('inclusions', JSON.stringify(processInclusions(inclusions)))
       formData.append('price', price)
       formData.append('image_file', await resizeImage(imageFile[0]))
+      formData.append('is_displayed', true)
 
       response.data = await pocketbase
         .collection(COLLECTION_NAME)

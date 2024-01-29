@@ -7,7 +7,10 @@ export default async function getPackageCards() {
   const pocketbase = getClient()
   const packages = await pocketbase
     .collection(COLLECTION_NAME)
-    .getFullList({ sort: 'price' })
+    .getFullList({
+      sort: 'price',
+      filter: 'is_displayed = true'
+    })
     .then((packages) => {
       packages?.map((_package) => {
         _package.image_path = getImagePublicUrl({
